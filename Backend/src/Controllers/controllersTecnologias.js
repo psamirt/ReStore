@@ -9,10 +9,9 @@ const postProduct = async (req, res) => {
     Description,
     Marca,
     Ubicacion,
-    subcategoria
+    subcategoria,
+    Ofertas,
   } = req.body;
-
- 
 
   try {
     const newProduct = new TechSchema({
@@ -23,7 +22,8 @@ const postProduct = async (req, res) => {
       Description,
       Marca,
       Ubicacion,
-      subcategoria
+      subcategoria,
+      Ofertas,
     });
     const savedProduct = await newProduct.save();
 
@@ -36,9 +36,6 @@ const postProduct = async (req, res) => {
 
 // const getAllProducts = (req, res) => {};
 
-
-
-
 module.exports = {
-    postProduct,
-}
+  postProduct,
+};
