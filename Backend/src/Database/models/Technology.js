@@ -29,6 +29,9 @@ const TechnologySchema = mongoose.Schema({
     type: String,
     require: true,
   },
+  Ofertas: {
+    type: Number,
+  },
   subcategoria: {
     type: {
       TV: {
