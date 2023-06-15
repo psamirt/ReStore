@@ -1,9 +1,13 @@
 const express = require("express");
 const router = express.Router();
-const {postProduct,getAllCamarasyAccesorios,getAllCelulares,getAllComputacion,getAllConsolasyVideojuegos,getAllElectronicaAudioVideo,getAllTV} = require("../Controllers/controllersTecnologias")
+const {postProduct,getAllCamarasyAccesorios,getAllCelulares,getAllComputacion,getAllConsolasyVideojuegos,getAllElectronicaAudioVideo,getAllTV,getAllProducts} = require("../Controllers/controllersTecnologias")
 const {disabledProduct,getDisabledProducts} = require("../Controllers/disableProduct")
 const {ofertProduct,getOfertProducts} = require ("../Controllers/ofertas")
 const detailProduct = require("../Controllers/detail")
+
+
+//----------getAllProducts---------------------------------------------------------------------------------------------------------------//
+router.get("/allProducts",getAllProducts)
 
 
 //----------PostProducts---------------------------------------------------------------------------------------------------------------//
