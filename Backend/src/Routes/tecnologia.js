@@ -1,13 +1,17 @@
 const express = require("express");
 const router = express.Router();
-const {postProduct} = require("../Controllers/controllersTecnologias")
+const {postProduct,getAllCamarasyAccesorios,getAllCelulares,getAllComputacion,getAllConsolasyVideojuegos,getAllElectronicaAudioVideo,getAllTV} = require("../Controllers/controllersTecnologias")
 
-// router.get("/productos/all",)
-// router.get("/productos/id/:id",)
-// router.get("/productos/subcategorias",) // Se busca la subcategoria por query
 
 router.post("/posteo",postProduct)
-//rutas delete y put mas adelante
+router.get("/TV",getAllTV)
+router.get("/Computacion",getAllComputacion)
+router.get("/ElectronicaAudioVideo",getAllElectronicaAudioVideo)
+router.get("/ConsolasyVideojuegos",getAllConsolasyVideojuegos)
+router.get("/Celulares",getAllCelulares)
+router.get("/CamarasyAccesorios",getAllCamarasyAccesorios)
+
+
 
 
 module.exports=router
