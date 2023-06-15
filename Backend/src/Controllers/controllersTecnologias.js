@@ -125,6 +125,22 @@ const getAllProducts = async (req,res) => {
   }
 }
 
+const getAllProductsByCategory = async (req, res) => {
+  try {
+    const { category } = req.params;
+
+    const productos = await TechSchema.find({
+      [`subcategoria.${category}`]: { $exists: true },
+    });
+
+    res.status(200).json({ result: productos });
+  } catch (error) {
+    res
+      .status(400)
+      .json({ message: `Error al obtener los productos de ${category}` });
+    console.error(error);
+  }
+};
 
 module.exports = {
   postProduct,
@@ -134,5 +150,6 @@ module.exports = {
   getAllConsolasyVideojuegos,
   getAllCelulares,
   getAllCamarasyAccesorios,
-  getAllProducts
+  getAllProducts,
+  getAllProductsByCategory
 };

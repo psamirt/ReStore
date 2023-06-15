@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const {postProduct,getAllCamarasyAccesorios,getAllCelulares,getAllComputacion,getAllConsolasyVideojuegos,getAllElectronicaAudioVideo,getAllTV,getAllProducts} = require("../Controllers/controllersTecnologias")
+const {postProduct,getAllCamarasyAccesorios,getAllCelulares,getAllComputacion,getAllConsolasyVideojuegos,getAllElectronicaAudioVideo,getAllTV,getAllProducts,getAllProductsByCategory} = require("../Controllers/controllersTecnologias")
 const {disabledProduct,getDisabledProducts} = require("../Controllers/disableProduct")
 const {ofertProduct,getOfertProducts} = require ("../Controllers/ofertas")
 const detailProduct = require("../Controllers/detail")
@@ -29,6 +29,8 @@ router.put("/Ofertas",ofertProduct)
 router.get("/Detail/:id",detailProduct)
 //-----------SearchByName-------------------------------------------------------------------------------------------------------------//
 router.get("/searchName",Search)
+
+router.get("/categoria/:category", getAllProductsByCategory)
 
 
 module.exports=router

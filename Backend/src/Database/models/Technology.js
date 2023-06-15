@@ -31,6 +31,7 @@ const TechnologySchema = mongoose.Schema({
   },
   Ofertas: {
     type: Number,
+    default: 0,
   },
   Disabled:{
     type:Boolean,
