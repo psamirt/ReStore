@@ -66,13 +66,13 @@ const updatePasswordController = async (req, res) => {
   const { newPassword } = req.body;
 
   try {
-    // Verificar si el usuario existe
+    // verifico si el usuario existe
     const user = await User.findById(id);
     if (!user) {
       return res.status(404).json({ error: "Usuario no encontrado" });
     }
 
-    // Actualizar la contraseña del usuario
+    // actualizo la contraseña del usuario
     user.contraseña = newPassword;
     await user.save();
 
