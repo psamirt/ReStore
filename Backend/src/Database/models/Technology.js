@@ -32,6 +32,10 @@ const TechnologySchema = mongoose.Schema({
   Ofertas: {
     type: Number,
   },
+  Disabled:{
+    type:Boolean,
+    default:false
+  },
   subcategoria: {
     type: {
       TV: {
