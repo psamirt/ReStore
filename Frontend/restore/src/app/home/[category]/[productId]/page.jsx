@@ -1,8 +1,15 @@
+"use client"
+
 import React from 'react'
+import Link from 'next/link'
+import { useState } from 'react'
 
 function page() {
+  const data = useState(0)
   return (
-    <div>producto detalle</div>
+    <Link href={"/home"}>
+      <div>producto detalle</div>
+    </Link>
   )
 }
 
