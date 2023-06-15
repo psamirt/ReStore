@@ -82,24 +82,31 @@ const updatePasswordController = async (req, res) => {
   }
 };
 
-const getUserHandler = async (req, res) => {
-  const { id } = req.params;
-
+const getUsersHandler = async (req, res) => {
   try {
-    const user = await User.findById(id);
+    const { id } = req.params;
 
-    if (!user) {
-      return res.status(404).json({ error: "Usuario no encontrado" });
+    if (id) {
+      const user = await User.findById(id);
+
+      if (!user) {
+        return res.status(404).json({ error: "Usuario no encontrado" });
+      }
+
+      return res.status(200).json(user);
+    } else {
+      // Obtener todos los usuarios
+      const users = await User.find();
+
+      return res.status(200).json(users);
     }
-
-    res.status(200).json(user);
   } catch (error) {
-    res.status(500).json({ error: "Error al obtener el usuario" });
+    res.status(500).json({ error: "Error al obtener los usuarios" });
   }
 };
 
 module.exports = {
-  getUserHandler,
+  getUsersHandler,
   createUserController,
   updatePasswordController,
 };
