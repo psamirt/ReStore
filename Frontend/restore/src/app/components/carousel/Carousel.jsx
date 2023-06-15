@@ -44,15 +44,14 @@ export default function Carousel() {
       // autoplay-disable-on-interaction='false'
     >
       <swiper-slide>
-        <div className='bg-black relative'>
+        <div className='bg-black relative aspect-[16/5]'>
           <div className='swiper-lazy-preloader'></div>
           <Image
-            className='object-cover aspect-[16/5] max-w-full opacity-70'
+            className='object-cover  max-w-full opacity-70'
             src='https://i.ytimg.com/vi/oD_3wMh5kLg/maxresdefault.jpg'
             alt='celulares'
             loading='lazy'
-            width={1280}
-            height={720}
+            fill={true}
           />
           <p
             className='text-gray-100 text-3xl font-semibold drop-shadow-2xl absolute z-10 top-1/2 left-1/2 text-center'
@@ -63,15 +62,14 @@ export default function Carousel() {
         </div>
       </swiper-slide>
       <swiper-slide>
-        <div className='bg-black relative'>
+        <div className='bg-black relative aspect-[16/5]'>
           <div className='swiper-lazy-preloader'></div>
           <Image
-            className='object-cover aspect-[16/5] max-w-full opacity-70'
+            className='object-cover  max-w-full opacity-70'
             src='https://imagekit.androidphoria.com/wp-content/uploads/Lenovo-Tab-M10-Plus-3er-gen-mejor-tablet-menos-200-euros-2023.jpg'
             alt='tablets'
             loading='lazy'
-            width={1200}
-            height={675}
+            fill={true}
           />
           <p
             className='text-gray-100 text-3xl font-semibold drop-shadow-2xl absolute z-10 top-1/2 left-1/2 text-center'
@@ -82,15 +80,14 @@ export default function Carousel() {
         </div>
       </swiper-slide>
       <swiper-slide>
-        <div className='bg-black relative'>
+        <div className='bg-black relative aspect-[16/5]'>
           <div className='swiper-lazy-preloader'></div>
           <Image
-            className='object-cover aspect-[16/5] max-w-full opacity-70'
+            className='object-cover  max-w-full opacity-70'
             src='https://s3.studytonight.com/curious/uploads/pictures/1635942900-106730.jpg'
             alt='dispositivos'
             loading='lazy'
-            width={2000}
-            height={1143}
+            fill={true}
           />
           <p
             className='text-gray-100 text-3xl font-semibold drop-shadow-2xl absolute z-10 top-1/2 left-1/2 text-center'
