@@ -4,12 +4,10 @@ const {postProduct,getAllCamarasyAccesorios,getAllCelulares,getAllComputacion,ge
 const {disabledProduct,getDisabledProducts} = require("../Controllers/disableProduct")
 const {ofertProduct,getOfertProducts} = require ("../Controllers/ofertas")
 const detailProduct = require("../Controllers/detail")
-
+const Search = require("../Controllers/searchName")
 
 //----------getAllProducts---------------------------------------------------------------------------------------------------------------//
 router.get("/allProducts",getAllProducts)
-
-
 //----------PostProducts---------------------------------------------------------------------------------------------------------------//
 router.post("/posteo",postProduct)
 
@@ -29,6 +27,8 @@ router.get("/Ofertas",getOfertProducts)
 router.put("/Ofertas",ofertProduct)
 //-----------Detail-------------------------------------------------------------------------------------------------------------//
 router.get("/Detail/:id",detailProduct)
+//-----------SearchByName-------------------------------------------------------------------------------------------------------------//
+router.get("/searchName",Search)
 
 
 module.exports=router
