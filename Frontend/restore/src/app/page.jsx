@@ -1,7 +1,11 @@
+'use client';
+import Carousel from './components/carousel/Carousel';
+
 export default function Landing() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
+    <main className=''>
       landing soy landing page
+      <Carousel />
     </main>
-  )
+  );
 }
