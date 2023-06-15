@@ -1,7 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import datos from "productsExample.json";
-import estrellaIco from "../../../iconos/estrellas.png";
 import "./detail.css";
 
 function Detail({ props }) {
@@ -51,7 +50,7 @@ function Detail({ props }) {
           </h4>
           <button className="detail-button-carrito">Añadir al carrito</button>
           <h4 className="detail-secciones">
-            Calificación del vendedor : <img src={estrellaIco} alt="" />5
+            Calificación del vendedor : <img src="" alt="" />5
           </h4>
         </div>
       </div>
