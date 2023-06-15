@@ -40,8 +40,8 @@ export default function Carousel() {
       navigation='true'
       pagination='true'
       loop='true'
-      // autoplay-delay='5000'
-      // autoplay-disable-on-interaction='false'
+      autoplay-delay='5000'
+      autoplay-disable-on-interaction='false'
     >
       <swiper-slide>
         <div className='bg-black relative aspect-[16/5]'>
