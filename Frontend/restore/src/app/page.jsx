@@ -1,3 +1,9 @@
+<<<<<<< HEAD
+export default function Landing() {
+  return (
+    <main className=''>
+      landing soy landing page
+=======
 'use client';
 import Link from 'next/link';
 
@@ -16,6 +22,7 @@ export default function Landing() {
           Llevame al shop
         </Link>
       </div>
+>>>>>>> 07ba6b6b20283547b59f20fe4fc6be300fc709d4
     </main>
   );
 }
