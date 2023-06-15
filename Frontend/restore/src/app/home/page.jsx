@@ -1,3 +1,4 @@
+
 import React from 'react'
 import { fetchCategories } from './fetch'
 import ProductsContainer from '../components/ProductsContainer/ProductsContainer'
@@ -48,6 +49,7 @@ async function Home() {
 }
 
 export default Home
+
 
 
 
