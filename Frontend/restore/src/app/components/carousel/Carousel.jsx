@@ -68,8 +68,8 @@ export default function Carousel() {
             className='object-cover  max-w-full opacity-70'
             src='https://imagekit.androidphoria.com/wp-content/uploads/Lenovo-Tab-M10-Plus-3er-gen-mejor-tablet-menos-200-euros-2023.jpg'
             alt='tablets'
-            loading='lazy'
             fill={true}
+            loading='lazy'
           />
           <p
             className='text-gray-100 text-3xl font-semibold drop-shadow-2xl absolute z-10 top-1/2 left-1/2 text-center'
