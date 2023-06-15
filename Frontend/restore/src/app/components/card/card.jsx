@@ -2,11 +2,13 @@ import React from "react";
 import "./Card.css";
 import Link from "next/link";
 import Boton from "../Button/Button";
+import Image from "next/image";
 
 function Card(data) {
   return (
     <div className="Card">
       <h3>{data.name}</h3>
+      <Image  src={data.image} alt={data.name}  height={200} width={200}/>
       <div className="text">
         <p>Estado:{data.estado} </p>
         <p>Marca:{data.marca}</p>

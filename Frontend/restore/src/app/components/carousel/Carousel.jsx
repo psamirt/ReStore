@@ -1,4 +1,5 @@
 // import function to register Swiper custom elements
+"use client"
 import Image from 'next/image';
 import { useEffect, useRef } from 'react';
 import { register } from 'swiper/element/bundle';

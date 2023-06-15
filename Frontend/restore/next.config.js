@@ -17,6 +17,11 @@ const nextConfig = {
         hostname: 's3.studytonight.com',
         port: '',
       },
+      {
+        protocol: 'https',
+        hostname: "http2.mlstatic.com",
+        port:""
+      }
     ],
   },
 };
