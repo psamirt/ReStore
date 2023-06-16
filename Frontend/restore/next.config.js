@@ -19,9 +19,14 @@ const nextConfig = {
       },
       {
         protocol: 'https',
-        hostname: "http2.mlstatic.com",
-        port:""
-      }
+        hostname: 'http2.mlstatic.com',
+        port: '',
+      },
+      {
+        protocol: 'https',
+        hostname: 'images.pexels.com',
+        port: '',
+      },
     ],
   },
 };

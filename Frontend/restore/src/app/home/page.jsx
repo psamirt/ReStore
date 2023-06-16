@@ -62,7 +62,6 @@ function Home() {
         ) : (
           <ProductsContainer data={data} />
         ))}
-                
     </div>
   );
 }
