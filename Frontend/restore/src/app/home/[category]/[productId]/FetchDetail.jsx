@@ -1,7 +1,7 @@
 import React from "react";
 import "./detail.css";
 import axios from "axios";
-
+import { fetchDetail } from "../../fetch";
 
 export async function DetailId({ param }) {
   const post = await fetchDetail(param);
