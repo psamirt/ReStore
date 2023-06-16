@@ -4,9 +4,9 @@ import React, { useState } from 'react';
 
 export default function Searchbar(
   {
-    //   setSearchResult,
-    //   setExistingSearch,
-    //   existingSearch,
+       setSearchResult,
+       setExistingSearch,
+       existingSearch,
   }
 ) {
   //debe recibir una function de setear la busqueda, setear si existe una busqueda, y saber si existe una busqueda
@@ -28,8 +28,8 @@ export default function Searchbar(
     */
   const [inputValue, setInputValue] = useState('');
   //estos se eliminarian de aca una vez que estan en el componente padre:
-  const [searchResult, setSearchResult] = useState([]);
-  const [existingSearch, setExistingSearch] = useState(false);
+  // const [searchResult, setSearchResult] = useState([]);
+  // const [existingSearch, setExistingSearch] = useState(false);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
