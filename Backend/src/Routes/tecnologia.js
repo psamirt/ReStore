@@ -1,13 +1,31 @@
 const express = require("express");
 const router = express.Router();
-const {postProduct} = require("../Controllers/controllersTecnologias")
+const {postProduct,getAllProducts,getAllProductsByCategory} = require("../Controllers/controllersTecnologias")
+const {disabledProduct,getDisabledProducts} = require("../Controllers/disableProduct")
+const {ofertProduct,getOfertProducts} = require ("../Controllers/ofertas")
+const detailProduct = require("../Controllers/detail")
+const Search = require("../Controllers/searchName")
 
-// router.get("/productos/all",)
-// router.get("/productos/id/:id",)
-// router.get("/productos/subcategorias",) // Se busca la subcategoria por query
-
+//----------getAllProducts---------------------------------------------------------------------------------------------------------------//
+router.get("/allProducts",getAllProducts)
+//----------PostProducts---------------------------------------------------------------------------------------------------------------//
 router.post("/posteo",postProduct)
-//rutas delete y put mas adelante
+
+//----------Disabled---------------------------------------------------------------------------------------------------------------//
+router.put("/disabled",disabledProduct)
+router.get("/disabled",getDisabledProducts)
+
+//----------getSubCategories---------------------------------------------------------------------------------------------------------------//
+router.get("/categoria/:category", getAllProductsByCategory)
+
+//----------Ofertas---------------------------------------------------------------------------------------------------------------//
+router.get("/Ofertas",getOfertProducts)
+router.put("/Ofertas",ofertProduct)
+//-----------Detail-------------------------------------------------------------------------------------------------------------//
+router.get("/Detail/:id",detailProduct)
+//-----------SearchByName-------------------------------------------------------------------------------------------------------------//
+router.get("/searchName",Search)
+
 
 
 module.exports=router

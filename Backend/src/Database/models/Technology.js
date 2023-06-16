@@ -31,6 +31,11 @@ const TechnologySchema = mongoose.Schema({
   },
   Ofertas: {
     type: Number,
+    default: 0,
+  },
+  Disabled:{
+    type:Boolean,
+    default:false
   },
   subcategoria: {
     type: {
@@ -91,7 +96,7 @@ const TechnologySchema = mongoose.Schema({
           EquiposDj: Boolean,
           AccesoriosDj: Boolean,
           EstudiodeGrabacion: Boolean,
-          Grabadores: Boolean,
+          Grabadoras: Boolean,
           HomeTheatre: Boolean,
           Megafonos: Boolean,
           Microfonos: Boolean,
@@ -127,7 +132,7 @@ const TechnologySchema = mongoose.Schema({
       //-------------------------------------------------------------------------------------------------------------------------------------------------//
       Celulares: {
         type: {
-          Smarthpones: Boolean,
+          Smartphones: Boolean,
           Fundas: Boolean,
           Cargadores: Boolean,
         },
@@ -143,7 +148,7 @@ const TechnologySchema = mongoose.Schema({
           Camaras: Boolean,
           //-------------------------------------------------------------------------------------------------------------------------------------------------//
           //-------------------------------------------------------------------------------------------------------------------------------------------------//
-          CamarasFilmadores: Boolean,
+          CamarasFilmadoras: Boolean,
           //-------------------------------------------------------------------------------------------------------------------------------------------------//
           //-------------------------------------------------------------------------------------------------------------------------------------------------//
           Lentes: Boolean,
