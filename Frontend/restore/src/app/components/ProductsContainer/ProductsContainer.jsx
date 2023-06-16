@@ -1,20 +1,19 @@
-import React from "react";
-import productsExample from "productsExample.json";
-import Card from "../card/card"
-import { AiFillCamera } from "react-icons/ai";
-import { GrPersonalComputer } from "react-icons/gr";
-import { MdHeadset, MdVideogameAsset } from "react-icons/Md";
-import { IoIosTabletPortrait } from "react-icons/Io";
-import { ImDisplay } from "react-icons/Im";
-import Link from "next/link";
-import style from "./ProductsContainer.module.css";
-import Carousel from "../carousel/Carousel";
+import React from 'react';
+import productsExample from 'productsExample.json';
+import Card from '../card/card';
+import { AiFillCamera } from 'react-icons/ai';
+import { GrPersonalComputer } from 'react-icons/gr';
+import { MdHeadset, MdVideogameAsset } from 'react-icons/Md';
+import { IoIosTabletPortrait } from 'react-icons/Io';
+import { ImDisplay } from 'react-icons/Im';
+import Link from 'next/link';
+import style from './ProductsContainer.module.css';
+import Carousel from '../carousel/Carousel';
 
-function ProductsContainer({data}) {
+function ProductsContainer({ data }) {
   return (
     //Los links en realidad deben ser dinamicos, pero faltan endpoints de categorias
     <>
-
       <h2 className={style.banner}>Ofertas Limitadas!</h2>
       {data.result.map((props) => {
         return (
