@@ -1,9 +1,13 @@
-import React from 'react'
+import {DetailId} from "./FetchDetail.jsx"
 
-function page() {
+async function Detail() {
+
   return (
-    <div>producto detalle</div>
-  )
+<section>
+  <DetailId/>
+</section>
+  );
+
 }
 
 export default Detail;
