@@ -8,7 +8,7 @@ const Loader = () => {
         <div className="ring"></div>
         <div className="ring"></div>
         <div className="ring"></div>
-        <p className="p-loading">Loanding...</p>
+        <p className="p-loading">Cargando...</p>
       </div>
     </div>
   );

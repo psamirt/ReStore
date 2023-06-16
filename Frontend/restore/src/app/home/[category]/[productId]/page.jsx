@@ -1,13 +1,15 @@
-import {DetailId} from "./FetchDetail.jsx"
+import { DetailId } from "./FetchDetail.jsx";
+import { Navbar } from "@/app/components/navbar/navbar.jsx";
 
 async function Detail() {
-
   return (
-<section>
-  <DetailId/>
-</section>
+    <>
+      <Navbar />
+      <section>
+        <DetailId />
+      </section>
+    </>
   );
-
 }
 
 export default Detail;
