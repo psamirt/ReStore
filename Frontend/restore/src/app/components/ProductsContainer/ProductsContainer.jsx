@@ -15,6 +15,8 @@ function ProductsContainer({ data }) {
     //Los links en realidad deben ser dinamicos, pero faltan endpoints de categorias
     <>
       <h2 className={style.banner}>Ofertas Limitadas!</h2>
+      <div className={style.cardsContainer}>
+
       {data.result.map((props) => {
         return (
           <Card
@@ -31,6 +33,8 @@ function ProductsContainer({ data }) {
           />
         );
       })}
+
+      </div>
     </>
   );
 }

@@ -12,7 +12,7 @@ async function page({ params }) {
     <>
       <Navbar />
       <h2 className={style.categoria}>{categoria}</h2>
-      <Order/>
+      <div className={style.cardsContainer}>
       {response.result.map((result) => {
         return (
           <Card
@@ -22,9 +22,11 @@ async function page({ params }) {
             estado={result.state}
             marca={result.Marca}
             image={result.background_image}
+            id={result._id}
           />
         );
       })}
+      </div>
     </>
   );
 }

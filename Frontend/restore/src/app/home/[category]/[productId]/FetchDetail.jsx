@@ -3,30 +3,9 @@ import "./detail.css";
 import axios from "axios";
 
 
-const fetchPost = (productId) => {
-  return fetch(`http://localhost:3001/categories/technology/Detail/${productId}`).then((res) =>
-    res.json()
-  );
-};
-
-    // export async function getDetail(productId){
-    //     try {
-    //         const response = await axios.get(`http://localhost:3001/categories/technology/Detail/${productId}`)
-    //         const data = response.data;
-    //         return{
-    //             props:{data}
-    //         }
-    //     } catch (error) {
-    //         console.error("Error al conseguir detalle", error)
-    //         return{
-    //             props:{data:null}
-    //         }
-    //     }
-    // }
-
-
-export async function DetailId({params}) {
-  const post = await fetchPost("648b125d56b8ae71a2b24119");
+export async function DetailId({ param }) {
+  const post = await fetchDetail(param);
+  if (post.message) return <NotFound/>
   return (
       <div className="detail-container" key={post.result[0]._id}>
         {console.log(post.result[0])}

@@ -1,3 +1,5 @@
+"use client"
+import { useState } from "react";
 import React from "react";
 import { fetchCategories } from "./fetch";
 import ProductsContainer from "../components/ProductsContainer/ProductsContainer";
@@ -12,11 +14,17 @@ import style from "./page.module.css";
 import Link from "next/link";
 
 async function Home() {
+  const [searchResult, setSearchResult] = useState([]);
+  const [existingSearch, setExistingSearch] = useState(false);
+
   const data = await fetchCategories();
 
   return (
     <div>
-      <Navbar />
+      <Navbar  setSearchResult={setSearchResult}
+            setExistingSearch={setExistingSearch}
+            existingSearch={existingSearch}
+       />
       <Carousel />
       <div className={style.iconsContainer}>
         <Link className={style.link} href={"/home/ConsolasyVideojuegos"}>
@@ -38,7 +46,9 @@ async function Home() {
           <AiFillCamera fontSize={50}></AiFillCamera>
         </Link>
       </div>
-      <ProductsContainer data={data} />
+        <ProductsContainer data={data}/>
+
+          
     </div>
   );
 }
