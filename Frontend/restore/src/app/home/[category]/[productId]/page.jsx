@@ -1,10 +1,9 @@
 import {DetailId} from "./FetchDetail.jsx"
 
-async function Detail() {
-
+async function Detail({params}) {
   return (
 <section>
-  <DetailId/>
+  <DetailId param={params.productId} />
 </section>
   );
 
