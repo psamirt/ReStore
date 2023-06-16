@@ -1,5 +1,7 @@
+import React from "react";
 import "./detail.css";
 import axios from "axios";
+
 
 const fetchPost = (productId) => {
   return fetch(`http://localhost:3001/categories/technology/Detail/${productId}`).then((res) =>
