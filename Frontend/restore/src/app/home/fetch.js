@@ -15,3 +15,10 @@ export const fetchDetail = (productId) => {
       res.json()
     );
   };
+
+
+  export const fetchSearch = (search) => {
+    return fetch(`http://localhost:3001/categories/technology/searchname?name=${search}`).then((res) =>
+      res.json()
+    );
+  };

@@ -2,6 +2,7 @@
 import style from "./form.modules.css";
 import { PlusOutlined } from '@ant-design/icons';
 import { Button, Form, Input, Radio, Alert, Select, Upload } from "antd";
+import { Navbar } from "../components/navbar/navbar";
 
 import FormItem from "antd/es/form/FormItem";
 // import { useEffect, useState } from "react";
@@ -64,7 +65,8 @@ export default function Forms({
 //     }
 //   };
   return (
-    <div className={style.container + " top-1/3 "}>
+    <div>
+<div className={style.container + " top-1/3 "}>
       <div className="flex justify-between">
 
 <div>
@@ -213,5 +215,9 @@ export default function Forms({
         </Button>
       </Form>
     </div>
+
+    </div>
+
+    
   );
 }
