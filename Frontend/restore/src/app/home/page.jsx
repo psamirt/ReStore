@@ -23,22 +23,22 @@ async function Home() {
       <Carousel />
 
       <div className={style.iconsContainer}>
-        <Link className={style.link} href={"/home/ConsolasyVideojuegos"}>
+        <Link className={style.link} href={'/home/ConsolasyVideojuegos'}>
           <MdVideogameAsset fontSize={50} />
         </Link>
-        <Link className={style.link} href={"/home/TV"}>
+        <Link className={style.link} href={'/home/TV'}>
           <ImDisplay fontSize={50} />
         </Link>
-        <Link className={style.link} href={"/home/Celulares"}>
+        <Link className={style.link} href={'/home/Celulares'}>
           <IoIosTabletPortrait fontSize={50} />
         </Link>
-        <Link className={style.link} href={"/home/ElectronicaAudioVideo"}>
+        <Link className={style.link} href={'/home/ElectronicaAudioVideo'}>
           <MdHeadset fontSize={50} />
         </Link>
-        <Link className={style.link} href={"/home/Computacion"}>
+        <Link className={style.link} href={'/home/Computacion'}>
           <GrPersonalComputer fontSize={50}></GrPersonalComputer>
-        </Link>{" "}
-        <Link className={style.link} href={"/home/CamarasyAccesorios"}>
+        </Link>{' '}
+        <Link className={style.link} href={'/home/CamarasyAccesorios'}>
           <AiFillCamera fontSize={50}></AiFillCamera>
         </Link>
       </div>
