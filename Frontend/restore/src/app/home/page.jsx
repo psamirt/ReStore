@@ -1,41 +1,27 @@
-'use client';
-import { useEffect, useState } from 'react';
-import React from 'react';
-import { fetchCategories } from './fetch';
-import ProductsContainer from '../components/ProductsContainer/ProductsContainer';
-import { Navbar } from '../components/navbar/navbar';
-import Carousel from '../components/carousel/Carousel';
-import { AiFillCamera } from 'react-icons/ai';
-import { GrPersonalComputer } from 'react-icons/gr';
-import { MdHeadset, MdVideogameAsset } from 'react-icons/Md';
-import { IoIosTabletPortrait } from 'react-icons/Io';
-import { ImDisplay } from 'react-icons/Im';
-import style from './page.module.css';
-import Link from 'next/link';
-import axios from 'axios';
+import React from "react";
+import { fetchCategories } from "./fetch";
+import ProductsContainer from "../components/ProductsContainer/ProductsContainer";
+import { Navbar } from "../components/navbar/navbar";
+import Carousel from "../components/carousel/Carousel";
+import { AiFillCamera } from "react-icons/ai";
+import { GrPersonalComputer } from "react-icons/gr";
+import { MdHeadset, MdVideogameAsset } from "react-icons/Md";
+import { IoIosTabletPortrait } from "react-icons/Io";
+import { ImDisplay } from "react-icons/Im";
+import style from "./page.module.css";
+import Link from "next/link";
 
-function Home() {
-  const [existingSearch, setExistingSearch] = useState(false);
-  const [searchResult, setSearchResult] = useState({ result: [] });
-  const [data, setData] = useState({ result: [] });
-  const getData = async () => {
-    const { data } = await axios(
-      'http://localhost:3001/categories/technology/Ofertas'
-    );
-    setData(data);
-  };
-  useEffect(() => {
-    getData();
-  }, []);
+async function Home() {
+
+  const data = await fetchCategories();
+  
 
   return (
     <div>
       <Navbar
-        setSearchResult={setSearchResult}
-        setExistingSearch={setExistingSearch}
-        existingSearch={existingSearch}
-      />
+       />
       <Carousel />
+
       <div className={style.iconsContainer}>
         <Link className={style.link} href={'/home/ConsolasyVideojuegos'}>
           <MdVideogameAsset fontSize={50} />
@@ -56,12 +42,9 @@ function Home() {
           <AiFillCamera fontSize={50}></AiFillCamera>
         </Link>
       </div>
-      {data.result.length &&
-        (existingSearch ? (
-          <ProductsContainer data={searchResult} />
-        ) : (
-          <ProductsContainer data={data} />
-        ))}
+      <h2> Ofertas Limitas!</h2>
+        <ProductsContainer data={data}/>
+
     </div>
   );
 }

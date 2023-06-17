@@ -3,13 +3,10 @@ import Link from "next/link";
 import "./Navbar.css";
 import { FaBars, FaHome } from "react-icons/fa";
 import { FiShoppingCart } from "react-icons/fi";
-import Searchbar from "../searchbar/searchbar";
+import Searchbar from "../searchbar/searchbar"
 
-export const Navbar = ({
-  setSearchResult,
-  setExistingSearch,
-  existingSearch,
-}) => {
+
+export const Navbar = () => {
   return (
     <nav className="container">
       <Link className="link" href={"/home"}>
@@ -23,11 +20,7 @@ export const Navbar = ({
       <Link className="link" href={"/"}>
         Signup/Login
       </Link>
-      <Searchbar
-        setSearchResult={setSearchResult}
-        setExistingSearch={setExistingSearch}
-        existingSearch={existingSearch}
-      />
+      <Searchbar/>
     </nav>
   );
 };

@@ -1,9 +1,8 @@
-import React from "react";
 import { fetchCategory } from "../fetch";
 import Card from "@/app/components/card/card";
 import { Navbar } from "@/app/components/navbar/navbar";
-import style from "./page.module.css"
-import Order from "@/app/components/order/order";
+import style from "./page.module.css";
+import ProductsContainer from "@/app/components/ProductsContainer/ProductsContainer";
 
 async function page({ params }) {
   const categoria = params.category;
@@ -13,20 +12,7 @@ async function page({ params }) {
       <Navbar />
       <h2 className={style.categoria}>{categoria}</h2>
       <div className={style.cardsContainer}>
-      <Order/>
-      {response.result.map((result) => {
-        return (
-          <Card
-            key={result._id}
-            name={result.name}
-            precio={result.precio}
-            estado={result.state}
-            marca={result.Marca}
-            image={result.background_image}
-            id={result._id}
-          />
-        );
-      })}
+        <ProductsContainer data={response} ></ProductsContainer>
       </div>
     </>
   );
