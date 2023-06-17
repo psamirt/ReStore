@@ -33,6 +33,7 @@ export default function Searchbar(
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    event.stopPropagation()
     setExistingSearch(true);
 
     const { value } = event.target[0];
@@ -40,14 +41,14 @@ export default function Searchbar(
     // setLoading(true);
     try {
       const {
-        data: { result },
+        data
       } = await axios.get(endpoint, {
         params: { name: value },
       });
-      console.log(result);
+      console.log(data);
       //logica para volver al principio (hay que hacerla):
       //   dispatch(setPageToOne());
-      setSearchResult(result);
+      setSearchResult(data);
       //   setLoading(false);
     } catch (error) {
       console.log('...............', error.message);
