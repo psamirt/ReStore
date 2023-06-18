@@ -1,13 +1,11 @@
 import React from 'react';
 import Card from '../card/card';
-import style from './ProductsContainer.module.css';
-
 
 function ProductsContainer({ data }) {
   console.log(data);
   return (
     <>
-      <div className={style.cardsContainer}>
+      <div className='grid justify-items-center gap-4 auto-cols-max grid-cols-1 sm:grid-cols-2 lg:grid-cols-3'>
         {data.result.map((props) => {
           return (
             <Card
