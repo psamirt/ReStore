@@ -5,7 +5,7 @@ function NotFound() {
   return (
     <div>
          <Navbar></Navbar>
-        <div>No se ha encontrado ningun producto con ese nombre :(</div>
+        <div>No se ha encontrado ningun producto</div>
 
     </div>
   )
