@@ -4,7 +4,6 @@ import Boton from '../Button/Button';
 import Image from 'next/image';
 
 function Card(data) {
-  console.log(data);
   return (
     <div className='w-80 aspect-[4/3] grid gap-2 bg-slate-50 rounded-md p-6 shadow-lg shadow-slate-300 hover:scale-105 transition duration-500'>
       <div className='relative w-[85%]  mx-auto aspect-[4/3]'>

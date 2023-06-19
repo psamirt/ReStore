@@ -6,9 +6,9 @@ import NotFound from '../home/[category]/[productId]/notFound'
 
 async function Search({ searchParams }) {
   const data = await fetchSearch(searchParams.search)
-  const ubicaciones = [...new Set(data.result.map(producto => producto.Ubicacion))];
-  const marcas = [...new Set(data.result.map(producto => producto.Marca))];
-  const estado = [...new Set(data.result.map(producto => producto.state))];
+  const ubicaciones = data.result.map(producto => producto.Ubicacion)
+  const marcas = data.result.map(producto => producto.Marca)
+  const estado = data.result.map(producto => producto.state)
   if (data.length === 0) return  <NotFound></NotFound>
   return (
     <div>

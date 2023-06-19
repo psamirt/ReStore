@@ -38,8 +38,8 @@
 }
 
 .detail-img {
-  width: 350px;
-  height: 350px;
+  width: auto;
+  height: auto;
   border-radius: 1rem;
 }
 

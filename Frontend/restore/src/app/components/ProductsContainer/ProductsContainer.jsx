@@ -2,12 +2,18 @@
 import Card from "../card/card";
 import style from "./ProductsContainer.module.css";
 import React, { useState, useEffect } from "react";
+import productsCounter from "@/app/utils/productsCounter";
 
 function ProductsContainer({ data, ubicaciones, marcas, estado }) {
+
+  const stateCounter = productsCounter(estado)
+  const marcasCounter = productsCounter(marcas)
+  const ubiCounter = productsCounter(ubicaciones)
+  console.log(stateCounter)
   const [filters] = useState({
-    estado,
-    marcas,
-    ubicacion: ubicaciones,
+    estado : [...new Set(estado)],
+    marcas : [...new Set(marcas)],
+    ubicacion:[...new Set(ubicaciones)],
     oferta: ["En oferta"],
     precio: [ "Menos de $200000","Menos de $150000","Menos de $100000","Menos de $50000","Menos de $25000"],
     order: ["Menor precio","Mayor precio","Nombre ascendiente","Nombre descendiente"],
@@ -73,7 +79,7 @@ function ProductsContainer({ data, ubicaciones, marcas, estado }) {
           key={estado}
           onClick={() => handleFilterChange("state", estado)}
         >
-          {estado}
+          {estado} ({stateCounter[estado]})
         </button>
       ))}
       <h4 className={style.h4}>Marcas</h4>
@@ -83,7 +89,7 @@ function ProductsContainer({ data, ubicaciones, marcas, estado }) {
           key={marca}
           onClick={() => handleFilterChange("Marca", marca)}
         >
-          {marca}
+          {marca} ({marcasCounter[marca]})
         </button>
       ))}
       <h4 className={style.h4}>Ubicacion</h4>
@@ -93,7 +99,7 @@ function ProductsContainer({ data, ubicaciones, marcas, estado }) {
           key={ubi}
           onClick={() => handleFilterChange("Ubicacion", ubi)}
         >
-          {ubi}
+          {ubi} ({ubiCounter[ubi]})
         </button>
       ))}
 

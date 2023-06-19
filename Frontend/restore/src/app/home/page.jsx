@@ -13,9 +13,9 @@ import Link from 'next/link';
 
 async function Home() {
   const data = await fetchCategories();
-  const ubicaciones = [...new Set(data.result.map(producto => producto.Ubicacion))];
-  const marcas = [...new Set(data.result.map(producto => producto.Marca))];
-  const estado = [...new Set(data.result.map(producto => producto.state))];
+  const ubicaciones = data.result.map(producto => producto.Ubicacion)
+  const marcas = data.result.map(producto => producto.Marca)
+  const estado = data.result.map(producto => producto.state)
 
   return (
     <>

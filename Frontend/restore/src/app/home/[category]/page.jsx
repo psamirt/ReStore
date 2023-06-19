@@ -1,5 +1,4 @@
 import { fetchCategory } from "../fetch";
-import Card from "@/app/components/card/card";
 import { Navbar } from "@/app/components/navbar/navbar";
 import style from "./page.module.css";
 import ProductsContainer from "@/app/components/ProductsContainer/ProductsContainer";
@@ -7,9 +6,12 @@ import ProductsContainer from "@/app/components/ProductsContainer/ProductsContai
 async function page({ params }) {
   const categoria = params.category;
   const data = await fetchCategory(categoria);
-  const ubicaciones = [...new Set(data.result.map(producto => producto.Ubicacion))];
-  const marcas = [...new Set(data.result.map(producto => producto.Marca))];
-  const estado = [...new Set(data.result.map(producto => producto.state))];
+  const ubicaciones = data.result.map(producto => producto.Ubicacion)
+  const marcas = data.result.map(producto => producto.Marca)
+  const estado = data.result.map(producto => producto.state)
+
+
+
   return (
     <>
       <Navbar />
