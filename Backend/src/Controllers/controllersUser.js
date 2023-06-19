@@ -1,4 +1,6 @@
 const User = require("../Database/models/userModel");
+const bcrypt = require("bcrypt");
+const saltRounds = 10; // Número de rondas de hashing
 
 const createUser = async ({
   nombre,
@@ -15,11 +17,14 @@ const createUser = async ({
     throw Error("Ya existe un usuario con este email");
   }
 
+  // Generar el hash de la contraseña
+  const hashedPassword = await bcrypt.hash(contraseña, saltRounds);
+
   const newUser = new User({
     nombre,
     apellido,
     email,
-    contraseña,
+    contraseña: hashedPassword, // Guardar el hash en lugar de la contraseña en texto plano
     genero,
     fechaNacimiento,
     ubicacion,
@@ -62,23 +67,25 @@ const createUserController = async (req, res) => {
 };
 
 const updatePasswordController = async (req, res) => {
-  const { id } = req.params;
-  const { newPassword } = req.body;
-
   try {
-    // verifico si el usuario existe
-    const user = await User.findById(id);
+    const { newPassword, email } = req.body;
+
+    // Verificar si el usuario existe
+    const user = await User.findOne({ email });
     if (!user) {
       return res.status(404).json({ error: "Usuario no encontrado" });
     }
 
-    // actualizo la contraseña del usuario
-    user.contraseña = newPassword;
+    // Generar el hash de la nueva contraseña
+    const hashedPassword = await bcrypt.hash(newPassword, saltRounds);
+
+    // Actualizar la contraseña del usuario
+    user.contraseña = hashedPassword;
     await user.save();
 
-    res.status(200).json({ message: "Contraseña actualizada exitosamente" });
+    return res.status(200).json({ message: "Contraseña actualizada exitosamente" });
   } catch (error) {
-    res.status(500).json({ error: "Error al cambiar la contraseña" });
+    return res.status(500).json({ error: "Error al cambiar la contraseña" });
   }
 };
 
@@ -105,8 +112,27 @@ const getUsersHandler = async (req, res) => {
   }
 };
 
+const getEMAIL = async (req, res) => {
+  try {
+    const { email } = req.params;
+
+    if (email) {
+      const user = await User.findOne({ email });
+
+      if (!user) {
+        return res.status(200).json({ error: "Usuario no encontrado" });
+      }
+
+      return res.status(200).json(user);
+    } 
+  } catch (error) {
+    res.status(500).json({ error: "Error al obtener los usuarios" });
+  }
+};
+
 module.exports = {
   getUsersHandler,
   createUserController,
   updatePasswordController,
+  getEMAIL
 };
