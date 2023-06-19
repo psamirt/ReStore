@@ -1,7 +1,7 @@
 'use client';
 import Image from 'next/image';
 import Link from 'next/link';
-
+import Boton from './components/Button/Button';
 
 export default function Landing() {
   return (
@@ -21,11 +21,8 @@ export default function Landing() {
         <h1 className='text-5xl font-semibold text-slate-100 drop-shadow-2xl mb-8'>
           Bienvenido a ReStore
         </h1>
-        <Link
-          className='bg-yellow-400 bg- hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded transition'
-          href={'/home'}
-        >
-          Llevame al shop
+        <Link href={'/home'}>
+          <Boton text='Llevame al shop'></Boton>
         </Link>
       </div>
     </main>
