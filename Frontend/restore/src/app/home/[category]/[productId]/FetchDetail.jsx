@@ -1,6 +1,7 @@
 import React from "react";
 import "./detail.css";
 import { fetchDetail } from "../../fetch"
+import Image from 'next/image';
 
 
 export async function DetailId({ param }) {
@@ -14,7 +15,7 @@ export async function DetailId({ param }) {
         <img
           className="detail-img"
           src={post.result[0].background_image}
-          alt="imagen referencial"
+          alt={post.result[0].name}
         />
         </div>
         <div className="container-name-price">
