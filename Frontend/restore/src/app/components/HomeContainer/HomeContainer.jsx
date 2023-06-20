@@ -32,6 +32,7 @@ const responsive = {
       precio={props.precio}
       estado={props.state}
       marca={props.Marca}
+      oferta={props.Ofertas}
       subcategoria={props.subcategoria}
       key={props._id}
       id={props._id}

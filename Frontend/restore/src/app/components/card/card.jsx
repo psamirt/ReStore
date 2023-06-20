@@ -22,15 +22,21 @@ function Card(data) {
         {data.name}
       </h3>
       <div className='text-gray-500 text-sm'>
-        <p>Estado: {data.estado} </p>
+        <p>Estado: {data.estado}</p>
         <p>Marca: {data.marca}</p>
         <p>Categoria: {data.subcategorias}</p>
-        <p className='font-medium text-lg text-slate-800'>
-          Precio: ${data.precio}
-        </p>
+        {data.oferta ? (
+          <p className='font-medium text-lg text-slate-800'>
+            <span className='text-500 line-through'>Precio: ${data.precio}</span>
+            {' '}
+            <span className='text-red-500'>Oferta: ${data.oferta}</span>
+          </p>
+        ) : (
+          <p className='font-medium text-lg text-slate-800'>Precio: ${data.precio}</p>
+        )}
       </div>
       <Link className='grid' href={`/home/category/${data.id}`}>
-        <Boton text='See more'></Boton>
+        <Boton text='See more' />
       </Link>
     </div>
   );
