@@ -62,8 +62,28 @@ const getAllProductsByCategory = async (req, res) => {
   }
 };
 
+
+const getModelCategories = (req,res) =>{
+  
+let model =  [{name: "TV", subcategoria: []}, 
+{name: "Computacion", subcategoria: ['notebook', 'PcEscritorio',"Monitores","AccesoriosPc","Sillas","Componentes","Impresoras","Proyectores","Conectividad","Tablets","AccesoriosTablet"]},
+{name:"ElectronicaAudioVideo",subcategoria:["Amplificadores","AsistentesVirtuales","Auriculares","EquiposDj","AccesoriosDj","EstudiodeGrabacion","Grabadoras","HomeTheatre","Megafonos","Microfonos","Parlantes","Radios","Radios","Tocadiscos","AccesoriosParaAudio","ComponentesElectronicos","Drones"]},
+{name:"ConsolasyVideojuegos",subcategoria:["Consolas","Videojuegos","Accesorios"]},
+{name:"Celulares",subcategoria:["Smartphones","Fundas","Cargadores"]},
+{name:"CamarasyAccesorios",subcategoria:["Camaras","CamarasFilmadoras","Lentes","EstudioseIluminacion","CargadoresyBaterias","Soportes","Telescopios","Binoculares","Microscopios"]},
+]
+try {
+  res.status(200).json(model)
+} catch (error) {
+  console.error(error)
+  res.status(500).json({message:error})
+}
+
+}
+
 module.exports = {
   postProduct,
   getAllProducts,
-  getAllProductsByCategory
+  getAllProductsByCategory,
+  getModelCategories
 };
