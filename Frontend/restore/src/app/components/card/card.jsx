@@ -8,7 +8,7 @@ import Image from 'next/image';
 
 function Card(data) {
   return (
-    <div className='w-80 aspect-[4/3] grid gap-2 bg-slate-50 rounded-md p-6 shadow-lg shadow-slate-300 hover:scale-105 transition duration-500'>
+    <div className='w-80 md:w-64 lg:w-80 aspect-[4/3] grid gap-2 bg-slate-50 rounded-md p-6 shadow-lg shadow-slate-300 hover:scale-105 transition duration-500'>
       <div className='relative w-[85%]  mx-auto aspect-[4/3]'>
         <Image
           className='object-contain rounded-md'
