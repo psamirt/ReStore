@@ -37,6 +37,14 @@ const TechnologySchema = mongoose.Schema({
     type:Boolean,
     default:false
   },
+  favoritos: {
+    type: [String], // Array de IDs de favoritos
+    default: [],
+  },
+  carrito: {
+    type: [String], // Array de IDs de productos en el carrito
+    default: [],
+  },
   subcategoria: {
     type: {
       TV: {

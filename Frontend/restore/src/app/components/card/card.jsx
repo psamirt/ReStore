@@ -3,6 +3,9 @@ import Link from 'next/link';
 import Boton from '../Button/Button';
 import Image from 'next/image';
 
+//Hacer un botton para el carrito, o una imagen que al apretar => un evento OnClick que pase a la ruta post "localhost/carrito/add" por body el id del producto 
+// !!IMPORTANTE agregar esto a axios para que envie la cookie { withCredentials: true }
+
 function Card(data) {
   return (
     <div className='w-80 aspect-[4/3] grid gap-2 bg-slate-50 rounded-md p-6 shadow-lg shadow-slate-300 hover:scale-105 transition duration-500'>
