@@ -1,5 +1,5 @@
 // import function to register Swiper custom elements
-"use client"
+'use client';
 import Image from 'next/image';
 import { useEffect, useRef } from 'react';
 import { register } from 'swiper/element/bundle';
@@ -55,8 +55,12 @@ export default function Carousel() {
             fill={true}
           />
           <p
-            className='text-gray-100 text-3xl font-semibold drop-shadow-2xl absolute z-10 top-1/2 left-1/2 text-center'
-            style={{ transform: 'translate(-50%, -50%)' }}
+            className='text-gray-100  font-semibold drop-shadow-2xl absolute z-10 top-1/2 left-1/2 text-center'
+            style={{
+              transform: 'translate(-50%, -50%)',
+              fontSize: 'clamp(30px, 3.5vw, 64px)',
+              textWrap: 'balance',
+            }}
           >
             ¡Aprovecha descuentos en celulares!
           </p>
@@ -73,8 +77,12 @@ export default function Carousel() {
             loading='lazy'
           />
           <p
-            className='text-gray-100 text-3xl font-semibold drop-shadow-2xl absolute z-10 top-1/2 left-1/2 text-center'
-            style={{ transform: 'translate(-50%, -50%)' }}
+            className='text-gray-100  font-semibold drop-shadow-2xl absolute z-10 top-1/2 left-1/2 text-center'
+            style={{
+              transform: 'translate(-50%, -50%)',
+              fontSize: 'clamp(30px, 3.5vw, 64px)',
+              textWrap: 'balance',
+            }}
           >
             Las mejores tablets del mercado
           </p>
@@ -91,8 +99,12 @@ export default function Carousel() {
             fill={true}
           />
           <p
-            className='text-gray-100 text-3xl font-semibold drop-shadow-2xl absolute z-10 top-1/2 left-1/2 text-center'
-            style={{ transform: 'translate(-50%, -50%)' }}
+            className='text-gray-100  font-semibold drop-shadow-2xl absolute z-10 top-1/2 left-1/2 text-center'
+            style={{
+              transform: 'translate(-50%, -50%)',
+              fontSize: 'clamp(30px, 3.5vw, 64px)',
+              textWrap: 'balance',
+            }}
           >
             ¡Se acerca el dia del padre!
           </p>
