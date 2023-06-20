@@ -12,6 +12,19 @@ const {
 const { ofertProduct, getOfertProducts } = require("../Controllers/ofertas");
 const detailProduct = require("../Controllers/detail");
 const Search = require("../Controllers/searchName");
+const {
+  postProduct,
+  getAllProducts,
+  getAllProductsByCategory,
+  getModelCategories,
+} = require("../Controllers/controllersTecnologias");
+const {
+  disabledProduct,
+  getDisabledProducts,
+} = require("../Controllers/disableProduct");
+const { ofertProduct, getOfertProducts } = require("../Controllers/ofertas");
+const detailProduct = require("../Controllers/detail");
+const Search = require("../Controllers/searchName");
 
 const {
   getAccesorios,
@@ -24,6 +37,8 @@ const upload = require("../utils/multer");
 
 //----------getAllProducts---------------------------------------------------------------------------------------------------------------//
 router.get("/allProducts", getAllProducts);
+router.get("/allProducts", getAllProducts);
+router.get("/subcategorias", getModelCategories);
 //----------PostProducts---------------------------------------------------------------------------------------------------------------//
 router.post("/posteo", upload.single("image"), postProduct);
 
