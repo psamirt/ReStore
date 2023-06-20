@@ -47,11 +47,11 @@ const userSchema = new Schema({
     {
       tipo: {
         type: String,
-        required: true,
+  
       },
       numero: {
         type: String,
-        required: true,
+
       },
     },
   ],
