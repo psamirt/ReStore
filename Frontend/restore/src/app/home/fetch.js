@@ -1,4 +1,4 @@
-export const fetchCategories = async () => {
+export const fetchOfers = async () => {
         const response = await fetch("http://localhost:3001/categories/technology/Ofertas",{ next: { revalidate: 30 } })
         return await response.json()
 }

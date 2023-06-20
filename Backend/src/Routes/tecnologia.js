@@ -6,6 +6,8 @@ const {ofertProduct,getOfertProducts} = require ("../Controllers/ofertas")
 const detailProduct = require("../Controllers/detail")
 const Search = require("../Controllers/searchName")
 
+const {getAccesorios,getComputacion,getElectronica,getConsolas,getCelulares} = require("../Controllers/subCategorias")
+
 //----------getAllProducts---------------------------------------------------------------------------------------------------------------//
 router.get("/allProducts",getAllProducts)
 //----------PostProducts---------------------------------------------------------------------------------------------------------------//
@@ -26,6 +28,13 @@ router.get("/Detail/:id",detailProduct)
 //-----------SearchByName-------------------------------------------------------------------------------------------------------------//
 router.get("/searchName",Search)
 
+// subcatgoria
+
+router.get("/Computacion/:compu", getComputacion);
+router.get("/ElectronicaAudioVideo/:electro", getElectronica);
+router.get("/ConsolasyVideojuegos/:conso", getConsolas);
+router.get("/Celulares/:celu", getCelulares);
+router.get("/CamarasyAccesorios/:cam", getAccesorios);
 
 
 module.exports=router
