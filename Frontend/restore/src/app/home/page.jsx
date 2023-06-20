@@ -1,5 +1,5 @@
 import React from 'react';
-import { fetchCategories } from './fetch';
+import { fetchOfers } from './fetch';
 import ProductsContainer from '../components/ProductsContainer/ProductsContainer';
 import { Navbar } from '../components/navbar/navbar';
 import Carousel from '../components/carousel/Carousel';
@@ -8,14 +8,15 @@ import { GrPersonalComputer } from 'react-icons/gr';
 import { MdHeadset, MdVideogameAsset } from 'react-icons/Md';
 import { IoIosTabletPortrait } from 'react-icons/Io';
 import { ImDisplay } from 'react-icons/Im';
-// import style from './page.module.css';
+import { Suspense } from 'react';
+import HomeContainer from '../components/HomeContainer/HomeContainer';
 import Link from 'next/link';
 
 async function Home() {
-  const data = await fetchCategories();
-  const ubicaciones = data.result.map(producto => producto.Ubicacion)
-  const marcas = data.result.map(producto => producto.Marca)
-  const estado = data.result.map(producto => producto.state)
+  const data = await fetchOfers();
+  // const ubicaciones = data.result.map(producto => producto.Ubicacion)
+  // const marcas = data.result.map(producto => producto.Marca)
+  // const estado = data.result.map(producto => producto.state)
 
   return (
     <>
@@ -55,7 +56,11 @@ async function Home() {
           {' '}
           Ofertas Limitadas!
         </h2>
-        <ProductsContainer data={data} ubicaciones={ubicaciones} marcas={marcas} estado={estado}/>
+        <Suspense fallback={<div>Loading...</div>}>
+          <HomeContainer data={data}></HomeContainer>
+        {/* <ProductsContainer data={data} ubicaciones={ubicaciones} marcas={marcas} estado={estado}/> */}
+        </Suspense>
+        <HomeContainer data={data}></HomeContainer>
       </div>
       </>
   );
