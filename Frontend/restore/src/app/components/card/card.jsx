@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Boton from '../Button/Button';
 import Image from 'next/image';
@@ -7,6 +7,23 @@ import Image from 'next/image';
 // !!IMPORTANTE agregar esto a axios para que envie la cookie { withCredentials: true }
 
 function Card(data) {
+  const [precioConDescuento, setPrecioConDescuento] = useState(null);
+
+  useEffect(() => {
+    const calcularPrecioConDescuento = () => {
+      if (data.oferta && data.precio) {
+        const descuento = parseFloat(data.oferta) / 100;
+        const precio = parseFloat(data.precio);
+        const precioFinal = precio - precio * descuento;
+        return precioFinal.toFixed(2);
+      }
+      return null;
+    };
+
+    const precioFinal = calcularPrecioConDescuento();
+    setPrecioConDescuento(precioFinal);
+  }, [data.oferta, data.precio]);
+
   return (
     <div className='w-80 md:w-64 lg:w-80 aspect-[4/3] grid gap-2 bg-slate-50 rounded-md p-6 shadow-lg shadow-slate-300 hover:scale-105 transition duration-500'>
       <div className='relative w-[85%]  mx-auto aspect-[4/3]'>
@@ -26,17 +43,16 @@ function Card(data) {
         <p>Marca: {data.marca}</p>
         <p>Categoria: {data.subcategorias}</p>
         {data.oferta ? (
-          <p className='font-medium text-lg text-slate-800'>
-            <span className='text-500 line-through'>Precio: ${data.precio}</span>
+          <p className='font-medium text-base text-slate-500'>
+            <span className='text-black-500 line-through'>Precio: ${data.precio}</span>
             {' '}
-            <span className='text-red-500'>Oferta: ${data.oferta}</span>
+            <span className='text-red-500'>Oferta: ${precioConDescuento || data.oferta}</span>
           </p>
         ) : (
-          <p className='font-medium text-lg text-slate-800'>Precio: ${data.precio}</p>
+          <p className='font-medium text-base text-slate-800'>Precio: ${data.precio}</p>
         )}
       </div>
       <Link className='grid' href={`/home/category/${data.id}`}>
-        <Boton text='See more' />
       </Link>
     </div>
   );
