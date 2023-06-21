@@ -16,6 +16,8 @@ const postProduct = async (req, res) => {
   if (!req.file) {
     return res.send("Porfavor seleccione una imagen para subir");
   }
+  const parsedCategoria = JSON.parse(subcategoria)
+
   try {
     const cloudinaryImage = await cloudinary.uploader.upload(req.file.path, {
       folder: "Proyecto Final",
@@ -29,7 +31,7 @@ const postProduct = async (req, res) => {
       Description,
       Marca,
       Ubicacion,
-      subcategoria,
+      subcategoria : parsedCategoria,
       Ofertas,
     });
 

@@ -7,7 +7,7 @@ module.exports = multer({
   fileFilter: (req, file, cb) => {
     let ext = path.extname(file.originalname);
 
-    if (ext !== ".jpg" && ext !== ".jpeg" && ext !== ".png") {
+    if (ext !== ".jpg" && ext !== ".jpeg" && ext !== ".png" && ext !== ".webp" ) {
       cb(
         new Error(
           "el formato de archivo para la imagen no esta soportado, tiene que subir una imagen jpg, jpeg o png"
