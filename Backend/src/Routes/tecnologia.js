@@ -1,27 +1,15 @@
 const express = require("express");
 const router = express.Router();
 const {
-  postProduct,
-  getAllProducts,
-  getAllProductsByCategory,
-} = require("../Controllers/controllersTecnologias");
-const {
   disabledProduct,
   getDisabledProducts,
 } = require("../Controllers/disableProduct");
-const { ofertProduct, getOfertProducts } = require("../Controllers/ofertas");
-const detailProduct = require("../Controllers/detail");
-const Search = require("../Controllers/searchName");
 const {
   postProduct,
   getAllProducts,
   getAllProductsByCategory,
   getModelCategories,
 } = require("../Controllers/controllersTecnologias");
-const {
-  disabledProduct,
-  getDisabledProducts,
-} = require("../Controllers/disableProduct");
 const { ofertProduct, getOfertProducts } = require("../Controllers/ofertas");
 const detailProduct = require("../Controllers/detail");
 const Search = require("../Controllers/searchName");

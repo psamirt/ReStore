@@ -4,7 +4,7 @@ export const fetchOfers = async () => {
 }
 
 export const fetchCategory = async (category) => {
-    const response = await fetch(`http://localhost:3001/categories/technology/categoria/${category}`,{ next: { revalidate: 30 } } )
+    const response = await fetch(`http://localhost:3001/categories/technology/categoria/${category}`)
     return await response.json()
 }
 
