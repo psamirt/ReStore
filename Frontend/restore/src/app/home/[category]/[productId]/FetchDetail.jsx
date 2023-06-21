@@ -4,6 +4,7 @@ import { fetchDetail } from '../../fetch';
 import Image from 'next/image';
 import Boton from '@/app/components/Button/Button';
 import BackButton from '@/app/components/backButton/BackButton';
+import NotFound from './notFound';
 
 export async function DetailId({ param }) {
   const post = await fetchDetail(param);

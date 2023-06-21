@@ -17,8 +17,11 @@ export const Navbar = () => {
           <Link className='link' href={'/user'}>
             User
           </Link>
-          <Link className='link' href={'/'}>
+          <Link className='link' href={'/login'}>
             Signup/Login
+          </Link>
+          <Link className='link' href={'/form'}>
+            Crear producto
           </Link>
           <FiShoppingCart />
           <Searchbar />

@@ -22,7 +22,7 @@ async function Home() {
     <>
       <Navbar />
       <Carousel />
-      <div className='mx-auto container px-4'>
+      <div className='mx-auto container px-4 mb-8'>
         <div className='flex align-middle justify-center gap-16 py-8 flex-wrap '>
           <Link
             title='click to visit ConsolasyVideojuegos'
@@ -58,11 +58,11 @@ async function Home() {
         </h2>
         <Suspense fallback={<div>Loading...</div>}>
           <HomeContainer data={data}></HomeContainer>
-        {/* <ProductsContainer data={data} ubicaciones={ubicaciones} marcas={marcas} estado={estado}/> */}
+          {/* <ProductsContainer data={data} ubicaciones={ubicaciones} marcas={marcas} estado={estado}/> */}
         </Suspense>
-        <HomeContainer data={data}></HomeContainer>
+        {/* <HomeContainer data={data}></HomeContainer> */}
       </div>
-      </>
+    </>
   );
 }
 

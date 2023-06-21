@@ -3,7 +3,7 @@ import Link from 'next/link';
 import Boton from '../Button/Button';
 import Image from 'next/image';
 
-//Hacer un botton para el carrito, o una imagen que al apretar => un evento OnClick que pase a la ruta post "localhost/carrito/add" por body el id del producto 
+//Hacer un botton para el carrito, o una imagen que al apretar => un evento OnClick que pase a la ruta post "localhost/carrito/add" por body el id del producto
 // !!IMPORTANTE agregar esto a axios para que envie la cookie { withCredentials: true }
 
 function Card(data) {
@@ -42,18 +42,11 @@ function Card(data) {
         <p>Estado: {data.estado}</p>
         <p>Marca: {data.marca}</p>
         <p>Categoria: {data.subcategorias}</p>
-        {data.oferta ? (
-          <p className='font-medium text-base text-slate-500'>
-            <span className='text-black-500 line-through'>Precio: ${data.precio}</span>
-            {' '}
-            <span className='text-red-500'>Oferta: ${precioConDescuento}</span>
-          </p>
-        ) : (
-          <p className='font-medium text-base text-slate-800'>Precio: ${data.precio}</p>
-        )}
+        <p className='font-medium text-lg text-slate-800'>
+          Precio: ${data.precio}
+        </p>
       </div>
-      <Link className='grid' href={`/home/category/${data.id}`}>
-      </Link>
+      <Link className='grid' href={`/home/category/${data.id}`}></Link>
     </div>
   );
 }
