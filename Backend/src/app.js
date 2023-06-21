@@ -3,13 +3,14 @@ const app = express();
 const logger = require("morgan");
 const cookieParser = require("cookie-parser");
 const routes = require ("./routes/index")
+const cors = require("cors")
 
 
 
 
 app.use(express.json()); // Para poder recibir solicitudes Http en formato Json y poder convertirlo a js
 app.use(cookieParser()); // Para poder recibir cookies
-
+app.use(cors())
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*"); //Autorizo recibir solicitudes de este dominio
   res.header("Access-Control-Allow-Credentials", true); //Autorizo recibir solicitudes que incluyan el encabezado con credenciales

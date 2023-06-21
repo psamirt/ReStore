@@ -36,4 +36,7 @@ async function page({ params }) {
   );
 }
 
+
 export default page;
+
+export const revalidate = 30

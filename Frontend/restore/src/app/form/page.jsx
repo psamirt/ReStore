@@ -1,69 +1,55 @@
 'use client';
-import React, { useState } from 'react';
-import { Button, Form, Input, Radio, Space, Select, Upload } from 'antd';
-import FormItem from 'antd/es/form/FormItem';
-import { postProduct } from '../home/fetch';
+import React, { useState, useEffect } from 'react';
+import {
+  Button,
+  Form,
+  Input,
+  Radio,
+  Space,
+  Select,
+  Upload,
+  PlusOutlined,
+} from 'antd';
 import axios from 'axios';
-import { Navbar } from '../components/navbar/navbar';
 
 export default function MyForm() {
+  const [categoria, setCategoria] = useState(null);
+
+  useEffect(() => {
+    const fetch = async () => {
+      const response = await axios.get(
+        'http://localhost:3001/categories/technology/subcategorias'
+      );
+      setCategoria(response.data);
+    };
+    fetch();
+  }, []);
+
   const { TextArea } = Input;
   const { Option } = Select;
   const categorias = [
-    { label: 'Computación', value: 'computacion' },
-    { label: 'Electrónica Audio y Video', value: 'electronica' },
-    { label: 'Consolas y Videojuegos', value: 'consolas' },
-    { label: 'Celulares', value: 'celulares' },
-    { label: 'Cámaras y Accesorios', value: 'camaras' },
+    { label: 'Computación', value: 'Computacion' },
+    { label: 'Electrónica Audio y Video', value: 'ElectronicaAudioVideo' },
+    { label: 'Consolas y Videojuegos', value: 'ConsolasyVideojuegos' },
+    { label: 'Celulares', value: 'Celulares' },
+    { label: 'Cámaras y Accesorios', value: 'CamarasyAccesorios' },
   ];
 
-  const subcategorias = {
-    computacion: [
-      'Notebook',
-      'PC Escritorio',
-      'Monitores',
-      'Accesorios PC',
-      'Sillas',
-      'Componentes',
-      'Impresoras',
-      'Proyectores',
-      'Conectividad',
-      'Tablets',
-      'Accesorios Tablet',
-    ],
-    electronica: [
-      'Amplificadores',
-      'Asistentes Virtuales',
-      'Auriculares',
-      'Equipos DJ',
-      'Accesorios DJ',
-      'Estudio de Grabación',
-      'Grabadoras',
-      'Home Theatre',
-      'Megáfonos',
-      'Micrófonos',
-      'Parlantes',
-      'Radios',
-      'Sintonizador',
-      'Tocadiscos',
-      'Accesorios para Audio',
-      'Componentes Electrónicos',
-      'Drones',
-    ],
-    consolas: ['Consolas', 'Videojuegos', 'Accesorios'],
-    celulares: ['Smartphones', 'Fundas', 'Cargadores'],
-    camaras: [
-      'Cámaras',
-      'Cámaras filmadoras',
-      'Lentes',
-      'Estudios e Iluminación',
-      'Cargadores y Baterías',
-      'Soportes',
-      'Telescopios',
-      'Binoculares',
-      'Microscopios',
-    ],
-  };
+  const subcategorias = categoria
+    ? categoria.reduce((result, category) => {
+        result[category.name] = category.subcategoria;
+        return result;
+      }, {})
+    : [];
+
+  const marcas = categoria
+    ? categoria.reduce((result, category) => {
+        result[category.name] = category.marca;
+        return result;
+      }, {})
+    : [];
+
+  console.log(marcas);
 
   const [input, setInput] = useState({
     name: '',
@@ -74,27 +60,45 @@ export default function MyForm() {
     Marca: '',
     Ubicacion: '',
     Ofertas: 0,
-    subcategoria: {
-      Computacion: {
-        notebook: true,
-      },
-    },
+    subcategoria: {},
   });
 
   const [subcategoriaOptions, setSubcategoriaOptions] = useState([]);
   const [selectedCategoria, setSelectedCategoria] = useState(null);
   const [subcategoriaKey, setSubcategoriaKey] = useState(0);
   const [selectedSubcategoria, setSelectedSubcategoria] = useState(undefined);
+  const [selectedMarca, setSelectedMarca] = useState([]);
 
   const handleCategoriaChange = (value) => {
     setSelectedCategoria(value);
     setSelectedSubcategoria(undefined);
     setSubcategoriaKey(subcategoriaKey + 1);
     setSubcategoriaOptions(subcategorias[value]);
+    setSelectedMarca(marcas[value]);
+    setInput((prevState) => ({
+      ...prevState,
+      subcategoria: {
+        [value]: {},
+      },
+    }));
+  };
+
+  const handleMarca = (value) => {
+    setInput({ ...input, Marca: value });
   };
 
   const handleSubcategoriaChange = (value) => {
     setSelectedSubcategoria(value);
+    setInput((prevState) => ({
+      ...prevState,
+      subcategoria: {
+        ...prevState.subcategoria,
+        [selectedCategoria]: {
+          ...prevState.subcategoria.selectedCategoria,
+          [value]: true,
+        },
+      },
+    }));
   };
 
   // ...
@@ -195,15 +199,25 @@ export default function MyForm() {
         </Form.Item>
 
         <Form.Item
-          name='marca'
+          name='Marca'
           label='Marca'
-          rules={[{ required: true, message: 'Ingresa la marca' }]}
+          rules={[{ required: true, message: 'Escoge la marca' }]}
         >
-          <Input
-            placeholder='Escribe la marca'
-            value={input.Marca}
-            onChange={(e) => setInput({ ...input, Marca: e.target.value })}
-          />
+          <Select
+            key={subcategoriaKey}
+            placeholder='Selecciona la marca'
+            showSearch
+            optionFilterProp='children'
+            mode='single'
+            defaultValue={undefined}
+            onChange={handleMarca}
+          >
+            {selectedMarca.map((marca) => (
+              <Option key={marca} value={marca}>
+                {marca}
+              </Option>
+            ))}
+          </Select>
         </Form.Item>
 
         <Form.Item
@@ -257,6 +271,35 @@ export default function MyForm() {
             }
           />
         </Form.Item>
+        {/* 
+        <Form.Item label="Imagen" valuePropName="fileList">
+            <Upload action="http://localhost:3001/categories/technology/posteo" listType="picture-card" customRequest={({ file }) => {
+      // Aquí puedes implementar la lógica de subida de archivos a tu servidor local
+      // utilizando Axios u otra librería de tu elección
+      const formData = new FormData();
+      formData.append('image', file);
+
+      return axios.post('http://localhost:3001/categories/technology/posteo', formData)
+        .then(response => {
+          // Manejar la respuesta del servidor si es necesario
+          console.log('Imagen cargada con éxito:', response);
+        })
+        .catch(error => {
+          // Manejar el error si ocurre
+          console.error('Error al cargar la imagen:', error);
+        });
+    }}>
+              <div>
+                <div
+                  style={{
+                    marginTop: 8,
+                  }}
+                >
+                  Upload
+              </div>
+            </div>
+          </Upload>
+        </Form.Item> */}
 
         <Form.Item label='Imagen'>
           <Input

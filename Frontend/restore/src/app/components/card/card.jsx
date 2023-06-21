@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Boton from '../Button/Button';
 import Image from 'next/image';
@@ -7,6 +7,23 @@ import Image from 'next/image';
 // !!IMPORTANTE agregar esto a axios para que envie la cookie { withCredentials: true }
 
 function Card(data) {
+  const [precioConDescuento, setPrecioConDescuento] = useState(null);
+
+  useEffect(() => {
+    const calcularPrecioConDescuento = () => {
+      if (data.oferta && data.precio) {
+        const descuento = parseFloat(data.oferta) / 100;
+        const precio = parseFloat(data.precio);
+        const precioFinal = precio - precio * descuento;
+        return precioFinal.toFixed(2);
+      }
+      return null;
+    };
+
+    const precioFinal = calcularPrecioConDescuento();
+    setPrecioConDescuento(precioFinal);
+  }, [data.oferta, data.precio]);
+
   return (
     <div className='w-80 md:w-64 lg:w-80 aspect-[4/3] grid gap-2 bg-slate-50 rounded-md p-6 shadow-lg shadow-slate-300 hover:scale-105 transition duration-500'>
       <div className='relative w-[85%]  mx-auto aspect-[4/3]'>
@@ -22,16 +39,14 @@ function Card(data) {
         {data.name}
       </h3>
       <div className='text-gray-500 text-sm'>
-        <p>Estado: {data.estado} </p>
+        <p>Estado: {data.estado}</p>
         <p>Marca: {data.marca}</p>
-        {/* <p>Categoria: {data.subcategorias}</p> */}
+        <p>Categoria: {data.subcategorias}</p>
         <p className='font-medium text-lg text-slate-800'>
           Precio: ${data.precio}
         </p>
       </div>
-      <Link className='grid' href={`/home/category/${data.id}`}>
-        <Boton text='See more'></Boton>
-      </Link>
+      <Link className='grid' href={`/home/category/${data.id}`}></Link>
     </div>
   );
 }
