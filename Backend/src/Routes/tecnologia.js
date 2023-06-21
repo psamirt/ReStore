@@ -1,33 +1,61 @@
 const express = require("express");
 const router = express.Router();
-const {postProduct,getAllProducts,getAllProductsByCategory,getModelCategories} = require("../Controllers/controllersTecnologias")
-const {disabledProduct,getDisabledProducts} = require("../Controllers/disableProduct")
-const {ofertProduct,getOfertProducts} = require ("../Controllers/ofertas")
-const detailProduct = require("../Controllers/detail")
-const Search = require("../Controllers/searchName")
+const {
+  postProduct,
+  getAllProducts,
+  getAllProductsByCategory,
+} = require("../Controllers/controllersTecnologias");
+const {
+  disabledProduct,
+  getDisabledProducts,
+} = require("../Controllers/disableProduct");
+const { ofertProduct, getOfertProducts } = require("../Controllers/ofertas");
+const detailProduct = require("../Controllers/detail");
+const Search = require("../Controllers/searchName");
+const {
+  postProduct,
+  getAllProducts,
+  getAllProductsByCategory,
+  getModelCategories,
+} = require("../Controllers/controllersTecnologias");
+const {
+  disabledProduct,
+  getDisabledProducts,
+} = require("../Controllers/disableProduct");
+const { ofertProduct, getOfertProducts } = require("../Controllers/ofertas");
+const detailProduct = require("../Controllers/detail");
+const Search = require("../Controllers/searchName");
 
-const {getAccesorios,getComputacion,getElectronica,getConsolas,getCelulares} = require("../Controllers/subCategorias")
+const {
+  getAccesorios,
+  getComputacion,
+  getElectronica,
+  getConsolas,
+  getCelulares,
+} = require("../Controllers/subCategorias");
+const upload = require("../utils/multer");
 
 //----------getAllProducts---------------------------------------------------------------------------------------------------------------//
-router.get("/allProducts",getAllProducts)
-router.get("/subcategorias",getModelCategories)
+router.get("/allProducts", getAllProducts);
+router.get("/allProducts", getAllProducts);
+router.get("/subcategorias", getModelCategories);
 //----------PostProducts---------------------------------------------------------------------------------------------------------------//
-router.post("/posteo",postProduct)
+router.post("/posteo", upload.single("image"), postProduct);
 
 //----------Disabled---------------------------------------------------------------------------------------------------------------//
-router.put("/disabled",disabledProduct)
-router.get("/disabled",getDisabledProducts)
+router.put("/disabled", disabledProduct);
+router.get("/disabled", getDisabledProducts);
 
 //----------getSubCategories---------------------------------------------------------------------------------------------------------------//
-router.get("/categoria/:category", getAllProductsByCategory)
+router.get("/categoria/:category", getAllProductsByCategory);
 
 //----------Ofertas---------------------------------------------------------------------------------------------------------------//
-router.get("/Ofertas",getOfertProducts)
-router.put("/Ofertas",ofertProduct)
+router.get("/Ofertas", getOfertProducts);
+router.put("/Ofertas", ofertProduct);
 //-----------Detail-------------------------------------------------------------------------------------------------------------//
-router.get("/Detail/:id",detailProduct)
+router.get("/Detail/:id", detailProduct);
 //-----------SearchByName-------------------------------------------------------------------------------------------------------------//
-router.get("/searchName",Search)
+router.get("/searchName", Search);
 
 // subcatgoria
 
@@ -37,5 +65,4 @@ router.get("/ConsolasyVideojuegos/:conso", getConsolas);
 router.get("/Celulares/:celu", getCelulares);
 router.get("/CamarasyAccesorios/:cam", getAccesorios);
 
-
-module.exports=router
+module.exports = router;
