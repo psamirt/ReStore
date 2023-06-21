@@ -24,7 +24,7 @@ function Card(data) {
       <div className='text-gray-500 text-sm'>
         <p>Estado: {data.estado} </p>
         <p>Marca: {data.marca}</p>
-        <p>Categoria: {data.subcategorias}</p>
+        {/* <p>Categoria: {data.subcategoria}</p> */}
         <p className='font-medium text-lg text-slate-800'>
           Precio: ${data.precio}
         </p>
