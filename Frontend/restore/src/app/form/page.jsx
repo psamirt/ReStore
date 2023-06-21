@@ -1,77 +1,78 @@
-"use client";
-import React, { useState } from "react";
-import { Button, Form, Input, Radio, Space, Select, Upload } from "antd";
-import FormItem from "antd/es/form/FormItem";
-import { postProduct } from "../home/fetch";
-import axios from "axios";
+'use client';
+import React, { useState } from 'react';
+import { Button, Form, Input, Radio, Space, Select, Upload } from 'antd';
+import FormItem from 'antd/es/form/FormItem';
+import { postProduct } from '../home/fetch';
+import axios from 'axios';
+import { Navbar } from '../components/navbar/navbar';
 
 export default function MyForm() {
   const { TextArea } = Input;
   const { Option } = Select;
   const categorias = [
-    { label: "Computación", value: "computacion" },
-    { label: "Electrónica Audio y Video", value: "electronica" },
-    { label: "Consolas y Videojuegos", value: "consolas" },
-    { label: "Celulares", value: "celulares" },
-    { label: "Cámaras y Accesorios", value: "camaras" },
+    { label: 'Computación', value: 'computacion' },
+    { label: 'Electrónica Audio y Video', value: 'electronica' },
+    { label: 'Consolas y Videojuegos', value: 'consolas' },
+    { label: 'Celulares', value: 'celulares' },
+    { label: 'Cámaras y Accesorios', value: 'camaras' },
   ];
 
   const subcategorias = {
     computacion: [
-      "Notebook",
-      "PC Escritorio",
-      "Monitores",
-      "Accesorios PC",
-      "Sillas",
-      "Componentes",
-      "Impresoras",
-      "Proyectores",
-      "Conectividad",
-      "Tablets",
-      "Accesorios Tablet",
+      'Notebook',
+      'PC Escritorio',
+      'Monitores',
+      'Accesorios PC',
+      'Sillas',
+      'Componentes',
+      'Impresoras',
+      'Proyectores',
+      'Conectividad',
+      'Tablets',
+      'Accesorios Tablet',
     ],
     electronica: [
-      "Amplificadores",
-      "Asistentes Virtuales",
-      "Auriculares",
-      "Equipos DJ",
-      "Accesorios DJ",
-      "Estudio de Grabación",
-      "Grabadoras",
-      "Home Theatre",
-      "Megáfonos",
-      "Micrófonos",
-      "Parlantes",
-      "Radios",
-      "Sintonizador",
-      "Tocadiscos",
-      "Accesorios para Audio",
-      "Componentes Electrónicos",
-      "Drones",
+      'Amplificadores',
+      'Asistentes Virtuales',
+      'Auriculares',
+      'Equipos DJ',
+      'Accesorios DJ',
+      'Estudio de Grabación',
+      'Grabadoras',
+      'Home Theatre',
+      'Megáfonos',
+      'Micrófonos',
+      'Parlantes',
+      'Radios',
+      'Sintonizador',
+      'Tocadiscos',
+      'Accesorios para Audio',
+      'Componentes Electrónicos',
+      'Drones',
     ],
-    consolas: ["Consolas", "Videojuegos", "Accesorios"],
-    celulares: ["Smartphones", "Fundas", "Cargadores"],
+    consolas: ['Consolas', 'Videojuegos', 'Accesorios'],
+    celulares: ['Smartphones', 'Fundas', 'Cargadores'],
     camaras: [
-      "Cámaras",
-      "Cámaras filmadoras",
-      "Lentes",
-      "Estudios e Iluminación",
-      "Cargadores y Baterías",
-      "Soportes",
-      "Telescopios",
-      "Binoculares",
-      "Microscopios",
+      'Cámaras',
+      'Cámaras filmadoras',
+      'Lentes',
+      'Estudios e Iluminación',
+      'Cargadores y Baterías',
+      'Soportes',
+      'Telescopios',
+      'Binoculares',
+      'Microscopios',
     ],
   };
 
   const [input, setInput] = useState({
-    name: "",
-    state: "",
-    background_image: "",
+    name: '',
+    state: '',
+    background_image: '',
     precio: 0,
-    Description: "",
-    Marca: "",
-    Ubicacion: "",
+    Description: '',
+    Marca: '',
+    Ubicacion: '',
     Ofertas: 0,
     subcategoria: {
       Computacion: {
@@ -110,44 +111,44 @@ export default function MyForm() {
     };
 
     axios
-      .post("http://localhost:3001/categories/technology/posteo", data)
+      .post('http://localhost:3001/categories/technology/posteo', data)
       .then((response) => {
-        console.log("Producto publicado:", response.data);
-        alert("Producto creado exitosamente");
+        console.log('Producto publicado:', response.data);
+        alert('Producto creado exitosamente');
       })
       .catch((error) => {
-        console.error("Error al publicar el producto:", error);
+        console.error('Error al publicar el producto:', error);
       });
   };
 
   return (
-    <div className="">
-      {console.log(input, selectedCategoria, selectedSubcategoria)}
-      <div className="flex justify-between">
+    <div className=''>
+      <Navbar />
+      <div className=' flex justify-between'>
         <div>
-          <h1 className="">Ingresa la información del producto</h1>
+          <h1 className=''>Ingresa la información del producto</h1>
         </div>
         <div>
-          <Button type="dashed">X</Button>
+          <Button type='dashed'>X</Button>
         </div>
       </div>
       <Form
         labelCol={{ span: 0 }}
         wrapperCol={{ span: 14 }}
-        layout="horizontal"
+        layout='horizontal'
         onFinish={handleSubmit}
       >
         <Form.Item
-          name="Categoría"
-          label="Categoría"
-          rules={[{ required: true, message: "Escoge la categoría" }]}
+          name='Categoría'
+          label='Categoría'
+          rules={[{ required: true, message: 'Escoge la categoría' }]}
         >
           <Select
-            placeholder="Selecciona la categoría"
+            placeholder='Selecciona la categoría'
             onChange={handleCategoriaChange}
             showSearch
-            optionFilterProp="children"
-            mode="single"
+            optionFilterProp='children'
+            mode='single'
           >
             {categorias.map((categoria) => (
               <Option key={categoria.value} value={categoria.value}>
@@ -158,16 +159,16 @@ export default function MyForm() {
         </Form.Item>
 
         <Form.Item
-          name="Subcategoría"
-          label="Subcategoría"
-          rules={[{ required: true, message: "Escoge la subcategoría" }]}
+          name='Subcategoría'
+          label='Subcategoría'
+          rules={[{ required: true, message: 'Escoge la subcategoría' }]}
         >
           <Select
             key={subcategoriaKey}
-            placeholder="Selecciona la subcategoría"
+            placeholder='Selecciona la subcategoría'
             showSearch
-            optionFilterProp="children"
-            mode="single"
+            optionFilterProp='children'
+            mode='single'
             defaultValue={undefined}
             onChange={handleSubcategoriaChange}
           >
@@ -180,74 +181,74 @@ export default function MyForm() {
         </Form.Item>
 
         <Form.Item
-          name="producto"
-          label="Nombre"
+          name='producto'
+          label='Nombre'
           rules={[
-            { required: true, message: "Ingresa el nombre del producto" },
+            { required: true, message: 'Ingresa el nombre del producto' },
           ]}
         >
           <Input
-            placeholder="Escribe el nombre del producto"
+            placeholder='Escribe el nombre del producto'
             value={input.name}
             onChange={(e) => setInput({ ...input, name: e.target.value })}
           />
         </Form.Item>
 
         <Form.Item
-          name="marca"
-          label="Marca"
-          rules={[{ required: true, message: "Ingresa la marca" }]}
+          name='marca'
+          label='Marca'
+          rules={[{ required: true, message: 'Ingresa la marca' }]}
         >
           <Input
-            placeholder="Escribe la marca"
+            placeholder='Escribe la marca'
             value={input.Marca}
             onChange={(e) => setInput({ ...input, Marca: e.target.value })}
           />
         </Form.Item>
 
         <Form.Item
-          name="precio"
-          label="Precio"
+          name='precio'
+          label='Precio'
           rules={[
             {
               required: true,
-              message: "Ingresa el precio",
+              message: 'Ingresa el precio',
             },
           ]}
         >
           <Input
-            type="number"
-            name="precio"
-            placeholder="Escribe el precio"
+            type='number'
+            name='precio'
+            placeholder='Escribe el precio'
             value={input.precio}
             onChange={(e) => setInput({ ...input, precio: e.target.value })}
           />
         </Form.Item>
 
         <Form.Item
-          name="ubicacion"
-          label="Ubicación"
-          rules={[{ required: true, message: "Ingresa la ciudad" }]}
+          name='ubicacion'
+          label='Ubicación'
+          rules={[{ required: true, message: 'Ingresa la ciudad' }]}
         >
           <Input
-            placeholder="Escribe la ciudad"
+            placeholder='Escribe la ciudad'
             value={input.Ubicacion}
             onChange={(e) => setInput({ ...input, Ubicacion: e.target.value })}
           />
         </Form.Item>
 
-        <Form.Item label="Estado">
+        <Form.Item label='Estado'>
           <Radio.Group
-            name="estado"
+            name='estado'
             value={input.state}
             onChange={(e) => setInput({ ...input, state: e.target.value })}
           >
-            <Radio value="usado"> Usado </Radio>
-            <Radio value="nuevo"> Nuevo </Radio>
+            <Radio value='Usado'> Usado </Radio>
+            <Radio value='Nuevo'> Nuevo </Radio>
           </Radio.Group>
         </Form.Item>
 
-        <Form.Item label="Descripción">
+        <Form.Item label='Descripción'>
           <TextArea
             rows={4}
             value={input.Description}
@@ -257,10 +258,10 @@ export default function MyForm() {
           />
         </Form.Item>
 
-        <Form.Item label="Imagen">
+        <Form.Item label='Imagen'>
           <Input
-            type="url"
-            placeholder="Ingresa la URL de la imagen"
+            type='url'
+            placeholder='Ingresa la URL de la imagen'
             value={input.background_image}
             onChange={(e) =>
               setInput({ ...input, background_image: e.target.value })
@@ -268,7 +269,7 @@ export default function MyForm() {
           />
         </Form.Item>
 
-        <Button htmlType="submit" className="">
+        <Button htmlType='submit' className=''>
           Publicar
         </Button>
       </Form>
