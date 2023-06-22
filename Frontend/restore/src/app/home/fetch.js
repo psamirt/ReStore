@@ -1,24 +1,21 @@
+import api from "../utils/api";
+
 export const fetchOfers = async () => {
-        const response = await fetch("http://localhost:3001/categories/technology/Ofertas",{ next: { revalidate: 30 } })
-        return await response.json()
-}
+  const response = await api.get('/Ofertas', { params: { next: { revalidate: 30 } } });
+  return response.data;
+};
 
 export const fetchCategory = async (category) => {
-    const response = await fetch(`http://localhost:3001/categories/technology/categoria/${category}`)
-    return await response.json()
-}
+  const response = await api.get(`/categoria/${category}`);
+  return response.data;
+};
 
+export const fetchDetail = async (productId) => {
+  const response = await api.get(`/Detail/${productId}`);
+  return response.data;
+};
 
-
-export const fetchDetail = (productId) => {
-    return fetch(`http://localhost:3001/categories/technology/Detail/${productId}`).then((res) =>
-      res.json()
-    );
-  };
-
-
-  export const fetchSearch = (search) => {
-    return fetch(`http://localhost:3001/categories/technology/searchname?name=${search}`).then((res) =>
-      res.json()
-    );
-  };
+export const fetchSearch = async (search) => {
+  const response = await api.get('/searchname', { params: { name: search } });
+  return response.data;
+};
