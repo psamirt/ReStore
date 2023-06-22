@@ -9,6 +9,9 @@ const userSchema = new Schema({
     type: String,
     required: true,
   },
+  profile_picture: {
+    type: String,
+  },
   email: {
     type: String,
     required: true,
@@ -47,11 +50,9 @@ const userSchema = new Schema({
     {
       tipo: {
         type: String,
-  
       },
       numero: {
         type: String,
-
       },
     },
   ],
