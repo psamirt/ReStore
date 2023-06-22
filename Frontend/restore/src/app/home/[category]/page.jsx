@@ -5,7 +5,7 @@ import ProductsContainer from '@/app/components/ProductsContainer/ProductsContai
 
 export function generateMetadata({ params, searchParams }, parent) {
   const categoria = params.category;
-  
+
   return {
     title: categoria,
   };
@@ -23,7 +23,7 @@ async function page({ params }) {
     <>
       <Navbar />
 
-      <h2 className='bg-yellow-50 mb-4 text-2xl text-center font-bold py-2 relative z-10'>
+      <h2 className='bg-yellow-50 text-2xl text-center font-bold py-2 relative z-10'>
         {categoria}
       </h2>
       <ProductsContainer
@@ -36,7 +36,6 @@ async function page({ params }) {
   );
 }
 
-
 export default page;
 
-export const revalidate = 30
+export const revalidate = 30;
