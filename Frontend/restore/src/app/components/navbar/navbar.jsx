@@ -21,8 +21,9 @@ export const Navbar = () => {
           <Link className='link' href={'/form'}>
             Crear producto
           </Link>
-          {/* <FiShoppingCart /> */}
           <Searchbar />
+          <Link href={'/cart'}>
+          </Link>
         </div>
       </div>
     </nav>

@@ -1,6 +1,9 @@
+'use client';
 import { DetailId } from './FetchDetail.jsx';
 import { Navbar } from '@/app/components/navbar/navbar.jsx';
 import { fetchDetail } from '../../fetch.js';
+import { Provider } from 'react-redux';
+import store from '../../../../redux/store.js';
 
 export async function generateMetadata({ params, searchParams }, parent) {
   const id = params.productId;
@@ -18,9 +21,11 @@ async function Detail({ params }) {
   return (
     <>
       <Navbar />
-      <section>
-        <DetailId param={params.productId} />
-      </section>
+      <Provider store={store}>
+        <section>
+          <DetailId param={params.productId} />
+        </section>
+      </Provider>
     </>
   );
 }
