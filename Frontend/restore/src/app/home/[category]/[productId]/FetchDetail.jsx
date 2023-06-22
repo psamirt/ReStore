@@ -16,8 +16,8 @@ export async function DetailId({ param }) {
   return (
     <div className='container mx-auto px-4 my-8' key={post.result[0]._id}>
       <BackButton />
-      <div className='grid md:grid-cols-2 gap-4 mb-8'>
-        <div className='relative aspect-square shadow-md shadow-slate-200 md:justify-self-center '>
+      <div className='grid md:grid-cols-2 gap-4 mb-8 mt-4'>
+        <div className='relative rounded-lg aspect-square shadow-md shadow-slate-200 md:justify-self-center '>
           <Image
             className='aspect-square rounded-lg object-contain'
             src={post.result[0].background_image}

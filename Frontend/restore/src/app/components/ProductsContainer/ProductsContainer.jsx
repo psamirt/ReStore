@@ -87,7 +87,7 @@ function ProductsContainer({ data, ubicaciones, marcas, estado }) {
   }, [currentOrder]);
 
   return (
-    <div className='flex gap-8 container mx-auto px-4'>
+    <div className='flex gap-8 container mx-auto px-4 my-8'>
       <aside className='filters flex flex-col gap-4'>
         <button
           className={` text-blue-900 text-sm bg-slate-200 rounded-md py-1 font-medium  ${
@@ -102,7 +102,7 @@ function ProductsContainer({ data, ubicaciones, marcas, estado }) {
           <h4 className=' text-blue-900  font-bold'>Estado</h4>
           {filters.estado.map((estado) => (
             <button
-              className={style.filters}
+              className='hover:text-gray-700'
               key={estado}
               onClick={() => handleFilterChange('state', estado)}
             >
@@ -114,7 +114,7 @@ function ProductsContainer({ data, ubicaciones, marcas, estado }) {
           <h4 className=' text-blue-900  font-bold'>Marcas</h4>
           {filters.marcas.map((marca) => (
             <button
-              className={style.filters}
+              className='hover:text-gray-700'
               key={marca}
               onClick={() => handleFilterChange('Marca', marca)}
             >
@@ -126,7 +126,7 @@ function ProductsContainer({ data, ubicaciones, marcas, estado }) {
           <h4 className=' text-blue-900  font-bold'>Ubicacion</h4>
           {filters.ubicacion.map((ubi) => (
             <button
-              className={style.filters}
+              className='hover:text-gray-700'
               key={ubi}
               onClick={() => handleFilterChange('Ubicacion', ubi)}
             >
@@ -138,7 +138,7 @@ function ProductsContainer({ data, ubicaciones, marcas, estado }) {
           <h4 className=' text-blue-900  font-bold'>Precio</h4>
           {filters.precio.map((precio) => (
             <button
-              className={style.filters}
+              className='hover:text-gray-700'
               key={precio}
               onClick={() => handleFilterChange('precio', precio)}
             >
@@ -151,7 +151,7 @@ function ProductsContainer({ data, ubicaciones, marcas, estado }) {
           {filters.order.map((orde) => {
             return (
               <button
-                className={style.filters}
+                className='hover:text-gray-700'
                 key={orde}
                 onClick={() => handleOrderChange(orde)}
               >
