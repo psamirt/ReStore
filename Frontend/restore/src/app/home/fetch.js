@@ -1,11 +1,7 @@
-import axios from "axios";
-
-const api = axios.create({
-  baseURL: "http://localhost:3001/categories/technology/",
-});
+import api from "../utils/api";
 
 export const fetchOfers = async () => {
-  const response = await api.get("/Ofertas", { params: { next: { revalidate: 30 } } });
+  const response = await api.get('/Ofertas', { params: { next: { revalidate: 30 } } });
   return response.data;
 };
 
@@ -20,6 +16,6 @@ export const fetchDetail = async (productId) => {
 };
 
 export const fetchSearch = async (search) => {
-  const response = await api.get(`/searchname`, { params: { name: search } });
+  const response = await api.get('/searchname', { params: { name: search } });
   return response.data;
 };
