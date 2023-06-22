@@ -1,3 +1,4 @@
+'use client';
 import { DetailId } from './FetchDetail.jsx';
 import { Navbar } from '@/app/components/navbar/navbar.jsx';
 import { fetchDetail } from '../../fetch.js';
