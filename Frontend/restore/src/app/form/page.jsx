@@ -9,6 +9,7 @@ import {
   Upload,
 } from "antd";
 import axios from "axios";
+import { Navbar } from "../components/navbar/navbar";
 
 
 export default function MyForm() {

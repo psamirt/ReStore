@@ -40,7 +40,7 @@ const nextConfig = {
     ],
   },
   eslint: {
-    ignoreDuranteBuilds: verdadero,
+    ignoreDuringBuilds: true,
   },
 };
 
