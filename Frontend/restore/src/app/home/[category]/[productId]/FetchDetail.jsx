@@ -1,3 +1,4 @@
+'use client';
 import React from 'react';
 import './detail.css';
 import { fetchDetail } from '../../fetch';
@@ -5,8 +6,11 @@ import Image from 'next/image';
 import Boton from '@/app/components/Button/Button';
 import BackButton from '@/app/components/backButton/BackButton';
 import NotFound from './notFound';
+import { addToCart } from '@/redux/actions';
+import { useDispatch } from 'react-redux';
 
 export async function DetailId({ param }) {
+  const dispatch = useDispatch();
   const post = await fetchDetail(param);
   if (post.message) return <NotFound />;
   return (
@@ -57,7 +61,12 @@ export async function DetailId({ param }) {
             </select>
           </div>
           <div>
-            <Boton text={'Añadir al carrito'}>Añadir al carrito</Boton>
+            <Boton
+              onClick={() => dispatch(addToCart(post.result[0]))}
+              text={'Añadir al carrito'}
+            >
+              Añadir al carrito
+            </Boton>
           </div>
         </div>
       </div>

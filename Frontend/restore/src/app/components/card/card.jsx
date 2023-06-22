@@ -42,11 +42,23 @@ function Card(data) {
         <p>Estado: {data.estado}</p>
         <p>Marca: {data.marca}</p>
         <p>Categoria: {data.subcategorias}</p>
-        <p className='font-medium text-lg text-slate-800'>
-          Precio: ${data.precio}
-        </p>
+        {data.oferta ? (
+          <p className='font-medium text-base text-slate-500'>
+            Precio:{' '}
+            <span className='text-red-400 line-through'>
+              ${`${data.precio} `}
+            </span>
+            <span className='text-slate-800'>${precioConDescuento}</span>
+          </p>
+        ) : (
+          <p className='font-medium text-base text-slate-800'>
+            Precio: ${data.precio}
+          </p>
+        )}
       </div>
-      <Link className='grid' href={`/home/category/${data.id}`}></Link>
+      <Link className='grid' href={`/home/category/${data.id}`}>
+        <Boton text='See more'></Boton>
+      </Link>
     </div>
   );
 }
