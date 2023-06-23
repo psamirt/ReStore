@@ -57,7 +57,7 @@ function Card(data) {
         )}
       </div>
       <Link className='grid' href={`/home/category/${data.id}`}>
-        <Boton text='See more'></Boton>
+      <Boton text='Ver mas'></Boton>
       </Link>
     </div>
   );

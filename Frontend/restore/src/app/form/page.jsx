@@ -10,10 +10,20 @@ import {
 } from "antd";
 import axios from "axios";
 import { Navbar } from "../components/navbar/navbar";
+import { useSession } from "next-auth/react"
+import { useRouter } from 'next/navigation';
+
+
 
 
 export default function MyForm() {
+  const { data: session } = useSession()
   const [categoria, setCategoria] = useState(null);
+  const router = useRouter();
+  if (!session) {
+    router.push('/login');
+    return "Debes estar logueado para publicar productos"
+  }
 
   useEffect(() => {
     const fetchData = async () => {

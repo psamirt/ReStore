@@ -20,12 +20,6 @@ export const fetchDetail = (productId) => {
   ).then((res) => res.json());
 };
 
-export const fetchSearch = (search) => {
-  return fetch(
-    `http://localhost:3001/categories/technology/searchname?name=${search}`
-  ).then((res) => res.json());
-};
-
 export const fetchAllProducts = async () => {
   try {
     const response = await fetch(`http://localhost:3001/categories/technology/allProducts`);
@@ -40,3 +34,12 @@ export const fetchAllProducts = async () => {
   }
 };
 
+  export const fetchSearch = (search) => {
+    return fetch(`http://localhost:3001/categories/technology/searchname?name=${search}`).then((res) =>
+      res.json()
+    );
+  };
+
+  export const fetchUsuario = (id) => {
+    return fetch(`http://localhost:3001/users/${id}/email`).then(res => res.json())
+  }
