@@ -7,13 +7,15 @@ import Boton from '@/app/components/Button/Button';
 import BackButton from '@/app/components/backButton/BackButton';
 import NotFound from './notFound';
 import { addToCart } from '@/redux/actions';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import Loader from '@/app/components/loader/Loader';
 
 export function DetailId({ param }) {
   const dispatch = useDispatch();
+  const { cart } = useSelector((store) => store);
   const [post, setPost] = useState({ result: [] });
+  const [onCart, setOnCart] = useState(false);
 
   const [addedToCart, setAddedToCart] = useState(false);
   useEffect(() => {
@@ -32,6 +34,12 @@ export function DetailId({ param }) {
     fetch();
   }, []);
 
+  useEffect(() => {
+    if (!addedToCart) {
+      if (cart.some((cartItem) => cartItem._id === param)) setOnCart(true);
+    }
+  }, [addedToCart]);
+
   const handleAddToCart = () => {
     setAddedToCart(true);
     return dispatch(addToCart(post.result[0]));
@@ -45,7 +53,7 @@ export function DetailId({ param }) {
       ) : (
         <div>
           <BackButton />
-          <div className='grid md:grid-cols-2 gap-4 mb-8 mt-4'>
+          <div className='grid md:grid-cols-2 gap-4 mb-12 mt-4'>
             <div className='relative rounded-lg aspect-square shadow-md shadow-slate-200 md:justify-self-center '>
               <Image
                 className='aspect-square rounded-lg object-contain'
@@ -99,9 +107,15 @@ export function DetailId({ param }) {
                   </Boton>
                 </span>
                 {addedToCart ? (
-                  <p className='self-center font-medium text-green-500'>
-                    Agregado exitósamente
-                  </p>
+                  !onCart ? (
+                    <p className='self-center font-medium text-green-500'>
+                      Agregado exitósamente
+                    </p>
+                  ) : (
+                    <p className='self-center font-medium text-red-500'>
+                      Ya agregaste este producto al carrito
+                    </p>
+                  )
                 ) : null}
               </div>
             </div>

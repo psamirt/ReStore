@@ -16,8 +16,7 @@ export default function CartContent() {
     //chequear si esta logeado el user, si lo esta poblar el carrito con sus prods
     //se puede hacer una action que reciba muchos prod en el payload y que haga ...state, cart: [...state.cart, ...action.payload]
     const localLoggedIn = localStorage.isLoggedIn;
-    setIsLoggedIn(JSON.parse(localLoggedIn));
-    // localLoggedIn &&
+    localLoggedIn !== undefined && setIsLoggedIn(JSON.parse(localLoggedIn));
   }, []);
 
   return (

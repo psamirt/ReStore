@@ -5,9 +5,11 @@ export const addToCart = (item) => {
   let storedCart = localStorage.getItem('cart')
     ? JSON.parse(localStorage.getItem('cart'))
     : [];
-  if (!storedCart.some((item) => item._id === item._id)) {
+  if (!storedCart.some((storedItem) => storedItem._id === item._id)) {
+    console.log('ya existe');
     storedCart = [...storedCart, item];
   }
+  console.log(item);
 
   localStorage.setItem('cart', JSON.stringify(storedCart));
 
