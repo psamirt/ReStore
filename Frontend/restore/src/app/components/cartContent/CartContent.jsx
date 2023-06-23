@@ -26,7 +26,7 @@ export default function CartContent() {
         {/* probar database */}
       </button>
       <h1 className='text-3xl  mb-4 font-semibold text-blue-900'>Carrito</h1>
-      {cart.length ? (
+      {cart?.length ? (
         cart.map((item) => <CartItem key={item._id} item={item} {...item} />)
       ) : (
         <div className='relative min-h-[50vh] grid place-content-center'>

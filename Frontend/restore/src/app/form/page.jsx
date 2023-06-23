@@ -1,28 +1,38 @@
-'use client';
-import React, { useState, useEffect } from 'react';
+"use client";
+import React, { useState, useEffect } from "react";
 import {
   Button,
   Form,
   Input,
   Radio,
-  Space,
   Select,
   Upload,
-  PlusOutlined,
-} from 'antd';
-import axios from 'axios';
+} from "antd";
+import axios from "axios";
+import { Navbar } from "../components/navbar/navbar";
+import { useSession } from "next-auth/react"
+import { useRouter } from 'next/navigation';
+
+
+
 
 export default function MyForm() {
+  const { data: session } = useSession()
   const [categoria, setCategoria] = useState(null);
+  const router = useRouter();
+  if (!session) {
+    router.push('/login');
+    return "Debes estar logueado para publicar productos"
+  }
 
   useEffect(() => {
-    const fetch = async () => {
+    const fetchData = async () => {
       const response = await axios.get(
-        'http://localhost:3001/categories/technology/subcategorias'
+        "http://localhost:3001/categories/technology/subcategorias"
       );
       setCategoria(response.data);
     };
-    fetch();
+    fetchData();
   }, []);
 
   const { TextArea } = Input;
@@ -52,9 +62,9 @@ export default function MyForm() {
   console.log(marcas);
 
   const [input, setInput] = useState({
-    name: '',
-    state: '',
-    background_image: '',
+    name: "",
+    state: "",
+    file: null,
     precio: 0,
     Description: '',
     Marca: '',
@@ -103,22 +113,25 @@ export default function MyForm() {
 
   // ...
 
-  const handleSubmit = (values) => {
-    const data = {
-      ...input,
-      producto: values.producto,
-      marca: values.marca,
-      precio: values.precio,
-      ubicacion: values.ubicacion,
-      estado: values.estado,
-      descripcion: values.descripcion,
-    };
+  const handleSubmit = () => {
+    const formData = new FormData();
+    for (const key in input) {
+      if (key === "file") formData.append("image", input.file)
+      else if (key === "subcategoria") {
+        formData.append(key, JSON.stringify(input[key]));
+      } else {
+        formData.append(key, input[key]);
+      }
+    }
+
+    console.log(Object.fromEntries(formData.entries()))
+  
+    
 
     axios
-      .post('http://localhost:3001/categories/technology/posteo', data)
-      .then((response) => {
-        console.log('Producto publicado:', response.data);
-        alert('Producto creado exitosamente');
+      .post("http://localhost:3001/categories/technology/posteo", formData)
+      .then(() => {
+        alert("Producto creado exitosamente");
       })
       .catch((error) => {
         console.error('Error al publicar el producto:', error);
@@ -257,8 +270,9 @@ export default function MyForm() {
             value={input.state}
             onChange={(e) => setInput({ ...input, state: e.target.value })}
           >
-            <Radio value='Usado'> Usado </Radio>
-            <Radio value='Nuevo'> Nuevo </Radio>
+            <Radio value="Usado"> Usado </Radio>
+            <Radio value="Nuevo"> Nuevo </Radio>
+            <Radio value="Casi nuevo">Casi nuevo </Radio>
           </Radio.Group>
         </Form.Item>
 
@@ -271,45 +285,25 @@ export default function MyForm() {
             }
           />
         </Form.Item>
-        {/* 
-        <Form.Item label="Imagen" valuePropName="fileList">
-            <Upload action="http://localhost:3001/categories/technology/posteo" listType="picture-card" customRequest={({ file }) => {
-      // Aquí puedes implementar la lógica de subida de archivos a tu servidor local
-      // utilizando Axios u otra librería de tu elección
-      const formData = new FormData();
-      formData.append('image', file);
 
-      return axios.post('http://localhost:3001/categories/technology/posteo', formData)
-        .then(response => {
-          // Manejar la respuesta del servidor si es necesario
-          console.log('Imagen cargada con éxito:', response);
-        })
-        .catch(error => {
-          // Manejar el error si ocurre
-          console.error('Error al cargar la imagen:', error);
-        });
-    }}>
-              <div>
-                <div
-                  style={{
-                    marginTop: 8,
-                  }}
-                >
-                  Upload
+        <Form.Item label="Imagen" valuePropName="file">
+          <Upload
+            listType="picture-card"
+            showUploadList={false}
+            customRequest={({ file }) => {
+              setInput({ ...input, file });
+            }}
+          >
+            <div>
+              <div
+                style={{
+                  marginTop: 8,
+                }}
+              >
+                {input.file ? input.file.name :  "Upload"}
               </div>
             </div>
           </Upload>
-        </Form.Item> */}
-
-        <Form.Item label='Imagen'>
-          <Input
-            type='url'
-            placeholder='Ingresa la URL de la imagen'
-            value={input.background_image}
-            onChange={(e) =>
-              setInput({ ...input, background_image: e.target.value })
-            }
-          />
         </Form.Item>
 
         <Button htmlType='submit' className=''>

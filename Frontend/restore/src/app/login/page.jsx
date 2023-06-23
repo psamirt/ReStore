@@ -6,14 +6,28 @@ import axios from "axios";
 import bcrypt from "bcryptjs";
 import "./login.css";
 import Link from "next/link";
+import { signIn, signOut, useSession, getProviders } from "next-auth/react";
 
 function Login() {
   const router = useRouter();
   const URL = "http://localhost:3001/users";
   // ----------------------------------------------------------------Hooks------------------------------------------------------------------------------
+  useEffect(() => {
+    const setProv = async () => {
+      const response = await getProviders();
+      setProviders(response);
+    };
+    setProv();
+  }, []);
 
+  const handleSignIn = async (providerId) => {
+    const result = await signIn(providerId);
+    // Redirigir al usuario al home después de iniciar sesión correctamente
+    // router.push("/home");
+  };
   // ----------------------------------------------------------------States------------------------------------------------------------------------------
   const [submitted, setSubmitted] = useState(false);
+  const [providers, setProviders] = useState(null);
 
   const [user, setUser] = useState({
     email: "",
@@ -29,7 +43,7 @@ function Login() {
   async function validate(user) {
     const error = {};
     let userFind = null;
-  
+
     try {
       if (user.email && user.email) {
         const { data } = await axios.get(
@@ -39,7 +53,7 @@ function Login() {
           error.email = "Usuario no existe";
           return error;
         }
-  
+
         if (user.password) {
           const passwordMatch = await bcrypt.compare(
             user.password,
@@ -55,7 +69,7 @@ function Login() {
       error.email = "Usuario no existe";
       return error;
     }
-  
+
     return error;
   }
 
@@ -136,7 +150,7 @@ function Login() {
                 />
                 <span>Email</span>
               </div>
-                <p className="error-login">{errors.email}</p>
+              <p className="error-login">{errors.email}</p>
               <div className="inputBox">
                 <input
                   type="password"
@@ -153,29 +167,29 @@ function Login() {
                 />
                 <span>Contraseña</span>
               </div>
-                <p className="error-login">{errors.password}</p>
+              <p className="error-login">{errors.password}</p>
               <div className="links">
                 <Link href={"/login/changepassword"}>
-                <p>
-                  <img
-                    width="20"
-                    height="20"
-                    src="https://img.icons8.com/ios-filled/50/000000/question-mark.png"
-                    alt="question-mark"
-                  />
-                  Cambiar contraseña
-                </p>
+                  <p>
+                    <img
+                      width="20"
+                      height="20"
+                      src="https://img.icons8.com/ios-filled/50/000000/question-mark.png"
+                      alt="question-mark"
+                    />
+                    Cambiar contraseña
+                  </p>
                 </Link>
                 <Link href={"/login/signup"}>
-                <p>
-                  <img
-                    width="20"
-                    height="20"
-                    src="https://img.icons8.com/external-kiranshastry-solid-kiranshastry/64/000000/external-user-medical-kiranshastry-solid-kiranshastry.png"
-                    alt="external-user-medical-kiranshastry-solid-kiranshastry"
-                  />
-                  Crear Cuenta
-                </p>
+                  <p>
+                    <img
+                      width="20"
+                      height="20"
+                      src="https://img.icons8.com/external-kiranshastry-solid-kiranshastry/64/000000/external-user-medical-kiranshastry-solid-kiranshastry.png"
+                      alt="external-user-medical-kiranshastry-solid-kiranshastry"
+                    />
+                    Crear Cuenta
+                  </p>
                 </Link>
               </div>
               <div className="inputBox">
@@ -185,6 +199,20 @@ function Login() {
                   disabled={Object.keys(errors).length > 0 && submitted}
                 />
               </div>
+              <button onClick={() => signIn("google")}>
+                <>
+                  {providers &&
+                    Object.values(providers).map((provider) => (
+                      <button
+                        type="button"
+                        key={provider.name}
+                        onClick={() => handleSignIn(provider.name)}
+                      >
+                        SignIn con {provider.name}
+                      </button>
+                    ))}
+                </>
+              </button>
             </form>
           </div>
         </div>
