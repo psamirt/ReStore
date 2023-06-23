@@ -5,13 +5,13 @@ import { Navbar } from '../components/navbar/navbar'
 import defaultImage from "./defaultImage.jpg"
 import Image from 'next/image'
 import { useSession } from 'next-auth/react'
-import { useRouter } from 'next/navigation';
+// import { useRouter } from 'next/navigation';
 
 async function User({searchParams}) {
   const { data: session, status } = useSession(); 
-  const router = useRouter();
+  // const router = useRouter();
   if (!session) {
-    router.push('/login');
+    // router.push('/login');
     return "Debes estar logueado para ver tu perfil"
   }
   const usuario = await fetchUsuario(searchParams.User)

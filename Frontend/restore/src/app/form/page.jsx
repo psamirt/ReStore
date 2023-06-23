@@ -11,24 +11,22 @@ import {
 import axios from "axios";
 import { Navbar } from "../components/navbar/navbar";
 import { useSession } from "next-auth/react"
-import { useRouter } from 'next/navigation';
-
-
+// import { useRouter } from 'next/navigation';
 
 
 export default function MyForm() {
+  // const router = useRouter();
   const { data: session } = useSession()
   const [categoria, setCategoria] = useState(null);
-  const router = useRouter();
   if (!session) {
-    router.push('/login');
+    // router.push('/login');
     return "Debes estar logueado para publicar productos"
   }
 
   useEffect(() => {
     const fetchData = async () => {
       const response = await axios.get(
-        "https://re-store.onrender.com/technology/subcategorias"
+        "https://re-store.onrender.com/categories/technology/subcategorias"
       );
       setCategoria(response.data);
     };
@@ -129,7 +127,7 @@ export default function MyForm() {
     
 
     axios
-      .post("https://re-store.onrender.com/technology/posteo", formData)
+      .post("https://re-store.onrender.com/categories/technology/posteo", formData)
       .then(() => {
         alert("Producto creado exitosamente");
       })
