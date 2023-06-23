@@ -23,7 +23,6 @@ const responsive = {
 };
 
  function  HomeContainer({data}) {
-  console.log(data)
   return (
    <Carousel  responsive={responsive}>
     {data.result.map(props => {
