@@ -47,9 +47,9 @@ export const Navbar = () => {
               Crear producto
             </Link>
           )}
-          <FiShoppingCart />
           <Searchbar />
           <Link href={'/cart'}>
+          <FiShoppingCart />
           </Link>
         </div>
       </div>
