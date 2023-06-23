@@ -6,9 +6,11 @@ import CartItem from '../cartItem/CartItem';
 import { useRouter } from 'next/navigation';
 import { addFromDatabase } from '@/redux/actions';
 
+
 export default function CartContent() {
   const { cart, isLoggedIn } = useSelector((store) => store);
   const router = useRouter();
+
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const dispatch = useDispatch();
   console.log(cart);
