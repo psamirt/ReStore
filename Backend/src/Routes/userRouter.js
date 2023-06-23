@@ -33,5 +33,4 @@ router.get("/verify_emaill/:uuid", getVerifyUser);
 
 //--------------Verificaciones----------------------------------------------------------------//
 
-
 module.exports = router;

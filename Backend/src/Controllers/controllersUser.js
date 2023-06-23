@@ -12,7 +12,7 @@ const createUser = async ({
   fechaNacimiento,
   ubicacion,
   metodosPago,
-  image
+  image,
 }) => {
   const searchEmail = await User.findOne({ email });
   if (searchEmail) {
@@ -20,8 +20,10 @@ const createUser = async ({
   }
 
   // Generar el hash de la contraseña
-  
-   const hashedPassword = contraseña ? await bcrypt.hash(contraseña, saltRounds) : ""
+
+  const hashedPassword = contraseña
+    ? await bcrypt.hash(contraseña, saltRounds)
+    : "";
 
   const newUser = new User({
     nombre,
@@ -50,10 +52,10 @@ const createUserController = async (req, res) => {
     fechaNacimiento,
     ubicacion,
     metodosPago,
-    image
+    image,
   } = req.body;
 
-  console.log(req.body)
+  console.log(req.body);
   try {
     const savedUser = await createUser({
       nombre,
@@ -64,7 +66,7 @@ const createUserController = async (req, res) => {
       fechaNacimiento,
       ubicacion,
       metodosPago,
-      image
+      image,
     });
 
     res.status(200).json(savedUser);
