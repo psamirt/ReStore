@@ -31,4 +31,7 @@ router.get("/:email/email", userController.getEMAIL);
 router.post("/verify_email", postVerifyUser);
 router.get("/verify_emaill/:uuid", getVerifyUser);
 
+//--------------Verificaciones----------------------------------------------------------------//
+
+
 module.exports = router;
