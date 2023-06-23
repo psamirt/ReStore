@@ -15,13 +15,13 @@ const handler = NextAuth({
         ],
     callbacks:{
         async session({session}) {
-            const response = await fetch(`http://localhost:3001/users/${session.user.email}/email`)
+            const response = await fetch(`https://re-store.onrender.com/users/${session.user.email}/email`)
             const sessionUser = await response.json()
             session.user.id = sessionUser._id
             return session;
         },
         async signIn({profile}) {
-            const response = await fetch(`http://localhost:3001/users/${profile.email}/email`)
+            const response = await fetch(`https://re-store.onrender.com/users/${profile.email}/email`)
             const user = await response.json()
             if (user.error) {
                 const sign = {
@@ -29,7 +29,7 @@ const handler = NextAuth({
                     nombre: profile.name,
                 }
                 console.log(sign)
-                await fetch("http://localhost:3001/users/", {
+                await fetch("https://re-store.onrender.com/users/", {
                     method: 'POST',
                     headers: {
                       'Content-Type': 'application/json',
