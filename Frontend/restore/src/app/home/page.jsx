@@ -1,6 +1,5 @@
 import React from 'react';
 import { fetchOfers } from './fetch';
-import ProductsContainer from '../components/ProductsContainer/ProductsContainer';
 import { Navbar } from '../components/navbar/navbar';
 import Carousel from '../components/carousel/Carousel';
 import { Suspense } from 'react';
@@ -24,28 +23,28 @@ async function Home() {
             title='click to visit ConsolasyVideojuegos'
             href={'/home/ConsolasyVideojuegos'}
           >
-            {/* <MdVideogameAsset fontSize={50} /> */}
+            ico
           </Link>
           <Link title='click to visit TV' href={'/home/TV'}>
-            {/* <ImDisplay fontSize={50} /> */}
+            ico
           </Link>
           <Link title='click to visit Celulares' href={'/home/Celulares'}>
-            {/* <IoIosTabletPortrait fontSize={50} /> */}
+            ico
           </Link>
           <Link
             title='click to visit ElectronicaAudioVideo'
             href={'/home/ElectronicaAudioVideo'}
           >
-            {/* <MdHeadset fontSize={50} /> */}
+            ico
           </Link>
           <Link title='click to visit Computacion' href={'/home/Computacion'}>
-            {/* <GrPersonalComputer fontSize={50}></GrPersonalComputer> */}
+            ico
           </Link>{' '}
           <Link
             title='click to visit CamarasyAccesorios'
             href={'/home/CamarasyAccesorios'}
           >
-            {/* <AiFillCamera fontSize={50}></AiFillCamera> */}
+            ico
           </Link>
         </div>
         <h2 className='text-4xl text-center mb-4 font-medium text-blue-900'>

@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation';
 import { addFromDatabase } from '@/redux/actions';
 
 export default function CartContent() {
-  const { cart } = useSelector((store) => store);
+  const { cart, isLoggedIn } = useSelector((store) => store);
   const router = useRouter();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const dispatch = useDispatch();
@@ -26,22 +26,22 @@ export default function CartContent() {
       </button>
       <h1 className='text-3xl  mb-4 font-semibold text-blue-900'>Carrito</h1>
       {cart?.length ? (
-        cart.map((item) => <CartItem key={item._id} item={item} {...item} />)
+        cart.map((item) => <CartItem key={item._id} item={item} />)
       ) : (
-        <div className='relative min-h-[50vh] grid place-content-center'>
-          <div className=' top-1/2 left-1/2 grid gap-4 justify-items-center'>
+        <div className="relative min-h-[50vh] grid place-content-center">
+          <div className=" top-1/2 left-1/2 grid gap-4 justify-items-center">
             <h2
-              className=' text-3xl font-medium text-center'
+              className=" text-3xl font-medium text-center"
               style={{
-                textWrap: 'balance',
+                textWrap: "balance",
               }}
             >
               No hay nada para ver aqui
             </h2>
             <span>
               <Boton
-                onClick={() => router.push('/home')}
-                text={'Volver a inicio'}
+                onClick={() => router.push("/home")}
+                text={"Volver a inicio"}
               />
             </span>
           </div>
@@ -49,8 +49,8 @@ export default function CartContent() {
       )}
       {cart.length ? (
         <div>
-          <hr className='mb-4' />
-          <p className='text-lg font-medium mb-4'>
+          <hr className="mb-4" />
+          <p className="text-lg font-medium mb-4">
             Total: ${cart.reduce((prev, item) => item.precio + prev, 0)}
           </p>
           {/* desabilitar el boton si no esta logueado */}

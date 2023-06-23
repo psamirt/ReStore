@@ -1,10 +1,8 @@
-'use client';
-import Link from 'next/link';
-// import { FaBars, FaHome } from "react-icons/fa";
-// import { FiShoppingCart } from 'react-icons/fi';
-import Searchbar from '../searchbar/searchbar';
-import { useState, useEffect } from 'react';
-import { signIn, signOut, useSession, getProviders } from 'next-auth/react';
+"use client";
+import Link from "next/link";
+import Searchbar from "../searchbar/searchbar";
+import { useState, useEffect } from "react";
+import { signIn, signOut, useSession, getProviders } from "next-auth/react";
 //mostrar fabars como clickeable y desplegar menu con lo otro en modo responsive
 
 export const Navbar = () => {
@@ -14,11 +12,10 @@ export const Navbar = () => {
 
   console.log(session);
   return (
-    <nav className=' py-4  z-20 sticky top-0 bg-slate-900 text-slate-50'>
-      <div className='container  px-4 mx-auto flex gap-4 justify-between'>
-        <Link className='link self-center' href={'/home'}>
-          Inicio
-          {/* <FaHome style={{ color: '#f8fafc' }} fontSize={30} /> */}
+    <nav className=" py-4  z-20 sticky top-0 bg-slate-900 text-slate-50">
+      <div className="container  px-4 mx-auto flex gap-4 justify-between">
+        <Link className="link" href={"/home"}>
+          // iconos aqui
         </Link>
         <div className='flex gap-8 justify-between items-center'>
           {session && (
@@ -53,8 +50,7 @@ export const Navbar = () => {
           )}
           <Searchbar />
           <Link href={'/cart'}>
-            {/* <FiShoppingCart /> */}
-            Carrito
+            //iconos aqui
           </Link>
         </div>
       </div>
