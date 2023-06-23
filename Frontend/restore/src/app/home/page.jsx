@@ -8,8 +8,8 @@ import HomeContainer from '../components/HomeContainer/HomeContainer';
 import Link from 'next/link';
 
 async function Home() {
-  // const data = await fetchOfers();
-  const data = window !== undefined ? await fetchOfers() : {};
+  const data = await fetchOfers();
+  // const data = window !== undefined ? await fetchOfers() : {};
   // const ubicaciones = data.result.map(producto => producto.Ubicacion)
   // const marcas = data.result.map(producto => producto.Marca)
   // const estado = data.result.map(producto => producto.state)
