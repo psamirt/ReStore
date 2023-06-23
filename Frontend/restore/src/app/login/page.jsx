@@ -10,7 +10,7 @@ import { signIn, signOut, useSession, getProviders } from "next-auth/react";
 
 function Login() {
   const router = useRouter();
-  const URL = "http://localhost:3001/users";
+  const URL = "https://re-store.onrender.com/users";
   // ----------------------------------------------------------------Hooks------------------------------------------------------------------------------
   useEffect(() => {
     const setProv = async () => {
@@ -47,7 +47,7 @@ function Login() {
     try {
       if (user.email && user.email) {
         const { data } = await axios.get(
-          `http://localhost:3001/users/${user.email}/email`
+          `https://re-store.onrender.com/users/${user.email}/email`
         );
         if (data.error) {
           error.email = "Usuario no existe";
@@ -107,7 +107,7 @@ function Login() {
       const expirationDate = new Date();
       expirationDate.setMonth(expirationDate.getMonth() + 1);
       const { data } = await axios.get(
-        `http://localhost:3001/users/${user.email}/email`
+        `https://re-store.onrender.com/users/${user.email}/email`
       );
       document.cookie = `User_id=${
         data._id

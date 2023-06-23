@@ -28,7 +28,7 @@ export default function MyForm() {
   useEffect(() => {
     const fetchData = async () => {
       const response = await axios.get(
-        "http://localhost:3001/categories/technology/subcategorias"
+        "https://re-store.onrender.com/technology/subcategorias"
       );
       setCategoria(response.data);
     };
@@ -129,7 +129,7 @@ export default function MyForm() {
     
 
     axios
-      .post("http://localhost:3001/categories/technology/posteo", formData)
+      .post("https://re-store.onrender.com/technology/posteo", formData)
       .then(() => {
         alert("Producto creado exitosamente");
       })
