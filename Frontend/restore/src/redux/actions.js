@@ -1,10 +1,14 @@
+import axios from 'axios';
 import { ADD_TO_CART, REMOVE_FROM_CART } from './action-types';
 
 export const addToCart = (item) => {
   let storedCart = localStorage.getItem('cart')
     ? JSON.parse(localStorage.getItem('cart'))
     : [];
-  storedCart = [...storedCart, item];
+  if (!storedCart.some((item) => item._id === item._id)) {
+    storedCart = [...storedCart, item];
+  }
+
   localStorage.setItem('cart', JSON.stringify(storedCart));
 
   return {
@@ -24,5 +28,19 @@ export const removeFromCart = (item) => {
   return {
     type: REMOVE_FROM_CART,
     payload: item,
+  };
+};
+
+export const addFromDatabase = (localItems) => {
+  return async (dispatch) => {
+    try {
+      const { data: dbItems } = await axios.get(
+        `http://localhost:3001/carrito`,
+        { withCredentials: true }
+      );
+      console.log(dbItems);
+    } catch (error) {
+      console.error(error);
+    }
   };
 };

@@ -3,6 +3,7 @@ import React from 'react';
 import Boton from '../Button/Button';
 import { useDispatch } from 'react-redux';
 import { removeFromCart } from '@/redux/actions';
+import { useRouter } from 'next/navigation';
 
 export default function CartItem({
   background_image,
@@ -12,12 +13,19 @@ export default function CartItem({
   item,
 }) {
   const dispatch = useDispatch();
+  const router = useRouter();
+
   return (
     <>
       <hr className='h-px bg-gray-300 border-0 ' />
       <div className='grid grid-cols-2 justify-between  my-4'>
         <div className='grid gap-4 text-slate-800 content-center items-center'>
-          <h2 className=''>{name}</h2>
+          <h2
+            className='cursor-pointer underline'
+            onClick={() => router.push(`/home/category/${item._id}`)}
+          >
+            {name}
+          </h2>
           <p className='text-gray-500 text-sm'>{Marca}</p>
           <p className='text-slate-800 font-semibold text-lg'>${precio}</p>
           <span>

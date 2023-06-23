@@ -17,7 +17,11 @@ const initialState = storedCart;
 export const reducer = (state = initialState, action) => {
   switch (action.type) {
     case ADD_TO_CART:
-      //hacer logica por si viene un prod que ya esta
+      if (state.cart.some((item) => item._id === action.payload._id))
+        return {
+          ...state,
+          cart: state.cart,
+        };
       return {
         ...state,
         cart: [...state.cart, action.payload],

@@ -1,27 +1,30 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 import Boton from '../Button/Button';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import CartItem from '../cartItem/CartItem';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { addFromDatabase } from '@/redux/actions';
 
 export default function CartContent() {
   const { cart } = useSelector((store) => store);
   const router = useRouter();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const dispatch = useDispatch();
   console.log(cart);
-  useEffect(
-    () => {
-      //chequear si esta logeado el user, si lo esta poblar el carrito con sus prods
-      //se puede hacer una action que reciba muchos prod en el payload y que haga ...state, cart: [...state.cart, ...action.payload]
-    },
-    [
-      /*aca va a ir algo como isLoggedIn*/
-    ]
-  );
+  useEffect(() => {
+    //chequear si esta logeado el user, si lo esta poblar el carrito con sus prods
+    //se puede hacer una action que reciba muchos prod en el payload y que haga ...state, cart: [...state.cart, ...action.payload]
+    const localLoggedIn = localStorage.isLoggedIn;
+    setIsLoggedIn(JSON.parse(localLoggedIn));
+    // localLoggedIn &&
+  }, []);
 
   return (
     <div className='container px-4 m-auto my-8'>
+      <button onClick={() => dispatch(addFromDatabase())}>
+        {/* probar database */}
+      </button>
       <h1 className='text-3xl  mb-4 font-semibold text-blue-900'>Carrito</h1>
       {cart.length ? (
         cart.map((item) => <CartItem key={item._id} item={item} {...item} />)
@@ -51,6 +54,7 @@ export default function CartContent() {
           <p className='text-lg font-medium mb-4'>
             Total: ${cart.reduce((prev, item) => item.precio + prev, 0)}
           </p>
+          {/* desabilitar el boton si no esta logueado */}
           <Boton text={'Comprar'}></Boton>
         </div>
       ) : null}
