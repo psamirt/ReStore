@@ -1,14 +1,21 @@
-const TechSchema = require("../Database/models/Technology");
+const User = require("../Database/models/userModel");
 
-// Agregar usuario al carrito
+// agregar usuario al carrito
 const addToCartHandler = async (req, res) => {
   try {
-    const userId = req.cookies.User_id;
-    const { productId } = req.body;
+    const { userId, productId } = req.body;
 
-    await TechSchema.findByIdAndUpdate(productId, {
-      $push: { carrito: userId },
-    });
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ error: "Usuario no encontrado" });
+    }
+
+    // verifico si el producto existe o si ya está en el carrito del usuario
+    if (!user.carrito.some((item) => item.productId === productId)) {
+      // si el producto no está en el carrito, agregarlo con una cantidad inicial de 1
+      user.carrito.push({ productId, cantidad: 1 });
+      await user.save();
+    }
 
     res.status(200).json({ message: "Producto agregado al carrito con éxito" });
   } catch (error) {
@@ -16,15 +23,13 @@ const addToCartHandler = async (req, res) => {
   }
 };
 
-// Eliminar usuario del carrito
+// eliminar usuario del carrito
 const removeFromCartHandler = async (req, res) => {
   try {
-    const userId = req.cookies.User_id;
-    const { productId } = req.body;
+    const { userId, productId } = req.body;
 
-    // Eliminar el ID del producto del array 'carrito' del usuario
-    await TechSchema.findByIdAndUpdate(productId, {
-      $pull: { carrito: userId },
+    await User.findByIdAndUpdate(userId, {
+      $pull: { carrito: { productId } },
     });
 
     res
@@ -36,13 +41,17 @@ const removeFromCartHandler = async (req, res) => {
       .json({ error: "Error al eliminar el producto del carrito" });
   }
 };
-
 const getCartProductsHandler = async (req, res) => {
   try {
-    const userId = req.cookies.User_id;
+    const { userId } = req.body;
 
-    // Obtener todos los productos donde el array 'carrito' contenga el ID del usuario
-    const products = await TechSchema.find({ carrito: userId });
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ error: "Usuario no encontrado" });
+    }
+
+    const products = user.carrito;
 
     res.status(200).json(products);
   } catch (error) {

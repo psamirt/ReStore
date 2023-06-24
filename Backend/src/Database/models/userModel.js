@@ -37,6 +37,18 @@ const userSchema = new Schema({
       },
     },
   ],
+  carrito: [
+    {
+      productId: {
+        type: String, // Suponiendo que los productos tienen un ObjectId único
+        // Nombre del modelo de los productos
+      },
+      cantidad: {
+        type: Number,
+        default: 1,
+      },
+    },
+  ],
   metodosPago: [
     {
       tipo: {
