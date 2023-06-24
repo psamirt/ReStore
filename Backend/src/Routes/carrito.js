@@ -6,7 +6,7 @@ const {
   getCartProductsHandler,
 } = require("../Controllers/carrito");
 
-router.put("/add", addToCartHandler);
+router.post("/add", addToCartHandler);
 router.put("/remove", removeFromCartHandler);
 router.get("/", getCartProductsHandler);
 
