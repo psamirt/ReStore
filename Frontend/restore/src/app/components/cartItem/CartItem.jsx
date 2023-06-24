@@ -1,20 +1,24 @@
 import Image from 'next/image';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Boton from '../Button/Button';
 import { useDispatch } from 'react-redux';
 import { removeFromCart } from '@/redux/actions';
 import { useRouter } from 'next/navigation';
+import axios from 'axios';
 
-export default function CartItem({
-  background_image,
-  name,
-  Marca,
-  precio,
-  item,
-}) {
+export default function CartItem({ productId, item, userId }) {
   const dispatch = useDispatch();
   const router = useRouter();
-
+  const [product, setProduct] = useState({});
+  useEffect(() => {
+    const fetch = async () => {
+      const response = await axios.get(
+        `http://localhost:3001/categories/technology/Detail/${productId}`
+      );
+      setProduct(response.data.result[0]);
+    };
+    fetch();
+  }, []);
   return (
     <>
       <hr className='h-px bg-gray-300 border-0 ' />
@@ -22,28 +26,32 @@ export default function CartItem({
         <div className='grid gap-4 text-slate-800 content-center items-center'>
           <h2
             className='cursor-pointer underline'
-            onClick={() => router.push(`/home/category/${item._id}`)}
+            onClick={() => router.push(`/home/category/${productId}`)}
           >
-            {name}
+            {product?.name}
           </h2>
-          <p className='text-gray-500 text-sm'>{Marca}</p>
-          <p className='text-slate-800 font-semibold text-lg'>${precio}</p>
+          <p className='text-gray-500 text-sm'>{product?.Marca}</p>
+          <p className='text-slate-800 font-semibold text-lg'>
+            ${product?.precio}
+          </p>
           <span>
             <Boton
-              onClick={() => dispatch(removeFromCart(item))}
+              onClick={() => dispatch(removeFromCart(productId, userId))}
               secondary={true}
               text={'Eliminar'}
             />
           </span>
         </div>
         <div className='relative aspect-square justify-self-end shadow-slate-200 min-h-[160px]'>
-          <Image
-            className='object-contain rounded-md '
-            src={background_image}
-            alt={name}
-            fill
-            sizes='160px'
-          />
+          {product.background_image ? (
+            <Image
+              className='object-contain rounded-md '
+              src={product?.background_image}
+              alt={product?.name}
+              fill
+              sizes='160px'
+            />
+          ) : null}
         </div>
       </div>
     </>

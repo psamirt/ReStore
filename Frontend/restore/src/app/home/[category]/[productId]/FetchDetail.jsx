@@ -10,10 +10,12 @@ import { addToCart } from '@/redux/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import Loader from '@/app/components/loader/Loader';
+import { useSession } from 'next-auth/react';
 
 export function DetailId({ param }) {
   const dispatch = useDispatch();
   const { cart } = useSelector((store) => store);
+  const { data: session, status } = useSession();
   const [post, setPost] = useState({ result: [] });
   const [onCart, setOnCart] = useState(false);
 
@@ -42,7 +44,11 @@ export function DetailId({ param }) {
 
   const handleAddToCart = () => {
     setAddedToCart(true);
-    return dispatch(addToCart(post.result[0]));
+    //DESPACHAR A CART SOLO {productId: post.result[0]._id}
+    //Y armar desp el objeto con la cantidad tambien
+    return dispatch(
+      addToCart(post.result[0]._id, session?.user.id, post.result[0].precio)
+    );
   };
 
   if (post.message) return <NotFound />;

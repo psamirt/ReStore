@@ -6,10 +6,9 @@ import { Provider } from 'react-redux';
 import store from '../../../../redux/store.js';
 import { useParams } from 'next/navigation.js';
 
-// export async function generateMetadata({ params, searchParams }, 
+// export async function generateMetadata({ params, searchParams },
 //   parent) {
 //   const id = params.productId;
-
 
 //   const product = await fetchDetail(id);
 
@@ -20,8 +19,8 @@ import { useParams } from 'next/navigation.js';
 //     : { title: 'No encontrado' };
 // }
 
-async function Detail() {
-  const params = useParams()
+function Detail() {
+  const params = useParams();
 
   return (
     <>
