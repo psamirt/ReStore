@@ -1,4 +1,3 @@
-
 'use client';
 import { fetchDetail } from '../../fetch';
 import Image from 'next/image';
@@ -10,6 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import Loader from '@/app/components/loader/Loader';
 import { useSession } from 'next-auth/react';
+import { useEffect, useState } from 'react';
 
 export function DetailId({ param }) {
   const dispatch = useDispatch();
@@ -53,7 +53,7 @@ export function DetailId({ param }) {
   if (post.message) return <NotFound />;
 
   const calculateDiscountedPrice = () => {
-    if (post.result[0].Ofertas && post.result[0].precio) {
+    if (post?.result[0]?.Ofertas && post.result[0].precio) {
       const descuento = parseFloat(post.result[0].Ofertas) / 100;
       const precio = parseFloat(post.result[0].precio);
       const precioConDescuento = precio - precio * descuento;
@@ -65,7 +65,6 @@ export function DetailId({ param }) {
   const precioConDescuento = calculateDiscountedPrice();
 
   return (
-
     <div className='container mx-auto px-4 my-8'>
       {!post.result[0] ? (
         <Loader />
@@ -88,19 +87,19 @@ export function DetailId({ param }) {
               <p className=''>Ubicacion : {post.result[0].Ubicacion}</p>
               <p className=''>Estado: {post.result[0].state}</p>
 
-               {precioConDescuento ? (
-            <p className='font-medium text-base text-slate-500'>
-              Precio:{" "}
-              <span className='text-red-400 line-through'>
-                ${post.result[0].precio}
-              </span>{" "}
-              <span className='text-slate-800'>${precioConDescuento}</span>
-            </p>
-          ) : (
-            <p className='font-medium text-base text-slate-800'>
-              Precio: ${post.result[0].precio}
-            </p>
-          )}
+              {precioConDescuento ? (
+                <p className='font-medium text-base text-slate-500'>
+                  Precio:{' '}
+                  <span className='text-red-400 line-through'>
+                    ${post.result[0].precio}
+                  </span>{' '}
+                  <span className='text-slate-800'>${precioConDescuento}</span>
+                </p>
+              ) : (
+                <p className='font-medium text-base text-slate-800'>
+                  Precio: ${post.result[0].precio}
+                </p>
+              )}
               <h3 className=''>
                 Calificación del vendedor : <img src='' alt='' />5
               </h3>
@@ -148,7 +147,6 @@ export function DetailId({ param }) {
               </h3>
               <p className='text-gray-600 leading-normal text-sm'>
                 {post.result[0].Description}
-              
               </p>
             </div>
             <div className='grid gap-2'>
@@ -164,7 +162,6 @@ export function DetailId({ param }) {
           </div>
         </div>
       )}
-
     </div>
   );
 }
