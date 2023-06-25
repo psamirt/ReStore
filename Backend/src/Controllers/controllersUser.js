@@ -79,46 +79,31 @@ const updateUser = async (req, res) => {
   try {
     const { id } = req.params;
 
-    // Busca el usuario por su ID
     const user = await User.findById(id);
 
     if (!user) {
       return res.status(404).json({ message: "No se encontró el usuario" });
     }
 
-    // Verificar la contraseña anterior
-    const { oldPassword, newPassword } = req.body;
+    const previousProfilePictureUrl = user.profile_picture;
+    console.log(previousProfilePictureUrl);
 
-    const passwordMatch = await bcrypt.compare(oldPassword, user.contraseña);
-
-    if (!passwordMatch) {
-      return res
-        .status(401)
-        .json({ message: "La contraseña anterior es incorrecta" });
+    if (previousProfilePictureUrl) {
+      await cloudinary.uploader.destroy(previousProfilePictureUrl);
     }
-    const hashedPassword = await bcrypt.hash(newPassword, saltRounds);
 
-    // Actualiza solo los campos proporcionados en el cuerpo de la solicitud
-    const updatedFields = {
-      nombre: req.body.nombre,
-      apellido: req.body.apellido,
-      email: req.body.email,
-      contraseña: hashedPassword, // Actualiza la contraseña con la nueva contraseña proporcionada
-      genero: req.body.genero,
-      fechaNacimiento: req.body.fechaNacimiento,
-      ubicacion: req.body.ubicacion,
-      metodosPago: req.body.metodosPago,
-    };
+    const cloudinaryImage = await cloudinary.uploader.upload(req.file.path, {
+      folder: "Foto de perfil",
+    });
 
-    // Filtra los campos que se hayan proporcionado en el cuerpo de la solicitud
-    const filteredFields = Object.fromEntries(
-      Object.entries(updatedFields).filter(
-        ([key, value]) => value !== undefined
-      )
-    );
-
-    // Actualiza los campos en el objeto del usuario
-    Object.assign(user, filteredFields);
+    user.nombre = req.body.nombre;
+    user.apellido = req.body.apellido;
+    user.email = req.body.email;
+    user.genero = req.body.genero;
+    user.fechaNacimiento = req.body.fechaNacimiento;
+    user.ubicacion = req.body.ubicacion;
+    user.metodosPago = req.body.metodosPago;
+    user.profile_picture = cloudinaryImage.secure_url;
 
     const updatedUser = await user.save();
 
@@ -219,7 +204,7 @@ const uploadProfilePhoto = async (req, res) => {
     });
 
     // Actualiza la foto de perfil del usuario
-    user.fotoPerfil = cloudinaryImage.secure_url;
+    user.profile_picture = cloudinaryImage.secure_url;
 
     await user.save();
 
@@ -231,48 +216,11 @@ const uploadProfilePhoto = async (req, res) => {
   }
 };
 
-const updateProfilePicture = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const user = await User.findById(id);
-
-    if (!user) {
-      return res.status(404).json({ error: "Usuario no encontrado" });
-    }
-
-    // Obtén la URL de la foto de perfil anterior
-    const previousProfilePictureUrl = user.profile_picture;
-    console.log(previousProfilePictureUrl);
-
-    // Elimina la foto de perfil anterior de Cloudinary
-    if (previousProfilePictureUrl) {
-      await cloudinary.uploader.destroy(previousProfilePictureUrl);
-    }
-
-    // Sube la nueva foto de perfil a Cloudinary
-    const cloudinaryImage = await cloudinary.uploader.upload(req.file.path, {
-      folder: "Foto de perfil",
-    });
-
-    // Guarda la URL de la nueva foto de perfil en la base de datos
-    user.profile_picture = cloudinaryImage.secure_url;
-    await user.save();
-
-    res
-      .status(200)
-      .json({ message: "Foto de perfil actualizada correctamente" });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Error al cambiar la foto de perfil" });
-  }
-};
-
 module.exports = {
   updatePasswordController,
   uploadProfilePhoto,
   updateUser,
   getUsersHandler,
   createUserController,
-  updateProfilePicture,
   getEMAIL,
 };
