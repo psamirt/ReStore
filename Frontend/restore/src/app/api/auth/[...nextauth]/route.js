@@ -6,7 +6,6 @@ const handler = NextAuth({
         GoogleProvider({
             clientId: process.env.GOOGLE_CLIENT_ID,
             clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-            scope: 'profile'
           }),
           GitHubProvider({
             clientId: process.env.GITHUB_ID,
@@ -41,10 +40,7 @@ const handler = NextAuth({
             return true
         },
          
-    },
-    pages: {
-        home: '/home',
-      },
+    }
       
 });
 export { handler as GET, handler as POST };
