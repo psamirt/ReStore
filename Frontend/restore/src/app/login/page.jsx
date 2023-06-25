@@ -6,7 +6,7 @@ import axios from "axios";
 import bcrypt from "bcryptjs";
 import "./login.css";
 import Link from "next/link";
-import { signIn, signOut, useSession, getProviders } from "next-auth/react";
+import { signIn, getProviders } from "next-auth/react";
 
 function Login() {
   const router = useRouter();
@@ -21,7 +21,7 @@ function Login() {
   }, []);
 
   const handleSignIn = async (providerId) => {
-    const result = await signIn(providerId);
+    const result = await signIn(providerId,{ callbackUrl: "/home" });
     // Redirigir al usuario al home después de iniciar sesión correctamente
  
   };

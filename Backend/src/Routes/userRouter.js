@@ -15,7 +15,7 @@ router.post("/", userController.createUserController);
 
 router.put("/changePassword", userController.updatePasswordController);
 
-router.put("/:id", userController.updateUser);
+router.put("/:id", upload.single("profileImage"), userController.updateUser);
 // Ruta POST para subir la foto de perfil del usuario
 router.post(
   "/:id/foto-perfil",
@@ -24,11 +24,6 @@ router.post(
 );
 
 // Ruta PUT para actualizar la foto de perfil del usuario
-router.put(
-  "/:id/foto-perfil",
-  upload.single("profileImage"),
-  userController.updateProfilePicture
-);
 
 router.get("/", userController.getUsersHandler);
 

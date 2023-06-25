@@ -1,8 +1,8 @@
-"use client";
-import Link from "next/link";
-import Searchbar from "../searchbar/searchbar";
-import { useState, useEffect } from "react";
-import { signIn, signOut, useSession, getProviders } from "next-auth/react";
+'use client';
+import Link from 'next/link';
+import Searchbar from '../searchbar/searchbar';
+import { useState, useEffect } from 'react';
+import { signIn, signOut, useSession, getProviders } from 'next-auth/react';
 import axios from "axios";
 import { fetchData } from "next-auth/client/_utils";
 import { useRouter } from "next/navigation"
@@ -55,16 +55,17 @@ export const Navbar = () => {
     router.push("/home")
   };
 
+
   return (
     <nav className="py-4 z-20 sticky top-0 bg-slate-900 text-slate-50">
       <div className="container px-4 mx-auto flex gap-4 justify-between">
         <Link className="link" href={"/home"}>
         Pagina Principal
         </Link>
-        <div className="flex gap-8 justify-between items-center">
+        <div className='flex gap-8 justify-between items-center'>
           {session ? (
             <Link
-              className="link"
+              className='link'
               href={{
                 pathname: "/user",
                 query: {

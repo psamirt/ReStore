@@ -1,4 +1,4 @@
-const { Schema, model } = require("mongoose");
+const { Schema, model } = require('mongoose');
 
 const userSchema = new Schema({
   nombre: {
@@ -21,7 +21,7 @@ const userSchema = new Schema({
   },
   genero: {
     type: String,
-    enum: ["Masculino", "Femenino", "Otro"],
+    enum: ['Masculino', 'Femenino', 'Otro'],
   },
   fechaNacimiento: {
     type: Date,
@@ -49,6 +49,9 @@ const userSchema = new Schema({
         type: Number,
         default: 1,
       },
+      precio: {
+        type: Number,
+      },
     },
   ],
   metodosPago: [
@@ -63,4 +66,4 @@ const userSchema = new Schema({
   ],
 });
 
-module.exports = model("User", userSchema);
+module.exports = model('User', userSchema);
