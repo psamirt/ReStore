@@ -204,7 +204,7 @@ const uploadProfilePhoto = async (req, res) => {
     });
 
     // Actualiza la foto de perfil del usuario
-    user.fotoPerfil = cloudinaryImage.secure_url;
+    user.profile_picture = cloudinaryImage.secure_url;
 
     await user.save();
 
@@ -222,6 +222,5 @@ module.exports = {
   updateUser,
   getUsersHandler,
   createUserController,
-  updateProfilePicture,
   getEMAIL,
 };
