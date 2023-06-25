@@ -86,6 +86,7 @@ const updateUser = async (req, res) => {
       return res.status(404).json({ message: "No se encontró el usuario" });
     }
 
+    
     // Verificar la contraseña anterior
     const { oldPassword, newPassword } = req.body;
 
