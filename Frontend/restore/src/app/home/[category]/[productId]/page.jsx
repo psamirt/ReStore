@@ -5,9 +5,8 @@ import { Provider } from 'react-redux';
 import store from '../../../../redux/store.js';
 import { useParams } from 'next/navigation.js';
 
-
-async function Detail() {
-  const params = useParams()
+function Detail() {
+  const params = useParams();
 
   return (
     <>

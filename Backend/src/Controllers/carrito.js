@@ -1,25 +1,26 @@
-const User = require("../Database/models/userModel");
+const User = require('../Database/models/userModel');
 
 // agregar usuario al carrito
 const addToCartHandler = async (req, res) => {
   try {
-    const { userId, productId } = req.body;
+    const { userId, productId, precio } = req.body;
 
     const user = await User.findById(userId);
     if (!user) {
-      return res.status(404).json({ error: "Usuario no encontrado" });
+      return res.status(404).json({ error: 'Usuario no encontrado' });
     }
 
     // verifico si el producto existe o si ya está en el carrito del usuario
     if (!user.carrito.some((item) => item.productId === productId)) {
       // si el producto no está en el carrito, agregarlo con una cantidad inicial de 1
-      user.carrito.push({ productId, cantidad: 1 });
+      user.carrito.push({ productId, cantidad: 1, precio });
       await user.save();
     }
+    //si esta agregarle cantidad
 
-    res.status(200).json({ message: "Producto agregado al carrito con éxito" });
+    res.status(200).json({ message: 'Producto agregado al carrito con éxito' });
   } catch (error) {
-    res.status(500).json({ error: "Error al agregar el producto al carrito" });
+    res.status(500).json({ error: 'Error al agregar el producto al carrito' });
   }
 };
 
@@ -27,28 +28,27 @@ const addToCartHandler = async (req, res) => {
 const removeFromCartHandler = async (req, res) => {
   try {
     const { userId, productId } = req.body;
-
     await User.findByIdAndUpdate(userId, {
       $pull: { carrito: { productId } },
     });
 
     res
       .status(200)
-      .json({ message: "Producto eliminado del carrito con éxito" });
+      .json({ message: 'Producto eliminado del carrito con éxito' });
   } catch (error) {
     res
       .status(500)
-      .json({ error: "Error al eliminar el producto del carrito" });
+      .json({ error: 'Error al eliminar el producto del carrito' });
   }
 };
 const getCartProductsHandler = async (req, res) => {
   try {
-    const { userId } = req.body;
+    const { userId } = req.query;
 
     const user = await User.findById(userId);
 
     if (!user) {
-      return res.status(404).json({ error: "Usuario no encontrado" });
+      return res.status(404).json({ error: 'Usuario no encontrado' });
     }
 
     const products = user.carrito;
@@ -57,7 +57,7 @@ const getCartProductsHandler = async (req, res) => {
   } catch (error) {
     res
       .status(500)
-      .json({ error: "Error al obtener los productos del carrito" });
+      .json({ error: 'Error al obtener los productos del carrito' });
   }
 };
 

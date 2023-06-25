@@ -1,47 +1,57 @@
-"use client";
-import React, { useEffect } from "react";
-import { fetchUsuario } from "../home/fetch";
-import { Navbar } from "../components/navbar/navbar";
-import defaultImage from "./defaultImage.jpg";
-import Image from "next/image";
-import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
+'use client';
+import React, { useEffect, useState } from 'react';
+import { fetchUsuario } from '../home/fetch';
+import { Navbar } from '../components/navbar/navbar';
+import defaultImage from './defaultImage.jpg';
+import Image from 'next/image';
+import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
+import axios from 'axios';
 
-async function User({ searchParams }) {
+function User({ searchParams }) {
   const { data: session, status } = useSession();
   const router = useRouter();
-
+  const [usuario, setUsuario] = useState(null);
+  // console.log(session);
+  // if (!session) {
+  //   router.push('/login');
+  //   return 'Debes estar logueado para ver tu perfil';
+  // }
+  console.log('a');
   useEffect(() => {
-    if (!session) {
-      router.push("/login");
-      return;
-    }
+    const fetchUsuario = async (id) => {
+      const { data } = await axios(
+        `https://re-store.onrender.com/users/${id}/email`
+      );
+      setUsuario(data);
+    };
+    fetchUsuario(searchParams.User);
   }, []);
 
-  if (!session) {
-    return;
-  }
-
-  const usuario = await fetchUsuario(searchParams.User);
   return (
     <>
       <Navbar></Navbar>
+
       <button>Editar perfil</button>
-      <div className="flex items-center">
+      <div className='flex items-center'>
         <Image
           src={session ? session.user.image : defaultImage}
-          alt="imagen"
+          alt='imagen'
           height={100}
           width={100}
         />
         <p> </p>
-        <div className="ml-4">
-          <p className="text-lg font-bold">Nombre: {usuario.nombre}</p>
-          <p className="text-lg font-bold">Apellido: {usuario.apellido}</p>
-          <p className="text-lg font-bold">Email: {usuario.email}</p>
-          <p className="text-lg font-bold">
-            Día de nacimiento: {usuario.fechaNacimiento}
-          </p>
+        <div className='ml-4'>
+          {usuario && (
+            <div>
+              <p className='text-lg font-bold'>Nombre: {usuario.nombre}</p>
+              <p className='text-lg font-bold'>Apellido: {usuario.apellido}</p>
+              <p className='text-lg font-bold'>Email: {usuario.email}</p>
+              <p className='text-lg font-bold'>
+                Día de nacimiento: {usuario.fechaNacimiento}
+              </p>
+            </div>
+          )}
         </div>
       </div>
       {/* <div className="mt-4">
