@@ -17,6 +17,10 @@ export default function MyForm() {
     return <p>Acceso denegado</p>
   }
   useEffect(() => {
+    if (!session && !document.cookie.includes("UserLocal")) {
+      router.push("/login");
+      return;
+    }
     const fetchData = async () => {
       const response = await axios.get(
         "https://re-store.onrender.com/categories/technology/subcategorias"
@@ -26,6 +30,7 @@ export default function MyForm() {
     fetchData();
   }, []);
 
+ 
 
   const { TextArea } = Input;
   const { Option } = Select;
