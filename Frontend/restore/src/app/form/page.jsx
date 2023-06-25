@@ -12,7 +12,7 @@ export default function MyForm() {
   const router = useRouter();
 
   useEffect(() => {
-    if (!session) {
+    if (!session && !document.cookie.includes("UserLocal")) {
       router.push("/login");
       return;
     }
@@ -25,9 +25,7 @@ export default function MyForm() {
     fetchData();
   }, []);
 
-  if (!session) {
-    return;
-  }
+ 
 
   const { TextArea } = Input;
   const { Option } = Select;

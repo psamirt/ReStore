@@ -219,7 +219,7 @@ const uploadProfilePhoto = async (req, res) => {
     });
 
     // Actualiza la foto de perfil del usuario
-    user.fotoPerfil = cloudinaryImage.secure_url;
+    user.imagenDePerfil = cloudinaryImage.secure_url;
 
     await user.save();
 
@@ -241,7 +241,7 @@ const updateProfilePicture = async (req, res) => {
     }
 
     // Obtén la URL de la foto de perfil anterior
-    const previousProfilePictureUrl = user.profile_picture;
+    const previousProfilePictureUrl = user.imagenDePerfil;
     console.log(previousProfilePictureUrl);
 
     // Elimina la foto de perfil anterior de Cloudinary
@@ -255,7 +255,7 @@ const updateProfilePicture = async (req, res) => {
     });
 
     // Guarda la URL de la nueva foto de perfil en la base de datos
-    user.profile_picture = cloudinaryImage.secure_url;
+    user.imagenDePerfil = cloudinaryImage.secure_url;
     await user.save();
 
     res
