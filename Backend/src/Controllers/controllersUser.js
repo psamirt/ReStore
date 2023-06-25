@@ -78,36 +78,41 @@ const createUserController = async (req, res) => {
 const updateUser = async (req, res) => {
   try {
     const { id } = req.params;
+    if (req.file) {
 
-    const user = await User.findById(id);
-
-    if (!user) {
-      return res.status(404).json({ message: "No se encontró el usuario" });
+      const previousProfilePictureUrl = user.profile_picture;
+      console.log(previousProfilePictureUrl);
+  
+      if (previousProfilePictureUrl) {
+        await cloudinary.uploader.destroy(previousProfilePictureUrl);
+      }
+  
+      const cloudinaryImage = await cloudinary.uploader.upload(req.file.path, {
+        folder: "Foto de perfil",
+      });
     }
+     // user.profile_picture = cloudinaryImage.secure_url;
+    const update = {
+      $set: {
+        nombre: req.body.nombre,
+        apellido: req.body.apellido,
+        email: req.body.email,
+        genero: req.body.genero,
+        fechaNacimiento: req.body.fechaNacimiento,
+        ubicacion: req.body.ubicacion,
+        metodosPago: req.body.metodosPago,
+      },
+    };
 
-    const previousProfilePictureUrl = user.profile_picture;
-    console.log(previousProfilePictureUrl);
+    const updtUser = await User.findOneAndUpdate({ _id: id }, update, { new: true });
 
-    if (previousProfilePictureUrl) {
-      await cloudinary.uploader.destroy(previousProfilePictureUrl);
-    }
 
-    const cloudinaryImage = await cloudinary.uploader.upload(req.file.path, {
-      folder: "Foto de perfil",
-    });
+  
 
-    user.nombre = req.body.nombre;
-    user.apellido = req.body.apellido;
-    user.email = req.body.email;
-    user.genero = req.body.genero;
-    user.fechaNacimiento = req.body.fechaNacimiento;
-    user.ubicacion = req.body.ubicacion;
-    user.metodosPago = req.body.metodosPago;
-    user.profile_picture = cloudinaryImage.secure_url;
+   
 
-    const updatedUser = await user.save();
 
-    res.status(200).json(updatedUser);
+    res.status(200).json(updtUser);
   } catch (error) {
     console.error(error);
     res
