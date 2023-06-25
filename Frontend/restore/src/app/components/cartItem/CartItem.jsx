@@ -13,7 +13,7 @@ export default function CartItem({ productId, item, userId }) {
   useEffect(() => {
     const fetch = async () => {
       const response = await axios.get(
-        `http://localhost:3001/categories/technology/Detail/${productId}`
+        `https://re-store.onrender.com/categories/technology/Detail/${productId}`
       );
       setProduct(response.data.result[0]);
     };

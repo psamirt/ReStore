@@ -43,7 +43,7 @@ export const addFromDatabase = (localItems, userId) => {
   return async (dispatch) => {
     try {
       const { data: dbItems } = await axios.get(
-        `http://localhost:3001/carrito`,
+        `https://re-store.onrender.com/carrito`,
         {
           params: { userId },
         }
@@ -74,11 +74,14 @@ export const addFromDatabase = (localItems, userId) => {
 const loggedAddToCart = (newProduct, userId) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.post(`http://localhost:3001/carrito`, {
-        productId: newProduct.productId,
-        userId,
-        precio: newProduct.precio,
-      });
+      const { data } = await axios.post(
+        `https://re-store.onrender.com/carrito`,
+        {
+          productId: newProduct.productId,
+          userId,
+          precio: newProduct.precio,
+        }
+      );
       return dispatch({
         type: ADD_TO_CART,
         payload: newProduct,
@@ -90,12 +93,15 @@ const loggedAddToCart = (newProduct, userId) => {
 const loggedRemoveFromCart = (productId, userId) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.delete('http://localhost:3001/carrito', {
-        data: {
-          productId: productId,
-          userId: userId,
-        },
-      });
+      const { data } = await axios.delete(
+        'https://re-store.onrender.com/carrito',
+        {
+          data: {
+            productId: productId,
+            userId: userId,
+          },
+        }
+      );
       console.log(data);
       return dispatch({ type: REMOVE_FROM_CART, payload: productId });
     } catch (error) {}

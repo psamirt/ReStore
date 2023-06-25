@@ -29,7 +29,7 @@ export function DetailId({ param }) {
   useEffect(() => {
     const fetch = async () => {
       const response = await axios.get(
-        `http://localhost:3001/categories/technology/Detail/${param}`
+        `https://re-store.onrender.com/categories/technology/Detail/${param}`
       );
       setPost(response.data);
     };

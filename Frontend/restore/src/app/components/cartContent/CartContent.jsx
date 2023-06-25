@@ -58,7 +58,7 @@ export default function CartContent() {
           </div>
         </div>
       )}
-      {cart.length ? (
+      {cart?.length ? (
         <div>
           <hr className='mb-4' />
           <p className='text-lg font-medium mb-4'>

@@ -20,7 +20,9 @@ function User({ searchParams }) {
   console.log('a');
   useEffect(() => {
     const fetchUsuario = async (id) => {
-      const { data } = await axios(`http://localhost:3001/users/${id}/email`);
+      const { data } = await axios(
+        `https://re-store.onrender.com/users/${id}/email`
+      );
       setUsuario(data);
     };
     fetchUsuario(searchParams.User);
