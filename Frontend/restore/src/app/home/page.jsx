@@ -23,28 +23,28 @@ async function Home() {
             title='click to visit ConsolasyVideojuegos'
             href={'/home/ConsolasyVideojuegos'}
           >
-            ico
+            Consolas
           </Link>
           <Link title='click to visit TV' href={'/home/TV'}>
-            ico
+            TV
           </Link>
           <Link title='click to visit Celulares' href={'/home/Celulares'}>
-            ico
+            Celulares
           </Link>
           <Link
             title='click to visit ElectronicaAudioVideo'
             href={'/home/ElectronicaAudioVideo'}
           >
-            ico
+            Audio y video
           </Link>
           <Link title='click to visit Computacion' href={'/home/Computacion'}>
-            ico
+            Computacion
           </Link>{' '}
           <Link
             title='click to visit CamarasyAccesorios'
             href={'/home/CamarasyAccesorios'}
           >
-            ico
+            Camaras
           </Link>
         </div>
         <h2 className='text-4xl text-center mb-4 font-medium text-blue-900'>

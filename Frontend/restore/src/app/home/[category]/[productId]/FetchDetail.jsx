@@ -1,6 +1,5 @@
+
 'use client';
-import React, { useEffect, useState } from 'react';
-import './detail.css';
 import { fetchDetail } from '../../fetch';
 import Image from 'next/image';
 import Boton from '@/app/components/Button/Button';
@@ -52,7 +51,21 @@ export function DetailId({ param }) {
   };
 
   if (post.message) return <NotFound />;
+
+  const calculateDiscountedPrice = () => {
+    if (post.result[0].Ofertas && post.result[0].precio) {
+      const descuento = parseFloat(post.result[0].Ofertas) / 100;
+      const precio = parseFloat(post.result[0].precio);
+      const precioConDescuento = precio - precio * descuento;
+      return precioConDescuento.toFixed(2);
+    }
+    return null;
+  };
+
+  const precioConDescuento = calculateDiscountedPrice();
+
   return (
+
     <div className='container mx-auto px-4 my-8'>
       {!post.result[0] ? (
         <Loader />
@@ -75,17 +88,19 @@ export function DetailId({ param }) {
               <p className=''>Ubicacion : {post.result[0].Ubicacion}</p>
               <p className=''>Estado: {post.result[0].state}</p>
 
-              {/* <h3 className="">
-            Cantidad :{" "}
-            <select className="" name="cantidad" id="cantidad">
-              <option value="1">1 unidad</option>
-              <option value="2">2 unidades</option>
-              <option value="3">3 unidades</option>
-              <option value="4">4 unidades</option>
-              <option value="5">5 unidades</option>
-              <option value="6">6 unidades</option>
-            </select>
-          </h3> */}
+               {precioConDescuento ? (
+            <p className='font-medium text-base text-slate-500'>
+              Precio:{" "}
+              <span className='text-red-400 line-through'>
+                ${post.result[0].precio}
+              </span>{" "}
+              <span className='text-slate-800'>${precioConDescuento}</span>
+            </p>
+          ) : (
+            <p className='font-medium text-base text-slate-800'>
+              Precio: ${post.result[0].precio}
+            </p>
+          )}
               <h3 className=''>
                 Calificación del vendedor : <img src='' alt='' />5
               </h3>
@@ -132,22 +147,8 @@ export function DetailId({ param }) {
                 Descripción:{' '}
               </h3>
               <p className='text-gray-600 leading-normal text-sm'>
-                {/* {post.result[0].Description} */}
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim
-                repellendus fugiat provident necessitatibus a nulla hic
-                veritatis, unde, eveniet quod eos adipisci ab iure totam,
-                excepturi obcaecati consequatur pariatur? Odit! Harum mollitia
-                natus fugit doloremque, vero sed assumenda, laudantium aliquam
-                alias quaerat rem eos sunt aliquid doloribus deserunt dolore
-                fugiat unde ex exercitationem! Aliquid veritatis reiciendis
-                aperiam, qui eligendi dolore. Dolorem voluptatem officiis, fuga
-                quae, temporibus mollitia iusto odio a cum facere at laudantium
-                odit, perspiciatis tenetur ullam. Atque aspernatur itaque natus
-                sed ab voluptates! Inventore dolores fugiat mollitia iusto?
-                Harum, nesciunt doloremque perspiciatis tenetur aspernatur quas
-                aliquid ullam deserunt dolor odit, fugit quibusdam. Atque
-                perspiciatis eos exercitationem sit. Nisi eligendi illo earum
-                aspernatur magni vero. Minima rerum dicta non.
+                {post.result[0].Description}
+              
               </p>
             </div>
             <div className='grid gap-2'>
@@ -163,6 +164,7 @@ export function DetailId({ param }) {
           </div>
         </div>
       )}
+
     </div>
   );
 }

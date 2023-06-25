@@ -11,10 +11,12 @@ export const Navbar = () => {
   const { data: session, status } = useSession();
 
   return (
-    <nav className=' py-4  z-20 sticky top-0 bg-slate-900 text-slate-50'>
-      <div className='container  px-4 mx-auto flex gap-4 justify-between'>
-        <Link className='link' href={'/home'}>
-          // iconos aqui
+
+    <nav className=" py-4  z-20 sticky top-0 bg-slate-900 text-slate-50">
+      <div className="container  px-4 mx-auto flex gap-4 justify-between">
+        <Link className="link" href={"/home"}>
+          Home
+
         </Link>
         <div className='flex gap-8 justify-between items-center'>
           {session && (
@@ -48,7 +50,11 @@ export const Navbar = () => {
             </Link>
           )}
           <Searchbar />
-          <Link href={'/cart'}>//iconos aqui</Link>
+
+          <Link href={'/cart'}>
+            Carrito
+          </Link>
+
         </div>
       </div>
     </nav>
