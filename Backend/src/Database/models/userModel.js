@@ -50,6 +50,9 @@ const userSchema = new Schema({
       precio: {
         type: Number,
       },
+      oferta: {
+        type: Number,
+      },
     },
   ],
   metodosPago: [

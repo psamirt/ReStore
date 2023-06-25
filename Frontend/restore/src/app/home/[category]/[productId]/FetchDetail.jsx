@@ -17,6 +17,11 @@ export function DetailId({ param }) {
   const { data: session, status } = useSession();
   const [post, setPost] = useState({ result: [] });
   const [onCart, setOnCart] = useState(false);
+  const cookieValue = document.cookie
+    .split('; ')
+    .find((row) => row.startsWith('User_id'))
+    ?.split('=')[1];
+  console.log(cookieValue);
 
   const [addedToCart, setAddedToCart] = useState(false);
   useEffect(() => {
@@ -37,16 +42,21 @@ export function DetailId({ param }) {
 
   useEffect(() => {
     if (!addedToCart) {
-      if (cart.some((cartItem) => cartItem._id === param)) setOnCart(true);
+      if (cart.some((cartItem) => cartItem.productId === param))
+        setOnCart(true);
     }
   }, [addedToCart]);
 
   const handleAddToCart = () => {
     setAddedToCart(true);
-    //DESPACHAR A CART SOLO {productId: post.result[0]._id}
-    //Y armar desp el objeto con la cantidad tambien
     return dispatch(
-      addToCart(post.result[0]._id, session?.user.id, post.result[0].precio)
+      addToCart(
+        post.result[0]._id,
+        session?.user.id,
+        cookieValue,
+        post.result[0].precio,
+        post.result[0]?.Ofertas
+      )
     );
   };
 
@@ -87,25 +97,23 @@ export function DetailId({ param }) {
               <p className=''>Ubicacion : {post.result[0].Ubicacion}</p>
               <p className=''>Estado: {post.result[0].state}</p>
 
-              {precioConDescuento ? (
-                <p className='font-medium text-base text-slate-500'>
-                  Precio:{' '}
-                  <span className='text-red-400 line-through'>
-                    ${post.result[0].precio}
-                  </span>{' '}
-                  <span className='text-slate-800'>${precioConDescuento}</span>
-                </p>
-              ) : (
-                <p className='font-medium text-base text-slate-800'>
-                  Precio: ${post.result[0].precio}
-                </p>
-              )}
               <h3 className=''>
                 Calificación del vendedor : <img src='' alt='' />5
               </h3>
-              <p className='text-blue-900 text-xl font-semibold'>
-                Precio: ${post.result[0].precio}
-              </p>
+              {precioConDescuento ? (
+                <p className='text-blue-900 text-xl font-semibold'>
+                  Precio:{' '}
+                  <span className='text-red-500 line-through'>
+                    ${post.result[0].precio}
+                  </span>{' '}
+                  <span className=''>${precioConDescuento}</span>
+                </p>
+              ) : (
+                <p className='text-blue-900 text-xl font-semibold'>
+                  Precio: ${post.result[0].precio}
+                </p>
+              )}
+
               <div>
                 <label className='block mb-2'>Método de envio :</label>
                 <select
