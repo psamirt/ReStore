@@ -76,7 +76,7 @@ export default function CartContent() {
                 const precioFinal = precio - precio * descuento;
                 return (Number(precioFinal) + Number(prev)).toFixed(2);
               }
-              return item.precio + prev;
+              return Number(item.precio) + Number(prev)
             }, 0)}
           </p>
           {/* desabilitar el boton si no esta logueado */}
