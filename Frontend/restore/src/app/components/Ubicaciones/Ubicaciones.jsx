@@ -6,6 +6,7 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import "./Ubicaciones.css";
 import Link from "next/link";
+import BackButton from '@/app/components/backButton/BackButton';
 
 function Ubicaciones() {
   const router = useRouter();
@@ -114,6 +115,7 @@ function Ubicaciones() {
   return (
     <div>
       <Navbar></Navbar>
+      <BackButton />
       <div className="containerUbi">
         {userData &&
           userData.map((e) => (

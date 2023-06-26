@@ -67,7 +67,7 @@ function usuario({ searchParams }) {
     genero: "",
   });
 
-  console.log(session, status);
+  // console.log(session, status);
   const handleSubmit = () => {
     const formData = new FormData();
 
@@ -97,24 +97,36 @@ function usuario({ searchParams }) {
       const response = await fetch(
         `https://re-store.onrender.com/users/${email}/email`
       );
-      const user = await response.json();
-      console.log(user);
+      const userr = await response.json();
+      console.log(userr);
       setInput({
-        email: user.email,
-        nombre: user.nombre,
-        apellido: user.apellido,
-        genero: user.genero,
-        fechaNacimiento: user.fechaNacimiento,
+        email: userr.email,
+        nombre: userr.nombre,
+        apellido: userr.apellido,
+        genero: userr.genero,
+        fechaNacimiento: userr.fechaNacimiento,
       });
     };
-    session && fetchUsuario(session.user.email); //hardcodeado por ahora
-  }, []);
-  console.log(input);
-  console.log(readOnly);
-  console.log(newInput);
+    session && fetchUsuario(session.user.email) 
+if (cookieValue) {
+  setInput({
+    email: user.email,
+    nombre: user.nombre,
+    apellido: user.apellido,
+    genero: user.genero,
+    fechaNacimiento: user.fechaNacimiento,
+  });
+}
+
+  }, [cookieValue,session,user]);
+  // console.log(input);
+  // console.log(readOnly);
+  // console.log(newInput);
   const handleToggleReadOnly = () => {
     setReadOnly(!readOnly);
   };
+console.log(input)
+console.log(user)
 
   const handleSelectChange = (value, clave) => {
     setNewInput((prevInput) => ({
