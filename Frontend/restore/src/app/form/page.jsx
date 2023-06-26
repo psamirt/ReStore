@@ -7,12 +7,17 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
 export default function MyForm() {
-  const { data: session } = useSession();
+  const { data: session,status } = useSession();
   const [categoria, setCategoria] = useState(null);
   const router = useRouter();
-
+  if (status === "loading") {
+    return <p>Loading...</p>
+  }
+  if (status === "unauthenticated") {
+    return <p>Acceso denegado</p>
+  }
   useEffect(() => {
-    if (!session) {
+    if (!session && !document.cookie.includes("UserLocal")) {
       router.push("/login");
       return;
     }
@@ -25,9 +30,7 @@ export default function MyForm() {
     fetchData();
   }, []);
 
-  if (!session) {
-    return;
-  }
+ 
 
   const { TextArea } = Input;
   const { Option } = Select;

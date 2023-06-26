@@ -337,7 +337,7 @@ function Signup() {
           </div>
           <div className="inputBox">
             <input
-              type="text"
+              type="number"
               required
               name="ubiCodigoPostal"
               value={user.ubiCodigoPostal}
@@ -349,7 +349,7 @@ function Signup() {
           <div className="inputBox">
             <input type="submit" value="Crea tu cuenta"></input>
           </div>
-          <p id="userCreatedMessage">{flag ? "Verifca tu email" : null}</p>
+          <p id="userCreatedMessage">{flag ? "Verifica tu email" : null}</p>
           <p id="userCreatedMessage">{message}</p>
           <p>
             Ya sos miembro?{" "}
