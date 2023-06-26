@@ -116,7 +116,7 @@ export const Navbar = () => {
             </Link>
           ) : null}
           <Searchbar />
-          <Link href={"/cart"}>{/* iconos aquí */}</Link>
+          <Link href={"/cart"}>Carrito</Link>
         </div>
       </div>
     </nav>

@@ -124,7 +124,7 @@ export default function MyForm() {
     console.log(Object.fromEntries(formData.entries()));
 
     axios
-      .post("https://re-store.onrender.com/technology/posteo", formData)
+      .post("https://re-store.onrender.com/categories/technology/posteo", formData)
       .then(() => {
         alert("Producto creado exitosamente");
       })
