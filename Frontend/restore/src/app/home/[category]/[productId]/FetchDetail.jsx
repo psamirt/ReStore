@@ -177,7 +177,7 @@ export function DetailId({ param }) {
               <h3 className='text-xl font-semibold text-blue-900'>
                 También te puede interesar:
               </h3>
-              <HomeContainer data={ofertas}></HomeContainer>
+              {/* <HomeContainer data={ofertas}></HomeContainer> */}
             </div>
           </div>
         </div>

@@ -3,6 +3,7 @@ import Link from 'next/link';
 import Searchbar from '../searchbar/searchbar';
 import { useState, useEffect } from 'react';
 import { signIn, signOut, useSession, getProviders } from 'next-auth/react';
+import Image from 'next/image';
 //mostrar fabars como clickeable y desplegar menu con lo otro en modo responsive
 
 export const Navbar = () => {
@@ -27,9 +28,11 @@ export const Navbar = () => {
                 },
               }}
             >
-              <img
+              <Image
                 src={session.user.image}
                 style={{ width: '35px', height: '35px' }}
+                width={35}
+                height={35}
                 alt={session.user.name}
               />
             </Link>
