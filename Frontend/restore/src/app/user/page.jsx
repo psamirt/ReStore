@@ -12,8 +12,12 @@ function usuario({ searchParams }) {
   const router = useRouter();
 
   useEffect(() => {
-    if (status === 'unauthenticated') router.push('/login');
-  });
+    if (status === 'unauthenticated') {
+      router.push("/login")
+    }
+  })
+ 
+
 
   const [readOnly, setReadOnly] = useState(true);
   const [file, setFile] = useState('');
@@ -72,7 +76,7 @@ function usuario({ searchParams }) {
         fechaNacimiento: user.fechaNacimiento,
       });
     };
-    fetchUsuario(searchParams.User); //hardcodeado por ahora
+    session && fetchUsuario(session.user.email); //hardcodeado por ahora
   }, []);
   console.log(input);
   console.log(readOnly);
