@@ -16,7 +16,7 @@ export function DetailId({ param }) {
   const { cart } = useSelector((store) => store);
   const { data: session, status } = useSession();
   const [post, setPost] = useState({ result: [] });
-  const [ofertas, setOfertas] = useState([]);
+  const [ofertas, setOfertas] = useState({ result: [] });
   const [onCart, setOnCart] = useState(false);
   const [cookieValue, setCookieValue] = useState(null);
   useEffect(() => {
@@ -86,7 +86,6 @@ export function DetailId({ param }) {
     }
     return null;
   };
-
   const precioConDescuento = calculateDiscountedPrice();
 
   return (
@@ -177,7 +176,7 @@ export function DetailId({ param }) {
               <h3 className='text-xl font-semibold text-blue-900'>
                 También te puede interesar:
               </h3>
-              {/* <HomeContainer data={ofertas}></HomeContainer> */}
+              <HomeContainer data={ofertas}></HomeContainer>
             </div>
           </div>
         </div>
