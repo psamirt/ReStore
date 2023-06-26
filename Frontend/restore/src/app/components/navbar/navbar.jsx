@@ -3,6 +3,7 @@ import Link from 'next/link';
 import Searchbar from '../searchbar/searchbar';
 import { useState, useEffect } from 'react';
 import { signIn, signOut, useSession, getProviders } from 'next-auth/react';
+import Image from 'next/image';
 //mostrar fabars como clickeable y desplegar menu con lo otro en modo responsive
 
 export const Navbar = () => {
@@ -11,12 +12,10 @@ export const Navbar = () => {
   const { data: session, status } = useSession();
 
   return (
-
-    <nav className=" py-4  z-20 sticky top-0 bg-slate-900 text-slate-50">
-      <div className="container  px-4 mx-auto flex gap-4 justify-between">
-        <Link className="link" href={"/home"}>
+    <nav className=' py-4  z-20 sticky top-0 bg-slate-900 text-slate-50'>
+      <div className='container  px-4 mx-auto flex gap-4 justify-between items-center'>
+        <Link className='link ' href={'/home'}>
           Home
-
         </Link>
         <div className='flex gap-8 justify-between items-center'>
           {session && (
@@ -29,9 +28,11 @@ export const Navbar = () => {
                 },
               }}
             >
-              <img
+              <Image
                 src={session.user.image}
                 style={{ width: '35px', height: '35px' }}
+                width={35}
+                height={35}
                 alt={session.user.name}
               />
             </Link>
@@ -42,22 +43,20 @@ export const Navbar = () => {
               Signup/Login
             </Link>
           ) : (
-            <button onClick={() =>  signOut({ callbackUrl: "/home" })}>Sign out</button>
+            <button onClick={() => signOut({ callbackUrl: '/home' })}>
+              Sign out
+            </button>
           )}
           {session && (
             <Link className='link' href={'/form'}>
               Crear producto
             </Link>
-          )} 
+          )}
           <Searchbar />
 
-          <Link href={'/cart'}>
-            Carrito
-          </Link>
-
+          <Link href={'/cart'}>Carrito</Link>
         </div>
       </div>
     </nav>
   );
 };
-

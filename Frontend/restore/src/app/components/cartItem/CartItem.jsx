@@ -6,16 +6,26 @@ import { removeFromCart } from '@/redux/actions';
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
 
-export default function CartItem({ productId, item, userId }) {
+export default function CartItem({ productId, item, userId, userId2 }) {
   const dispatch = useDispatch();
   const router = useRouter();
   const [product, setProduct] = useState({});
+  const [precio, setPrecio] = useState(0);
   useEffect(() => {
     const fetch = async () => {
       const response = await axios.get(
         `https://re-store.onrender.com/categories/technology/Detail/${productId}`
       );
       setProduct(response.data.result[0]);
+
+      if (response.data.result[0].Ofertas && response.data.result[0].precio) {
+        const descuento = parseFloat(response.data.result[0].Ofertas) / 100;
+        const precio = parseFloat(response.data.result[0].precio);
+        const precioFinal = precio - precio * descuento;
+        setPrecio(precioFinal.toFixed(2));
+      } else {
+        setPrecio(response.data.result[0].precio);
+      }
     };
     fetch();
   }, []);
@@ -31,16 +41,16 @@ export default function CartItem({ productId, item, userId }) {
             {product?.name}
           </h2>
           <p className='text-gray-500 text-sm'>{product?.Marca}</p>
-          <p className='text-slate-800 font-semibold text-lg'>
-            ${product?.precio}
-          </p>
-          <span>
+          <p className='text-slate-800 font-semibold text-lg'>${precio}</p>
+          <div>
             <Boton
-              onClick={() => dispatch(removeFromCart(productId, userId))}
+              onClick={() =>
+                dispatch(removeFromCart(productId, userId, userId2))
+              }
               secondary={true}
               text={'Eliminar'}
             />
-          </span>
+          </div>
         </div>
         <div className='relative aspect-square justify-self-end shadow-slate-200 min-h-[160px]'>
           {product.background_image ? (
