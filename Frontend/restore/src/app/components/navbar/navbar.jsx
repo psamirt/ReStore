@@ -40,13 +40,15 @@ export const Navbar = () => {
               Signup/Login
             </Link>
           ) : (
-            <button onClick={() =>  signOut({ callbackUrl: "/home" })}>Sign out</button>
+            <button onClick={() => signOut({ callbackUrl: '/home' })}>
+              Sign out
+            </button>
           )}
           {session && (
             <Link className='link' href={'/form'}>
               Crear producto
             </Link>
-          )} 
+          )}
           <Searchbar />
 
           <Link href={'/cart'}>Carrito</Link>
@@ -55,4 +57,3 @@ export const Navbar = () => {
     </nav>
   );
 };
-
