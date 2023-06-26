@@ -5,7 +5,7 @@ import { useSession } from "next-auth/react";
 import { Navbar } from "../../../components/navbar/navbar";
 import axios from "axios";
 import "./form.css";
-
+import BackButton from '@/app/components/backButton/BackButton';
 function UbiForm() {
   const { data: session, status } = useSession();
 
@@ -89,6 +89,7 @@ function UbiForm() {
   return (
     <div>
       <Navbar></Navbar>
+      <BackButton/>
       <form onSubmit={handleSubmit} className="asder">
         <div className="aaaa">
           <input
