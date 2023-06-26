@@ -1,5 +1,4 @@
 'use client';
-import { fetchDetail } from '../../fetch';
 import Image from 'next/image';
 import Boton from '@/app/components/Button/Button';
 import BackButton from '@/app/components/backButton/BackButton';
@@ -10,12 +9,14 @@ import axios from 'axios';
 import Loader from '@/app/components/loader/Loader';
 import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
+import HomeContainer from '@/app/components/HomeContainer/HomeContainer';
 
 export function DetailId({ param }) {
   const dispatch = useDispatch();
   const { cart } = useSelector((store) => store);
   const { data: session, status } = useSession();
   const [post, setPost] = useState({ result: [] });
+  const [ofertas, setOfertas] = useState([]);
   const [onCart, setOnCart] = useState(false);
   const [cookieValue, setCookieValue] = useState(null);
   useEffect(() => {
@@ -40,6 +41,16 @@ export function DetailId({ param }) {
         `https://re-store.onrender.com/categories/technology/Detail/${param}`
       );
       setPost(response.data);
+    };
+    fetch();
+  }, []);
+
+  useEffect(() => {
+    const fetch = async () => {
+      const response = await axios.get(
+        `https://re-store.onrender.com/categories/technology/Ofertas`
+      );
+      setOfertas(response.data);
     };
     fetch();
   }, []);
@@ -98,6 +109,7 @@ export function DetailId({ param }) {
               <h2 className='text-xl font-semibold text-blue-900'>
                 {post.result[0].name} {post.result[0].Marca}
               </h2>
+
               <p className=''>Ubicacion : {post.result[0].Ubicacion}</p>
               <p className=''>Estado: {post.result[0].state}</p>
 
@@ -165,11 +177,7 @@ export function DetailId({ param }) {
               <h3 className='text-xl font-semibold text-blue-900'>
                 También te puede interesar:
               </h3>
-              <img
-                className=''
-                src='https://i.stack.imgur.com/t0k67.png'
-                alt='imagen referencial'
-              />
+              <HomeContainer data={ofertas}></HomeContainer>
             </div>
           </div>
         </div>
