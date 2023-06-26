@@ -51,7 +51,7 @@ function Ubicaciones() {
 
   const handleDelete = async (id) => {
     try {
-      await axios.put("http://localhost:3001/users/ubication/delete", {
+      await axios.put("https://re-store.onrender.com/users/ubication/delete", {
         id: id,
       });
 
@@ -79,7 +79,7 @@ function Ubicaciones() {
     if (flag) {
       setFlag(false);
     } else {
-      await axios.put("http://localhost:3001/users/ubication/modify", {
+      await axios.put("https://re-store.onrender.com/users/ubication/modify", {
         id: editingId,
         ciudad: user.ciudad,
         direccion: user.direccion,
