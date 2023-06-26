@@ -11,10 +11,15 @@ export default function CartContent() {
   const { cart } = useSelector((store) => store);
   const { data: session, status } = useSession();
   const router = useRouter();
-  const cookieValue = document.cookie
-    .split('; ')
-    .find((row) => row.startsWith('User_id'))
-    ?.split('=')[1];
+  const [cookieValue, setCookieValue] = useState(null);
+  useEffect(() => {
+    setCookieValue(
+      document.cookie
+        .split('; ')
+        .find((row) => row.startsWith('User_id'))
+        ?.split('=')[1]
+    );
+  }, []);
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -28,7 +33,7 @@ export default function CartContent() {
   return (
     <div className='container px-4 m-auto my-8'>
       <h1 className='text-3xl  mb-4 font-semibold text-blue-900'>Carrito</h1>
-      {cart.length ? (
+      {cart && cart.length ? (
         //va a haber que fetchear la info de cada producto segun su id, ya sea aca o en cartItem
         cart.map((item) => (
           <CartItem
@@ -59,7 +64,7 @@ export default function CartContent() {
           </div>
         </div>
       )}
-      {cart.length ? (
+      {cart && cart.length ? (
         <div>
           <hr className='mb-4' />
           <p className='text-lg font-medium mb-4'>

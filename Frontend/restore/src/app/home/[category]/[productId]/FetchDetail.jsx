@@ -17,11 +17,15 @@ export function DetailId({ param }) {
   const { data: session, status } = useSession();
   const [post, setPost] = useState({ result: [] });
   const [onCart, setOnCart] = useState(false);
-  const cookieValue = document.cookie
-    .split('; ')
-    .find((row) => row.startsWith('User_id'))
-    ?.split('=')[1];
-  console.log(cookieValue);
+  const [cookieValue, setCookieValue] = useState(null);
+  useEffect(() => {
+    setCookieValue(
+      document.cookie
+        .split('; ')
+        .find((row) => row.startsWith('User_id'))
+        ?.split('=')[1]
+    );
+  }, []);
 
   const [addedToCart, setAddedToCart] = useState(false);
   useEffect(() => {
