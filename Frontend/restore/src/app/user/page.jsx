@@ -8,49 +8,11 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 
 function usuario({ searchParams }) {
-  console.log(searchParams);
   const { data: session, status } = useSession();
   const router = useRouter();
-  const [user, setUser] = useState({});
   const [cookieValue, setCookieValue] = useState(null);
-  useEffect(() => {
-    setCookieValue(
-      document.cookie
-        .split("; ")
-        .find((row) => row.startsWith("User_id"))
-        ?.split("=")[1]
-    );
-  }, []);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      // Verifica si hay sesión y si existe la cookie 'User_id'
-   
-      if (cookieValue) {
-        try {
-          const response = await axios.get(
-            `https://re-store.onrender.com/users/${cookieValue}`
-          );
-          const { data } = response;
-          setUser(data);
-        } catch (error) {
-          // Manejar el error de la petición
-        }
-      }
-    };
-
-    fetchData();
-  }, [session,cookieValue])
-
-
-  useEffect(() => {
-    if (!session && !document.cookie.includes("User_id")) {
-      router.push("/home");
-      return;
-    }
-  }, []);
-
   const [readOnly, setReadOnly] = useState(true);
+  const [cookieImg, setCookieImg] = useState(null)
   const [file, setFile] = useState("");
   const [input, setInput] = useState({
     nombre: "",
@@ -67,7 +29,22 @@ function usuario({ searchParams }) {
     genero: "",
   });
 
-  // console.log(session, status);
+
+  useEffect(() => {
+    setCookieValue(
+      document.cookie
+        .split("; ")
+        .find((row) => row.startsWith("User_id"))
+        ?.split("=")[1]
+    );
+  },[])
+
+  useEffect(() => {
+    if (!session && !document.cookie.includes("User_id")) {
+      router.push("/home");
+    }
+  }, []);
+
   const handleSubmit = () => {
     const formData = new FormData();
 
@@ -79,8 +56,9 @@ function usuario({ searchParams }) {
 
     console.log("ejecutando");
     console.log(Object.fromEntries(formData.entries()));
+    const id = session ? session.user.id : cookieValue
     axios
-      .put(`https://re-store.onrender.com/users/${session.user.id}`, formData)
+      .put(`https://re-store.onrender.com/users/${id}`, formData)
       .then(() => {
         alert("Cambios guardados exitosamente");
       })
@@ -92,41 +70,38 @@ function usuario({ searchParams }) {
       });
   };
 
-  useEffect(() => {
-    const fetchUsuario = async (email) => {
-      const response = await fetch(
-        `https://re-store.onrender.com/users/${email}/email`
-      );
-      const userr = await response.json();
-      console.log(userr);
-      setInput({
-        email: userr.email,
-        nombre: userr.nombre,
-        apellido: userr.apellido,
-        genero: userr.genero,
-        fechaNacimiento: userr.fechaNacimiento,
-      });
-    };
-    session && fetchUsuario(session.user.email) 
-if (cookieValue) {
-  setInput({
-    email: user.email,
-    nombre: user.nombre,
-    apellido: user.apellido,
-    genero: user.genero,
-    fechaNacimiento: user.fechaNacimiento,
-  });
-}
 
-  }, [cookieValue,session,user]);
-  // console.log(input);
-  // console.log(readOnly);
-  // console.log(newInput);
+
+  useEffect(() => {
+    const fetchUsuario = async (id) => {
+      const response = await fetch(
+        `https://re-store.onrender.com/users/${id}`
+      );
+      const user = await response.json();
+      
+      setInput({
+        email: user.email,
+        nombre: user.nombre,
+        apellido: user.apellido,
+        genero: user.genero,
+        fechaNacimiento: user.fechaNacimiento,
+      });
+      cookieValue && setCookieImg(user.imagenDePerfil)
+    };
+
+      if (session) {
+         fetchUsuario(session.user.id);
+      } else 
+         fetchUsuario(cookieValue);
+
+
+
+  }, [cookieValue]);
+
   const handleToggleReadOnly = () => {
     setReadOnly(!readOnly);
   };
-console.log(input)
-console.log(user)
+
 
   const handleSelectChange = (value, clave) => {
     setNewInput((prevInput) => ({
@@ -172,7 +147,7 @@ console.log(user)
                 />
               ) : (
                 <img
-                  src={session && session.user.image || cookieValue && user.imagenDePerfil}
+                  src={session && session.user.image || cookieValue && cookieImg}
                   alt="Preview"
                   style={{ width: "100%" }}
                 />
