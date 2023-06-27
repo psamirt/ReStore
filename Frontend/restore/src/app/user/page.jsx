@@ -52,11 +52,9 @@ function usuario({ searchParams }) {
       if (newInput[key] === "" || newInput[key] === "undefined") continue;
       else formData.append(key, newInput[key]);
     }
-    formData.append("image", file);
-
-    console.log("ejecutando");
-    console.log(Object.fromEntries(formData.entries()));
+    if (file) formData.append("profileImage", file);
     const id = session ? session.user.id : cookieValue
+    console.log([...formData]);
     axios
       .put(`https://re-store.onrender.com/users/${id}`, formData)
       .then(() => {
@@ -132,7 +130,7 @@ function usuario({ searchParams }) {
         >
           <Form.Item label="Imagen" valuePropName="file">
             <Upload
-              disable={readOnly}
+              disabled={session ? true : false}
               listType="picture-card"
               showUploadList={false}
               customRequest={({ file }) => {
