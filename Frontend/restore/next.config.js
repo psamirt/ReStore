@@ -56,6 +56,11 @@ const nextConfig = {
         hostname: 'avatars.githubusercontent.com',
         port: '',
       },
+      {
+        protocol: 'https',
+        hostname: 'static.vecteezy.com',
+        port: '',
+      },
     ],
   },
   eslint: {
