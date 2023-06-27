@@ -6,6 +6,7 @@ import { signIn, signOut, useSession, getProviders } from "next-auth/react";
 import axios from "axios";
 import { fetchData } from "next-auth/client/_utils";
 import { useRouter } from "next/navigation";
+import Image from 'next/image';
 
 export const Navbar = () => {
   const { data: session, status } = useSession();
@@ -95,9 +96,10 @@ export const Navbar = () => {
                 },
               }}
             >
-              <img
+              <Image
                 src={user.imagenDePerfil}
-                style={{ width: "35px", height: "35px" }}
+                width="35"
+                height="35"
                 alt={user.nombre}
               />
             </Link>
