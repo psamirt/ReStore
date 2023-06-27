@@ -6,7 +6,7 @@ import { signIn, signOut, useSession, getProviders } from "next-auth/react";
 import axios from "axios";
 import { fetchData } from "next-auth/client/_utils";
 import { useRouter } from "next/navigation";
-import Image from 'next/image';
+import Image from "next/image";
 
 export const Navbar = () => {
   const { data: session, status } = useSession();
@@ -19,6 +19,15 @@ export const Navbar = () => {
       document.cookie
         .split("; ")
         .find((row) => row.startsWith("User_id"))
+        ?.split("=")[1]
+    );
+  }, []);
+  const [cookieAdmin, setCookieAdmin] = useState(null);
+  useEffect(() => {
+    setCookieAdmin(
+      document.cookie
+        .split("; ")
+        .find((row) => row.startsWith("Admin"))
         ?.split("=")[1]
     );
   }, []);
@@ -47,13 +56,18 @@ export const Navbar = () => {
     };
 
     fetchData();
-  }, [session, flag, fetchData,cookieValue]);
+  }, [session, flag, fetchData, cookieValue]);
 
   const handleLogOut = () => {
     if (cookieValue) {
       deleteCookie("User_id"); // Utiliza la función deleteCookie para borrar la cookie
       setFlag(false);
-      setCookieValue(null)
+      setCookieValue(null);
+    }
+    if (cookieAdmin) {
+      deleteCookie("Admin"); // Utiliza la función deleteCookie para borrar la cookie
+      setFlag(false);
+      setCookieAdmin(null);
     } else {
       signOut();
       setFlag(false);
@@ -116,6 +130,9 @@ export const Navbar = () => {
             <Link className="link" href={"/form"}>
               Crear producto
             </Link>
+          ) : null}
+          {cookieAdmin ? (
+            <Link className="link" href={"/dashboardadmin"}>Dashboard Admin</Link>
           ) : null}
           <Searchbar />
           <Link href={"/cart"}>Carrito</Link>
