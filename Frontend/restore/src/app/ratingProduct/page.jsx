@@ -14,7 +14,7 @@ const Rating = ({ productId }) => {
 
   const submitRating = async () => {
     try {
-      const response = await axios.post(
+      const response = await axios.put(
         `https://re-store.onrender.com/categories/technology/rating`,
         {
           rate: rating,
