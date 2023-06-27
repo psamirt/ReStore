@@ -11,24 +11,29 @@ export default function CartContent() {
   const { cart } = useSelector((store) => store);
   const { data: session, status } = useSession();
   const router = useRouter();
-  console.log(cart);
+  const [cookieValue, setCookieValue] = useState(null);
+  useEffect(() => {
+    setCookieValue(
+      document.cookie
+        .split('; ')
+        .find((row) => row.startsWith('User_id'))
+        ?.split('=')[1]
+    );
+  }, []);
 
   const dispatch = useDispatch();
   useEffect(() => {
     //chequear si esta logeado el user, si lo esta poblar el carrito con sus prods
     //se puede hacer una action que reciba muchos prod en el payload y que haga ...state, cart: [...state.cart, ...action.payload]
-    if (session) {
-      dispatch(addFromDatabase(cart, session.user.id));
+    if (session || cookieValue) {
+      dispatch(addFromDatabase(cart, session?.user.id, cookieValue));
     }
-  }, [session]);
+  }, [session, cookieValue]);
 
   return (
     <div className='container px-4 m-auto my-8'>
-      <button onClick={() => dispatch(addFromDatabase())}>
-        {/* probar database */}
-      </button>
       <h1 className='text-3xl  mb-4 font-semibold text-blue-900'>Carrito</h1>
-      {cart?.length ? (
+      {cart && cart.length ? (
         //va a haber que fetchear la info de cada producto segun su id, ya sea aca o en cartItem
         cart.map((item) => (
           <CartItem
@@ -36,6 +41,7 @@ export default function CartContent() {
             item={item}
             {...item}
             userId={session?.user?.id}
+            userId2={cookieValue}
           />
         ))
       ) : (
@@ -58,11 +64,20 @@ export default function CartContent() {
           </div>
         </div>
       )}
-      {cart?.length ? (
+      {cart && cart.length ? (
         <div>
           <hr className='mb-4' />
           <p className='text-lg font-medium mb-4'>
-            Total: ${cart.reduce((prev, item) => item.precio + prev, 0)}
+            Total: $
+            {cart.reduce((prev, item) => {
+              if (item.oferta > 0) {
+                const descuento = parseFloat(item.oferta) / 100;
+                const precio = parseFloat(item.precio);
+                const precioFinal = precio - precio * descuento;
+                return (Number(precioFinal) + Number(prev)).toFixed(2);
+              }
+              return Number(item.precio) + Number(prev)
+            }, 0)}
           </p>
           {/* desabilitar el boton si no esta logueado */}
           <Boton text={'Comprar'}></Boton>

@@ -1,5 +1,4 @@
 'use client';
-import { fetchDetail } from '../../fetch';
 import Image from 'next/image';
 import Boton from '@/app/components/Button/Button';
 import BackButton from '@/app/components/backButton/BackButton';
@@ -10,13 +9,24 @@ import axios from 'axios';
 import Loader from '@/app/components/loader/Loader';
 import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
+import HomeContainer from '@/app/components/HomeContainer/HomeContainer';
 
 export function DetailId({ param }) {
   const dispatch = useDispatch();
   const { cart } = useSelector((store) => store);
   const { data: session, status } = useSession();
   const [post, setPost] = useState({ result: [] });
+  const [ofertas, setOfertas] = useState({ result: [] });
   const [onCart, setOnCart] = useState(false);
+  const [cookieValue, setCookieValue] = useState(null);
+  useEffect(() => {
+    setCookieValue(
+      document.cookie
+        .split('; ')
+        .find((row) => row.startsWith('User_id'))
+        ?.split('=')[1]
+    );
+  }, []);
 
   const [addedToCart, setAddedToCart] = useState(false);
   useEffect(() => {
@@ -36,17 +46,32 @@ export function DetailId({ param }) {
   }, []);
 
   useEffect(() => {
+    const fetch = async () => {
+      const response = await axios.get(
+        `https://re-store.onrender.com/categories/technology/Ofertas`
+      );
+      setOfertas(response.data);
+    };
+    fetch();
+  }, []);
+
+  useEffect(() => {
     if (!addedToCart) {
-      if (cart.some((cartItem) => cartItem._id === param)) setOnCart(true);
+      if (cart.some((cartItem) => cartItem.productId === param))
+        setOnCart(true);
     }
   }, [addedToCart]);
 
   const handleAddToCart = () => {
     setAddedToCart(true);
-    //DESPACHAR A CART SOLO {productId: post.result[0]._id}
-    //Y armar desp el objeto con la cantidad tambien
     return dispatch(
-      addToCart(post.result[0]._id, session?.user.id, post.result[0].precio)
+      addToCart(
+        post.result[0]._id,
+        session?.user.id,
+        cookieValue,
+        post.result[0].precio,
+        post.result[0]?.Ofertas
+      )
     );
   };
 
@@ -61,7 +86,6 @@ export function DetailId({ param }) {
     }
     return null;
   };
-
   const precioConDescuento = calculateDiscountedPrice();
 
   return (
@@ -84,28 +108,27 @@ export function DetailId({ param }) {
               <h2 className='text-xl font-semibold text-blue-900'>
                 {post.result[0].name} {post.result[0].Marca}
               </h2>
+
               <p className=''>Ubicacion : {post.result[0].Ubicacion}</p>
               <p className=''>Estado: {post.result[0].state}</p>
 
-              {precioConDescuento ? (
-                <p className='font-medium text-base text-slate-500'>
-                  Precio:{' '}
-                  <span className='text-red-400 line-through'>
-                    ${post.result[0].precio}
-                  </span>{' '}
-                  <span className='text-slate-800'>${precioConDescuento}</span>
-                </p>
-              ) : (
-                <p className='font-medium text-base text-slate-800'>
-                  Precio: ${post.result[0].precio}
-                </p>
-              )}
               <h3 className=''>
                 Calificación del vendedor : <img src='' alt='' />5
               </h3>
-              <p className='text-blue-900 text-xl font-semibold'>
-                Precio: ${post.result[0].precio}
-              </p>
+              {precioConDescuento ? (
+                <p className='text-blue-900 text-xl font-semibold'>
+                  Precio:{' '}
+                  <span className='text-red-500 line-through'>
+                    ${post.result[0].precio}
+                  </span>{' '}
+                  <span className=''>${precioConDescuento}</span>
+                </p>
+              ) : (
+                <p className='text-blue-900 text-xl font-semibold'>
+                  Precio: ${post.result[0].precio}
+                </p>
+              )}
+
               <div>
                 <label className='block mb-2'>Método de envio :</label>
                 <select
@@ -153,11 +176,7 @@ export function DetailId({ param }) {
               <h3 className='text-xl font-semibold text-blue-900'>
                 También te puede interesar:
               </h3>
-              <img
-                className=''
-                src='https://i.stack.imgur.com/t0k67.png'
-                alt='imagen referencial'
-              />
+              <HomeContainer data={ofertas}></HomeContainer>
             </div>
           </div>
         </div>

@@ -109,7 +109,10 @@ function Login() {
       const { data } = await axios.get(
         `https://re-store.onrender.com/users/${user.email}/email`
       );
-      document.cookie = `UserLocal=${
+      if (data._id == "649a1713b5f91733f2cbf8ed") {
+        document.cookie = "Admin=true; expires=${expirationDate.toUTCString()}; path=/"
+      }
+      document.cookie = `User_id=${
         data._id
       }; expires=${expirationDate.toUTCString()}; path=/`;
       router.push("/home");

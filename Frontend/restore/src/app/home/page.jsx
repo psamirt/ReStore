@@ -18,7 +18,7 @@ async function Home() {
       <Navbar />
       <Carousel />
       <div className='mx-auto container px-4 mb-8'>
-        <div className='flex align-middle justify-center gap-16 py-8 flex-wrap '>
+        <div className='flex align-middle justify-center gap-16 py-8 flex-wrap gap-y-4'>
           <Link
             title='click to visit ConsolasyVideojuegos'
             href={'/home/ConsolasyVideojuegos'}

@@ -1,12 +1,13 @@
 import axios from 'axios';
 import { ADD_FROM_DB, ADD_TO_CART, REMOVE_FROM_CART } from './action-types';
 
-export const addToCart = (productId, userId, precio) => {
+export const addToCart = (productId, userId, userId2, precio, oferta = 0) => {
   const newProduct = {
-    productId: productId,
+    productId,
     cantidad: 1,
-    _id: userId,
-    precio: precio,
+    _id: userId || userId2,
+    precio,
+    oferta,
   };
   let storedCart = localStorage.getItem('cart')
     ? JSON.parse(localStorage.getItem('cart'))
@@ -15,7 +16,7 @@ export const addToCart = (productId, userId, precio) => {
     storedCart = [...storedCart, newProduct];
   }
   localStorage.setItem('cart', JSON.stringify(storedCart));
-  if (userId) return loggedAddToCart(newProduct, userId);
+  if (userId || userId2) return loggedAddToCart(newProduct, userId, userId2);
 
   return {
     type: ADD_TO_CART,
@@ -23,7 +24,7 @@ export const addToCart = (productId, userId, precio) => {
   };
 };
 
-export const removeFromCart = (productId, userId) => {
+export const removeFromCart = (productId, userId, userId2) => {
   let storedCart = localStorage.getItem('cart')
     ? JSON.parse(localStorage.getItem('cart'))
     : [];
@@ -31,24 +32,25 @@ export const removeFromCart = (productId, userId) => {
     (localStorageItem) => localStorageItem.productId !== productId
   );
   localStorage.setItem('cart', JSON.stringify(storedCart));
-  console.log(userId, '.....................');
-  if (userId) return loggedRemoveFromCart(productId, userId);
+  if (userId || userId2)
+    return loggedRemoveFromCart(productId, userId, userId2);
   return {
     type: REMOVE_FROM_CART,
     payload: productId,
   };
 };
 
-export const addFromDatabase = (localItems, userId) => {
+export const addFromDatabase = (localItems, userId, userId2) => {
   return async (dispatch) => {
     try {
       const { data: dbItems } = await axios.get(
         `https://re-store.onrender.com/carrito`,
         {
-          params: { userId },
+          params: { userId: userId || userId2 },
         }
       );
       let mergedCart = [...localItems, ...dbItems];
+      console.log(mergedCart);
       mergedCart = mergedCart.reduce((uniqueItems, item) => {
         // Verificar si el ID del item actual ya existe en el array uniqueItems
         const exists = uniqueItems.some(
@@ -62,6 +64,21 @@ export const addFromDatabase = (localItems, userId) => {
 
         return uniqueItems;
       }, []);
+
+      mergedCart.forEach(async (cartItem) => {
+        try {
+          const { data } = await axios.post(
+            `https://re-store.onrender.com/carrito`,
+            {
+              productId: cartItem.productId,
+              userId: userId || userId2,
+              precio: cartItem.precio,
+              oferta: cartItem.oferta,
+            }
+          );
+        } catch (error) {}
+      });
+
       localStorage.setItem('cart', JSON.stringify(mergedCart));
       return dispatch({
         type: ADD_FROM_DB,
@@ -71,15 +88,16 @@ export const addFromDatabase = (localItems, userId) => {
   };
 };
 
-const loggedAddToCart = (newProduct, userId) => {
+const loggedAddToCart = (newProduct, userId, userId2) => {
   return async (dispatch) => {
     try {
       const { data } = await axios.post(
         `https://re-store.onrender.com/carrito`,
         {
           productId: newProduct.productId,
-          userId,
+          userId: userId || userId2,
           precio: newProduct.precio,
+          oferta: newProduct.oferta,
         }
       );
       return dispatch({
@@ -90,7 +108,7 @@ const loggedAddToCart = (newProduct, userId) => {
   };
 };
 
-const loggedRemoveFromCart = (productId, userId) => {
+const loggedRemoveFromCart = (productId, userId, userId2) => {
   return async (dispatch) => {
     try {
       const { data } = await axios.delete(
@@ -98,7 +116,7 @@ const loggedRemoveFromCart = (productId, userId) => {
         {
           data: {
             productId: productId,
-            userId: userId,
+            userId: userId || userId2,
           },
         }
       );

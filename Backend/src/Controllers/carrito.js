@@ -3,7 +3,7 @@ const User = require('../Database/models/userModel');
 // agregar usuario al carrito
 const addToCartHandler = async (req, res) => {
   try {
-    const { userId, productId, precio } = req.body;
+    const { userId, productId, precio, oferta } = req.body;
 
     const user = await User.findById(userId);
     if (!user) {
@@ -13,7 +13,7 @@ const addToCartHandler = async (req, res) => {
     // verifico si el producto existe o si ya está en el carrito del usuario
     if (!user.carrito.some((item) => item.productId === productId)) {
       // si el producto no está en el carrito, agregarlo con una cantidad inicial de 1
-      user.carrito.push({ productId, cantidad: 1, precio });
+      user.carrito.push({ productId, cantidad: 1, precio, oferta });
       await user.save();
     }
     //si esta agregarle cantidad
@@ -44,6 +44,7 @@ const removeFromCartHandler = async (req, res) => {
 const getCartProductsHandler = async (req, res) => {
   try {
     const { userId } = req.query;
+    console.log(userId);
 
     const user = await User.findById(userId);
 
