@@ -22,6 +22,7 @@ const {
   getCelulares,
 } = require("../Controllers/subcategorias");
 const upload = require("../utils/multer");
+const rating = require("../Controllers/rating");
 
 //----------getAllProducts---------------------------------------------------------------------------------------------------------------//
 router.get("/allProducts", getAllProducts);
@@ -45,7 +46,7 @@ router.get("/Detail/:id", detailProduct);
 //-----------SearchByName-------------------------------------------------------------------------------------------------------------//
 router.get("/searchName", Search);
 //----------Rating---------------------------------------------------------------------------------------------------------------//
-router.put("/rating", )
+router.post("/rating", rating)
 
 
 
