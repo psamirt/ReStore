@@ -7,12 +7,7 @@ import Boton from "../Button/Button";
 export default function Searchbar() {
   const [searchValue, setSearchValue] = useState("");
   const [disabled, setDisabled] = useState(true);
-  const url = window.location.href;
-
-  const isDisabled =
-    url.includes("user") ||
-    url.includes("user/ubication") ||
-    url.includes("user/ubication/form");
+  
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -43,7 +38,7 @@ export default function Searchbar() {
         }}
       >
         <Boton
-          disabled={disabled || isDisabled}
+          disabled={disabled}
           text={"Buscar"}
           type="submit"
         ></Boton>
