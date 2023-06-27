@@ -37,7 +37,6 @@ function HomeContainer({ data }) {
             key={props._id}
             id={props._id}
             image={props.background_image}
-            discount={props.Ofertas}
             ubicacion={props.Ubicacion}
           />
         );
