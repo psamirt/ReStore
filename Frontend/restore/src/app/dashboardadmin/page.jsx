@@ -1,9 +1,24 @@
-import React from 'react'
+"use client";
+import React from "react";
+import DashHeader from "../components/dashHeader/b";
+import DashSideMenu from "../components/dashSideMenu/d";
+import DashPage from "../components/dashPageContent/c";
+import DashFooter from "../components/dashFooter/a";
+import "./dash.css";
+import { Space } from "antd";
+
 
 function Dashboard() {
   return (
-    <div>Holaaa soy el Dashboard</div>
-  )
+    <div className="app">
+      <DashHeader />
+      <Space className="SideMenuAndPageContent">
+        <DashSideMenu />
+        <DashPage render={"home"}/>
+      </Space>
+      <DashFooter />
+    </div>
+  );
 }
 
-export default Dashboard
+export default Dashboard;
