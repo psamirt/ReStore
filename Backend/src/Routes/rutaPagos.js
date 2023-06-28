@@ -9,16 +9,13 @@ const Order = require("../Database/models/order");
 const stripe = new Stripe(
   "sk_test_51NNLpXJ1lb1YFkHpt7cNexUW59vJoBx40Sta98qZ2Bqa8bRzrTaU1gjsNAWMrpYseNMP4u3KRJZxMbjBXT9LtuJC00e9OgY4Hm"
 );
+
 let endpointSecret;
 
-// Parsear el cuerpo de la solicitud como texto sin procesar
-
 router.post("/create-checkout-session", createSession);
-router.get("/success");
-router.get("/cancel");
+// router.get("/success");
+// router.get("/cancel");
 
-// endpointSecret =
-//   "whsec_602cd2598b4998749e3f929be11b474b1123a11e8d6a5c3bea2a9be9e5728679";
 const createOrder = async (customer, data) => {
   try {
     console.log("Creating new order...");
