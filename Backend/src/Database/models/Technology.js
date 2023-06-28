@@ -41,13 +41,16 @@ const TechnologySchema = mongoose.Schema({
     type: [String], // Array de IDs de favoritos
     default: [],
   },
-  rating:{
-    rating:{
-      type:[Number],
+  rating: {
+    rating: {
+      type: [Number],
     },
-    ratingTotal:{
-      type:Number
-    }
+    ratingTotal: {
+      type: Number,
+    },
+    comments: {
+      type: [String],
+    },
   },
   subcategoria: {
     type: {
