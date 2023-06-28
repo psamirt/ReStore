@@ -45,7 +45,8 @@ const Rating = ({ productId }) => {
   return (
     <div>
       <Navbar/>
-      <div className="flex items-center">
+      <div className="flex flex-col items-center">
+      <div className="flex items-center mt-4" >
         {[1, 2, 3, 4, 5].map((star) => (
           <svg
             key={star}
@@ -65,10 +66,10 @@ const Rating = ({ productId }) => {
           </svg>
         ))}
       </div>
-      <p className="text-yellow-500 mt-2">{rating} out of 5 stars</p>
+      <p className="text-black-500 mt-2">{rating} De 5 estrellas</p>
       <textarea
-        className="mt-4 p-2 border border-gray-300 rounded"
-        placeholder="Leave a comment"
+        className="mt-4 p-2 border border-gray-300 rounded h-40 w-1/2 resize-none"
+        placeholder="Deja tu comentario"
         value={comment}
         onChange={handleCommentChange}
       ></textarea>
@@ -78,6 +79,7 @@ const Rating = ({ productId }) => {
       >
         Submit
       </button>
+      </div>
     </div>
   );
 };
