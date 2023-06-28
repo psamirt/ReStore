@@ -8,6 +8,6 @@ const rutaPagos = require("./rutaPagos");
 router.use("/categories/technology", categoryTechnology);
 router.use("/users", userRouter);
 router.use("/carrito", carritoRouter);
-router.use("/create-checkout-session", rutaPagos);
+router.use("/payments", rutaPagos);
 
 module.exports = router;
