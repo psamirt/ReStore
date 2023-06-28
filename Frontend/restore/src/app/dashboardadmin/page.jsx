@@ -1,9 +1,15 @@
-import React from 'react'
+"use client";
+import React from "react";
+import "./dash.css";
+
+
 
 function Dashboard() {
   return (
-    <div>Holaaa soy el Dashboard</div>
-  )
+    <div className="app">
+      Home
+    </div>
+  );
 }
 
-export default Dashboard
+export default Dashboard;

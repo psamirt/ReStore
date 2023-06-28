@@ -94,10 +94,9 @@ export const Navbar = () => {
             >
               <Image
                 src={session.user.image}
-                style={{ width: '35px', height: '35px' }}
+                width='35'
+                height='35'
                 alt={session.user.name}
-                width={35}
-                height={35}
               />
             </Link>
           ) : null}
