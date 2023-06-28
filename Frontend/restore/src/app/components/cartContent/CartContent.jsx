@@ -6,6 +6,7 @@ import CartItem from '../cartItem/CartItem';
 import { useRouter } from 'next/navigation';
 import { addFromDatabase } from '@/redux/actions';
 import { useSession } from 'next-auth/react';
+import Link from 'next/link';
 
 export default function CartContent() {
   const { cart } = useSelector((store) => store);
@@ -76,11 +77,25 @@ export default function CartContent() {
                 const precioFinal = precio - precio * descuento;
                 return (Number(precioFinal) + Number(prev)).toFixed(2);
               }
-              return Number(item.precio) + Number(prev)
+              return Number(item.precio) + Number(prev);
             }, 0)}
           </p>
-          {/* desabilitar el boton si no esta logueado */}
-          <Boton text={'Comprar'}></Boton>
+          {!session && !cookieValue ? (
+            <div className='flex gap-4 items-center'>
+              <Link className='link' href={'/login'}>
+                <Boton text={'Iniciar sesion'}></Boton>
+              </Link>
+              <h2 className='text-xl  font-semibold text-slate-800'>
+                Debes iniciar sesion para comprar
+              </h2>
+            </div>
+          ) : (
+            <Link
+              href={{ pathname: '/cart/checkout', query: { session: session } }}
+            >
+              <Boton text={'Comprar'}></Boton>
+            </Link>
+          )}
         </div>
       ) : null}
     </div>
