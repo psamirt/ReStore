@@ -66,6 +66,17 @@ const userSchema = new Schema({
       },
     },
   ],
+  productosComprados: [
+    {
+      productId: {
+        type: String
+      },
+      calificado: {
+        type: Boolean,
+        default: false,
+      },
+    },
+  ],
 });
 
 module.exports = model("User", userSchema);
