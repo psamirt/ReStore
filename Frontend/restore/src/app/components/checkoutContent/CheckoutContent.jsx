@@ -12,6 +12,7 @@ export default function CheckoutContent({ session, cookieValue }) {
   const [locations, setLocations] = useState([]);
   const [products, setProducts] = useState([]);
   const [processingPayment, setProcessingPayment] = useState(false);
+  const [paymentError, setpaymentError] = useState(false);
 
   const router = useRouter();
   const dispatch = useDispatch();
@@ -87,23 +88,24 @@ export default function CheckoutContent({ session, cookieValue }) {
 
   const handlePayment = async () => {
     setProcessingPayment(true);
-    const userId = session?.user.id || cookieValue;
-    console.log(userId);
     try {
       const { data } = await axios.post(
-        'https://re-store.onrender.com/payments/create-checkout-session',
+        // 'https://re-store.onrender.com/payments/create-checkout-session',
+        'https://re-store.onrender.com/payments/create-checko',
         // 'http://localhost:3001/payments/create-checkout-session',
         // 'https://deploy-funcionando.onrender.com/payments/create-checkout-session',
         {
-          userId,
+          userId: session?.user.id || cookieValue,
           cartItems: products,
         }
       );
       setProcessingPayment(false);
+      setpaymentError(false);
       dispatch(cleanCart(session?.user.id, cookieValue));
       router.push(data.url);
     } catch (error) {
-      console.log(error, '..............erorr..............');
+      setProcessingPayment(false);
+      setpaymentError(true);
     }
   };
 
@@ -124,6 +126,11 @@ export default function CheckoutContent({ session, cookieValue }) {
         {/* misma card pero que diga retirar en el local x direccion */}
         <Boton onClick={handlePayment} text={'Pagar'}></Boton>
         {processingPayment ? (
+          //
+          //
+          // crear componente procesando el pago
+          //para limpiar un poco
+          //
           <div class='flex items-center'>
             <div role='status'>
               <svg
@@ -146,6 +153,9 @@ export default function CheckoutContent({ session, cookieValue }) {
             </div>
             Procesando el pago
           </div>
+        ) : null}
+        {paymentError ? (
+          <p>Ocurrio un error en el pago, vuelve a intentarlo</p>
         ) : null}
       </div>
       <aside className='bg-slate-200 '>
@@ -177,11 +187,6 @@ export default function CheckoutContent({ session, cookieValue }) {
             <div>
               <span>Producto</span>
               <span>{`$${total}`}</span>
-            </div>
-            <hr />
-            <div>
-              <span>Pagás</span>
-              <span>{`$${(Number(total) + shipment).toFixed(2)}`}</span>
             </div>
           </div>
         ) : null}
