@@ -69,14 +69,8 @@ const userSchema = new Schema({
           id: {
             type: String,
           },
-          name: {
-            type: String,
-          },
           quantity: {
             type: String,
-          },
-          images: {
-            type: [String],
           },
           price: {
             type: Number,
@@ -101,17 +95,6 @@ const userSchema = new Schema({
       createdAt: {
         type: Date,
         default: Date.now,
-      },
-    },
-  ],
-  productosComprados: [
-    {
-      productId: {
-        type: String
-      },
-      calificado: {
-        type: Boolean,
-        default: false,
       },
     },
   ],
