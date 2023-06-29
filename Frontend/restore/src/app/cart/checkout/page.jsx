@@ -4,7 +4,6 @@ import { Provider } from 'react-redux';
 import { Navbar } from '../../components/navbar/navbar';
 import CheckoutContent from '../../components/checkoutContent/CheckoutContent';
 import store from '@/redux/store';
-import { PrivateRoute } from '../../components/privateRoute/PrivateRoute';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import Loader from '@/app/components/loader/Loader';
@@ -17,7 +16,6 @@ export default function page() {
   const [isMounted, setIsMounted] = useState(false);
 
   const router = useRouter();
-  console.log(status, 'status............................');
 
   useEffect(() => {
     setCookieValue(
@@ -33,13 +31,11 @@ export default function page() {
   }, [session]);
 
   useEffect(() => {
-    console.log(status !== 'authenticated' && status !== 'loading');
     if (
       status !== 'authenticated' &&
       status !== 'loading' &&
       !document.cookie.includes('User_id')
     ) {
-      console.log(status);
       router.push('/home');
     }
   }, [status, cookieValue]);
@@ -48,12 +44,10 @@ export default function page() {
     <>
       {session || cookieValue ? (
         <>
-          {/* <PrivateRoute manualLogIn={cookieValue} thirdLogIn={session}> */}
           <Navbar />
           <Provider store={store}>
             <CheckoutContent session={session} cookieValue={cookieValue} />
           </Provider>
-          {/* </PrivateRoute> */}
         </>
       ) : (
         <Loader />

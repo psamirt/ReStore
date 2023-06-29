@@ -136,8 +136,8 @@ export const cleanCart = (userId, userId2) => {
   return async (dispatch) => {
     try {
       const { data } = await axios.delete(
-        // 'https://re-store.onrender.com/carrito/checkout',
-        'http://localhost:3001/carrito/checkout',
+        'https://re-store.onrender.com/carrito/checkout',
+        // 'http://localhost:3001/carrito/checkout',
         {
           data: {
             userId: user,
