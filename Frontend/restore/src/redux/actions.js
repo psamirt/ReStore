@@ -1,5 +1,10 @@
 import axios from 'axios';
-import { ADD_FROM_DB, ADD_TO_CART, REMOVE_FROM_CART } from './action-types';
+import {
+  ADD_FROM_DB,
+  ADD_TO_CART,
+  CLEAN_CART,
+  REMOVE_FROM_CART,
+} from './action-types';
 
 export const addToCart = (productId, userId, userId2, precio, oferta = 0) => {
   const newProduct = {
@@ -122,6 +127,24 @@ const loggedRemoveFromCart = (productId, userId, userId2) => {
       );
       console.log(data);
       return dispatch({ type: REMOVE_FROM_CART, payload: productId });
+    } catch (error) {}
+  };
+};
+export const cleanCart = (userId, userId2) => {
+  localStorage.removeItem('cart');
+  const user = userId || userId2;
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.delete(
+        'https://re-store.onrender.com/carrito/checkout',
+        // 'http://localhost:3001/carrito/checkout',
+        {
+          data: {
+            userId: user,
+          },
+        }
+      );
+      dispatch({ type: CLEAN_CART });
     } catch (error) {}
   };
 };

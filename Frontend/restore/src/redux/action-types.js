@@ -3,3 +3,4 @@ export const REMOVE_FROM_CART = 'REMOVE_FROM_CART';
 export const ADD_FROM_DB = 'ADD_FROM_DB';
 export const LOGGED_ADD_TO_CART = 'LOGGED_ADD_TO_CART';
 export const LOGGED_REMOVE_FROM_CART = 'LOGGED_REMOVE_FROM_CART';
+export const CLEAN_CART = 'CLEAN_CART';
