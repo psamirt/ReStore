@@ -62,8 +62,23 @@ const getCartProductsHandler = async (req, res) => {
   }
 };
 
+//limpiar el carrito
+const cleanCartHandler = async (req, res) => {
+  const { userId } = req.body;
+  try {
+    await User.findByIdAndUpdate(userId, { $set: { carrito: [] } });
+
+    res.status(200).json({ message: 'Carrito vaciado con exito' });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ error: 'Error al eliminar los productos del carrito' });
+  }
+};
+
 module.exports = {
   addToCartHandler,
   removeFromCartHandler,
   getCartProductsHandler,
+  cleanCartHandler,
 };

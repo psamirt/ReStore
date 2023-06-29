@@ -1,4 +1,9 @@
-import { ADD_FROM_DB, ADD_TO_CART, REMOVE_FROM_CART } from './action-types';
+import {
+  ADD_FROM_DB,
+  ADD_TO_CART,
+  CLEAN_CART,
+  REMOVE_FROM_CART,
+} from './action-types';
 
 let storedCart = [];
 
@@ -39,6 +44,11 @@ export const reducer = (state = initialState, action) => {
       return {
         ...state,
         cart: action.payload,
+      };
+    case CLEAN_CART:
+      return {
+        ...state,
+        cart: [],
       };
     default:
       return state;
