@@ -41,29 +41,11 @@ const createSession = async (req, res) => {
 
     const paymentUrl = session.url;
     console.log(paymentUrl);
-    res.redirect(303, session.url);
+    res.json({ url: paymentUrl });
   } catch (error) {
     console.error('Error al crear la sesión de pago:', error);
     res.status(500).send('Error al crear la sesión de pago');
   }
 };
 
-const webHookController = async (req, res) => {
-  const payload = req.body;
-  const sig = req.headers['stripe-signature'];
-  try {
-    const event = stripe.webhooks.constructEvent(payload, sig, endpointSecret);
-
-    if (event.type === 'checkout.session.completed') {
-      const session = event.data.object;
-      const line_items = await stripe.checkout.session.listLineItems(
-        session.id
-      );
-      console.log(line_items);
-    }
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-module.exports = { createSession, webHookController };
+module.exports = { createSession };
