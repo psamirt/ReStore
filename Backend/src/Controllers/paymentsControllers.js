@@ -4,17 +4,17 @@ const stripe = new Stripe(
 );
 const DOMAIN = 'https://re-store-six.vercel.app/';
 
-const endpointSecret =
-  'whsec_602cd2598b4998749e3f929be11b474b1123a11e8d6a5c3bea2a9be9e5728679';
-
 const createSession = async (req, res) => {
   try {
     const customer = await stripe.customers.create({
       metadata: {
         userId: req.body.userId,
-        carrito: JSON.stringify(req.body.cartItems),
+
+        // carrito: JSON.stringify(req.body.cartItems),
       },
     });
+    console.log(req.body.userId);
+
     const lineItems = req.body.cartItems.map((product) => {
       const { name, description, unit_amount, quantity, images } = product;
       return {
