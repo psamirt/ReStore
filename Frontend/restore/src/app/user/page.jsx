@@ -73,6 +73,7 @@ function usuario({ searchParams }) {
     const fetchUsuario = async (id) => {
       const response = await fetch(`https://re-store.onrender.com/users/${id}`);
       const user = await response.json();
+      console.log(user);
 
       setInput({
         email: user.email,
@@ -118,6 +119,7 @@ function usuario({ searchParams }) {
   };
   return (
     <>
+    {console.log(comprados, calificado)}
       <Navbar></Navbar>
       <div className="container mx-auto p-4">
         <Button onClick={readOnly ? handleToggleReadOnly : handleCancelButton}>
