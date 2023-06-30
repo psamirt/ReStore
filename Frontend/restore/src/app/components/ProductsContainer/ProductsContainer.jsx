@@ -177,6 +177,7 @@ function ProductsContainer({ data, ubicaciones, marcas, estado }) {
                 image={props.background_image}
                 oferta={props.Ofertas}
                 ubicacion={props.Ubicacion}
+                Disabled={props.Disabled}
               />
             );
           })

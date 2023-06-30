@@ -39,6 +39,7 @@ function HomeContainer({ data }) {
             image={props.background_image}
             discount={props.Ofertas}
             ubicacion={props.Ubicacion}
+            Disabled={props.Disabled}
           />
         );
       })}
