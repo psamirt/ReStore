@@ -112,6 +112,10 @@ function Login() {
         document.cookie =
           'Admin=true; expires=${expirationDate.toUTCString()}; path=/';
       }
+if (data.ban === true) {
+  return alert("Estas baneado hasta nuevo aviso, no podras iniciar sesion")
+}
+      
       document.cookie = `User_id=${
         data._id
       }; expires=${expirationDate.toUTCString()}; path=/`;

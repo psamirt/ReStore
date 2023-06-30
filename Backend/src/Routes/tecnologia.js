@@ -26,7 +26,6 @@ const rating = require("../Controllers/rating");
 
 //----------getAllProducts---------------------------------------------------------------------------------------------------------------//
 router.get("/allProducts", getAllProducts);
-router.get("/allProducts", getAllProducts);
 router.get("/subcategorias", getModelCategories);
 //----------PostProducts---------------------------------------------------------------------------------------------------------------//
 router.post("/posteo", upload.single("image"), postProduct);
