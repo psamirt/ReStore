@@ -12,7 +12,7 @@ function usuario({ searchParams }) {
   const router = useRouter();
   const [cookieValue, setCookieValue] = useState(null);
   const [readOnly, setReadOnly] = useState(true);
-  const [cookieImg, setCookieImg] = useState(null)
+  const [cookieImg, setCookieImg] = useState(null);
   const [file, setFile] = useState("");
   const [input, setInput] = useState({
     nombre: "",
@@ -28,7 +28,8 @@ function usuario({ searchParams }) {
     fechaNacimiento: "",
     genero: "",
   });
-
+  const [comprados, setComprados] = useState([]);
+  const [calificado, setCalificado] = useState([]);
 
   useEffect(() => {
     setCookieValue(
@@ -37,7 +38,7 @@ function usuario({ searchParams }) {
         .find((row) => row.startsWith("User_id"))
         ?.split("=")[1]
     );
-  },[])
+  }, []);
 
   useEffect(() => {
     if (!session && !document.cookie.includes("User_id")) {
@@ -53,7 +54,7 @@ function usuario({ searchParams }) {
       else formData.append(key, newInput[key]);
     }
     if (file) formData.append("profileImage", file);
-    const id = session ? session.user.id : cookieValue
+    const id = session ? session.user.id : cookieValue;
     console.log([...formData]);
     axios
       .put(`https://re-store.onrender.com/users/${id}`, formData)
@@ -68,15 +69,11 @@ function usuario({ searchParams }) {
       });
   };
 
-
-
   useEffect(() => {
     const fetchUsuario = async (id) => {
-      const response = await fetch(
-        `https://re-store.onrender.com/users/${id}`
-      );
+      const response = await fetch(`https://re-store.onrender.com/users/${id}`);
       const user = await response.json();
-      
+
       setInput({
         email: user.email,
         nombre: user.nombre,
@@ -84,22 +81,28 @@ function usuario({ searchParams }) {
         genero: user.genero,
         fechaNacimiento: user.fechaNacimiento,
       });
-      cookieValue && setCookieImg(user.imagenDePerfil)
+      cookieValue && setCookieImg(user.imagenDePerfil);
+
+      if (user.orders) {
+        const productosComprados = user.orders.filter(
+          (order) => order.calificado === false
+        );
+        setComprados(productosComprados);
+        const productoCalificado = user.orders.filter(
+          (order) => order.calificado === true
+        );
+        setCalificado(productoCalificado);
+      }
     };
 
-      if (session) {
-         fetchUsuario(session.user.id);
-      } else 
-         fetchUsuario(cookieValue);
-
-
-
+    if (session) {
+      fetchUsuario(session.user.id);
+    } else fetchUsuario(cookieValue);
   }, [cookieValue]);
 
   const handleToggleReadOnly = () => {
     setReadOnly(!readOnly);
   };
-
 
   const handleSelectChange = (value, clave) => {
     setNewInput((prevInput) => ({
@@ -120,7 +123,7 @@ function usuario({ searchParams }) {
         <Button onClick={readOnly ? handleToggleReadOnly : handleCancelButton}>
           {readOnly ? "Editar perfil" : "Cancelar"}
         </Button>
-        <Link  href={"/user/ubicacion"}>
+        <Link href={"/user/ubicacion"}>
           <Button>Editar Ubicaciones</Button>
         </Link>
         <Form
@@ -145,7 +148,10 @@ function usuario({ searchParams }) {
                 />
               ) : (
                 <img
-                  src={session && session.user.image || cookieValue && cookieImg}
+                  src={
+                    (session && session.user.image) ||
+                    (cookieValue && cookieImg)
+                  }
                   alt="Preview"
                   style={{ width: "100%" }}
                 />
@@ -191,6 +197,27 @@ function usuario({ searchParams }) {
             Guardar Cambios
           </Button>
         )}
+        <div>
+          {comprados.length > 0 && (
+            <div>
+              <h2>Productos comprados</h2>
+              <ul>
+                {comprados.map((producto) => (
+                  <li key={producto.productId}>
+                    {producto.productId}{" "}
+                    {calificado.some(
+                      (item) => item.productId === producto.productId
+                    ) ? (
+                      <span>Producto ya calificado</span>
+                    ) : (
+                      <button>Calificar</button>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </div>
       </div>
     </>
   );

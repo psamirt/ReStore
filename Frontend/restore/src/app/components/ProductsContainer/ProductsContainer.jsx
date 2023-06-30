@@ -175,7 +175,7 @@ function ProductsContainer({ data, ubicaciones, marcas, estado }) {
                 key={props._id}
                 id={props._id}
                 image={props.background_image}
-                discount={props.Ofertas}
+                oferta={props.Ofertas}
                 ubicacion={props.Ubicacion}
                 Disabled={props.Disabled}
               />

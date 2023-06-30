@@ -6,6 +6,8 @@ import CartItem from '../cartItem/CartItem';
 import { useRouter } from 'next/navigation';
 import { addFromDatabase } from '@/redux/actions';
 import { useSession } from 'next-auth/react';
+import Link from 'next/link';
+import { totalPrice } from '@/app/helpers/totalPrice';
 
 export default function CartContent() {
   const { cart } = useSelector((store) => store);
@@ -67,20 +69,21 @@ export default function CartContent() {
       {cart && cart.length ? (
         <div>
           <hr className='mb-4' />
-          <p className='text-lg font-medium mb-4'>
-            Total: $
-            {cart.reduce((prev, item) => {
-              if (item.oferta > 0) {
-                const descuento = parseFloat(item.oferta) / 100;
-                const precio = parseFloat(item.precio);
-                const precioFinal = precio - precio * descuento;
-                return (Number(precioFinal) + Number(prev)).toFixed(2);
-              }
-              return Number(item.precio) + Number(prev)
-            }, 0)}
-          </p>
-          {/* desabilitar el boton si no esta logueado */}
-          <Boton text={'Comprar'}></Boton>
+          <p className='text-lg font-medium mb-4'>Total: ${totalPrice(cart)}</p>
+          {!session && !cookieValue ? (
+            <div className='flex gap-4 items-center'>
+              <Link className='link' href={'/login'}>
+                <Boton text={'Iniciar sesion'}></Boton>
+              </Link>
+              <h2 className='text-xl  font-semibold text-slate-800'>
+                Debes iniciar sesion para comprar
+              </h2>
+            </div>
+          ) : (
+            <Link href={'/cart/checkout'}>
+              <Boton text={'Comprar'}></Boton>
+            </Link>
+          )}
         </div>
       ) : null}
     </div>
