@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import Boton from '../Button/Button';
 import axios from 'axios';
 import { totalPrice } from '@/app/helpers/totalPrice';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { cleanCart } from '@/redux/actions';
 import LocationsCards from '../locationsCards/LocationsCards';
 import SelectShipment from '../selectShipment/SelectShipment';
 import fetchCartProductsById from '@/app/helpers/fetchCartProductsById';
@@ -21,7 +20,6 @@ export default function CheckoutContent({ session, cookieValue }) {
   const [selectedMethod, setSelectedMethod] = useState(null);
 
   const router = useRouter();
-  const dispatch = useDispatch();
   const total = totalPrice(cart);
 
   useEffect(() => {
@@ -54,10 +52,10 @@ export default function CheckoutContent({ session, cookieValue }) {
       );
       setProcessingPayment(false);
       localStorage.setItem('envio', JSON.stringify(envio));
+      localStorage.setItem('userId', JSON.stringify(userId));
       localStorage.setItem('direccion', JSON.stringify(direccion));
 
       // TODO pasar el dispatch a la pantalla de success
-      dispatch(cleanCart(session?.user.id, cookieValue));
       router.push(data.url);
     } catch (error) {
       setProcessingPayment(false);
@@ -83,7 +81,7 @@ export default function CheckoutContent({ session, cookieValue }) {
         <div className='grid gap-4'>
           <h2 className='text-xl font-medium'>Domicilio</h2>
           <LocationsCards
-            userId={session.user.id}
+            userId={session?.user.id}
             cookieValue={cookieValue}
             setSelectedLocation={setSelectedLocation}
             selectedLocation={selectedLocation}
@@ -98,7 +96,7 @@ export default function CheckoutContent({ session, cookieValue }) {
           onClick={handlePayment}
           text={'Pagar'}
         />
-        {processingPayment ? <ProcessingPayment /> : null}
+        {processingPayment ? <ProcessingPayment text={'Loading...'} /> : null}
         {paymentError ? (
           <p className='font-medium text-lg text-red-600 text-center -mt-4'>
             Ocurrio un error en el pago, vuelve a intentarlo

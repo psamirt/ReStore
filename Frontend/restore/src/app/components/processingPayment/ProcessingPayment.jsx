@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function ProcessingPayment() {
+export default function ProcessingPayment({ text }) {
   return (
     <div
       className='flex items-center justify-center absolute z-10 top-1/2 left-1/2 bg-slate-500 px-8 py-4 rounded-lg shadow-slate-400 shadow-xl'
@@ -25,7 +25,7 @@ export default function ProcessingPayment() {
         </svg>
         <span className='sr-only'>Loading...</span>
       </div>
-      <span className='text-slate-50 text-xl '>Procesando el pago...</span>
+      <span className='text-slate-50 text-xl '>{text}</span>
     </div>
   );
 }
