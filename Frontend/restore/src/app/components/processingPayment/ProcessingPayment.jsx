@@ -2,11 +2,14 @@ import React from 'react';
 
 export default function ProcessingPayment() {
   return (
-    <div className='flex items-center'>
+    <div
+      className='flex items-center justify-center absolute z-10 top-1/2 left-1/2 bg-slate-500 px-8 py-4 rounded-lg shadow-slate-400 shadow-xl'
+      style={{ transform: 'translate(-50%, -50%)' }}
+    >
       <div role='status'>
         <svg
           aria-hidden='true'
-          className='w-10 h-10 mr-4 text-gray-200 animate-spin fill-green-600'
+          className='w-16 h-16 mr-4 text-slate-400 animate-spin fill-white'
           viewBox='0 0 100 101'
           fill='none'
           xmlns='http://www.w3.org/2000/svg'
@@ -22,7 +25,7 @@ export default function ProcessingPayment() {
         </svg>
         <span className='sr-only'>Loading...</span>
       </div>
-      Procesando el pago
+      <span className='text-slate-50 text-xl '>Procesando el pago...</span>
     </div>
   );
 }
