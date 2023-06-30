@@ -1,14 +1,11 @@
 const express = require("express");
 const router = express.Router();
 const {
-  disabledProduct,
-  getDisabledProducts,
-} = require("../Controllers/disableProduct");
-const {
   postProduct,
   getAllProducts,
   getAllProductsByCategory,
   getModelCategories,
+  modifyProduct
 } = require("../Controllers/controllersTecnologias");
 const { ofertProduct, getOfertProducts } = require("../Controllers/ofertas");
 const detailProduct = require("../Controllers/detail");
@@ -25,14 +22,9 @@ const upload = require("../utils/multer");
 
 //----------getAllProducts---------------------------------------------------------------------------------------------------------------//
 router.get("/allProducts", getAllProducts);
-router.get("/allProducts", getAllProducts);
 router.get("/subcategorias", getModelCategories);
 //----------PostProducts---------------------------------------------------------------------------------------------------------------//
 router.post("/posteo", upload.single("image"), postProduct);
-
-//----------Disabled---------------------------------------------------------------------------------------------------------------//
-router.put("/disabled", disabledProduct);
-router.get("/disabled", getDisabledProducts);
 
 //----------getSubCategories---------------------------------------------------------------------------------------------------------------//
 router.get("/categoria/:category", getAllProductsByCategory);
@@ -45,9 +37,9 @@ router.get("/Detail/:id", detailProduct);
 //-----------SearchByName-------------------------------------------------------------------------------------------------------------//
 router.get("/searchName", Search);
 //----------Rating---------------------------------------------------------------------------------------------------------------//
-router.put("/rating", )
+router.put("/rating");
 
-
+router.put("/:id", upload.single("image"), modifyProduct)
 
 // subcatgoria
 router.get("/Computacion/:compu", getComputacion);
