@@ -145,6 +145,8 @@ export const cleanCart = (userId, userId2) => {
         }
       );
       dispatch({ type: CLEAN_CART });
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   };
 };
