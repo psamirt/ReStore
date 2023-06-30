@@ -10,10 +10,13 @@ import {
   Avatar,
   Tag,
   Button,
+  Input
 } from "antd";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import Swal from 'sweetalert2'
+
 
 function Clientes() {
   const router = useRouter();
@@ -26,7 +29,7 @@ function Clientes() {
   const [clientes, setClientes] = useState([]);
   const [loading, setLoading] = useState(false);
   const [flag, setFlag] = useState(false);
-
+  const [searchText, setSearchText] = useState('');
   const getClientes = async () => {
     const { data } = await axios.get("https://re-store.onrender.com/users");
     return data;
@@ -52,13 +55,16 @@ function Clientes() {
   const handleBan = async (clienteId) => {
     // Verificar si el ID del cliente es igual al ID del admin que se quiere evitar banear
     if (clienteId === "649a1713b5f91733f2cbf8ed") {
-      alert("No puedes banear al admin Bobo!");
+      Swal.fire({
+        icon: 'error',
+        text: 'No podes banear al admin.',
+      });
       return;
     }
 
     try {
       // Realizar la solicitud PUT a la ruta /users/ban con el ID del cliente
-      const response = await axios.put("https://re-store.onrender.com/users/ban/user", {
+      const response = await axios.put("http://localhost:3001/users/ban/user", {
         userId: clienteId,
       });
       setFlag(!flag);
@@ -79,6 +85,13 @@ function Clientes() {
   }, []);
 
   function TableClients() {
+    
+    const filteredClients = searchText
+    ? clientes.filter(cliente =>
+        cliente.email.toLowerCase().includes(searchText.toLowerCase())
+      )
+    : clientes;
+    
     const columns = [
       {
         title: "Foto",
@@ -149,11 +162,16 @@ function Clientes() {
         ),
       },
     ];
-    return <Table loading={loading} columns={columns} dataSource={clientes} />;
+    return <Table loading={loading} columns={columns} dataSource={filteredClients} />;
   }
   return (
     <Space size={20} direction="vertical">
       <Typography.Title level={4}>Clientes</Typography.Title>
+      <Input.Search
+      placeholder="Buscar por email"
+      value={searchText}
+      onChange={e => setSearchText(e.target.value)}
+    />
       <TableClients />
     </Space>
   );

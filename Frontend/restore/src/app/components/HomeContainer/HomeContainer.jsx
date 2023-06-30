@@ -7,6 +7,8 @@ import { useRouter } from "next/navigation";
 import { useSession,signOut } from "next-auth/react";
 import { useEffect, useState } from 'react';
 import axios from "axios"
+import Swal from 'sweetalert2';
+
 const responsive = {
   desktop: {
     breakpoint: { max: 3000, min: 1024 },
@@ -55,7 +57,11 @@ useEffect(() => {
 
 useEffect(() => {
   if (isBan) {
-    alert('Tu usuario está baneado');
+    Swal.fire({
+      icon: 'error',
+      title: '¡Estás baneado!',
+      text: 'Estás baneado hasta nuevo aviso. No podrás iniciar sesión.',
+    });
     signOut()
   }
 }, [isBan]);

@@ -9,7 +9,7 @@ import {
   Table,
   Avatar,
   Tag,
-  Button,
+  Button,Input
 } from "antd";
 import { useRouter } from "next/navigation";
 import axios from "axios";
@@ -29,6 +29,8 @@ function Pedidos() {
   const [pedidos, setPedidos] = useState([]);
   const [loading, setLoading] = useState(false);
   const [flag, setFlag] = useState(false);
+  const [searchText, setSearchText] = useState('');
+
 
   const getPedidos = async () => {
     const { data } = await axios.get("https://re-store.onrender.com/users/envios/all");
@@ -63,14 +65,14 @@ function Pedidos() {
   console.log(pedidos);
 
   function TablePedidos () {
+    
+    const filteredPedidos = searchText
+    ? pedidos.filter(pedidos =>
+      pedidos.email.toLowerCase().includes(searchText.toLowerCase())
+      )
+    : pedidos;
+    
     const columns = [
-      // {
-      //   title: "Foto",
-      //   dataIndex: "imagenDePerfil",
-      //   render: (link) => {
-      //     return <Avatar src={link} />;
-      //   },
-      // },
       {
         title: "Email",
         dataIndex: "email",
@@ -140,6 +142,11 @@ function Pedidos() {
   return (
     <Space size={20} direction="vertical">
     <Typography.Title level={4}>Pedidos</Typography.Title>
+    <Input.Search
+      placeholder="Buscar por email"
+      value={searchText}
+      onChange={e => setSearchText(e.target.value)}
+    />
     <TablePedidos />
   </Space>
   );

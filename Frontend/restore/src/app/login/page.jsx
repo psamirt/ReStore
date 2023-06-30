@@ -7,6 +7,7 @@ import bcrypt from 'bcryptjs';
 import './login.css';
 import Link from 'next/link';
 import { signIn, getProviders } from 'next-auth/react';
+import Swal from 'sweetalert2';
 
 function Login() {
   const router = useRouter();
@@ -113,7 +114,12 @@ function Login() {
           'Admin=true; expires=${expirationDate.toUTCString()}; path=/';
       }
 if (data.ban === true) {
-  return alert("Estas baneado hasta nuevo aviso, no podras iniciar sesion")
+  Swal.fire({
+    icon: 'error',
+    title: '¡Estás baneado!',
+    text: 'Estás baneado hasta nuevo aviso. No podrás iniciar sesión.',
+  });
+  return;
 }
       
       document.cookie = `User_id=${
