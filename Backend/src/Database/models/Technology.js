@@ -42,10 +42,10 @@ const TechnologySchema = mongoose.Schema({
     default: [],
   },
   rating: {
-    rating: {
+    stars: {
       type: [Number],
     },
-    ratingTotal: {
+    totalStars: {
       type: Number,
     },
     comments: {
