@@ -125,7 +125,6 @@ const loggedRemoveFromCart = (productId, userId, userId2) => {
           },
         }
       );
-      console.log(data);
       return dispatch({ type: REMOVE_FROM_CART, payload: productId });
     } catch (error) {}
   };

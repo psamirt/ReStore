@@ -12,8 +12,6 @@ export default function page() {
   const { data: session, status } = useSession();
   const sessionRef = useRef();
   const [cookieValue, setCookieValue] = useState(null);
-  // const isMountedRef = useRef(false);
-  const [isMounted, setIsMounted] = useState(false);
 
   const router = useRouter();
 
@@ -24,11 +22,7 @@ export default function page() {
         .find((row) => row.startsWith('User_id'))
         ?.split('=')[1]
     );
-    // setIsMounted(true);
   }, []);
-  useEffect(() => {
-    sessionRef.current = session;
-  }, [session]);
 
   useEffect(() => {
     if (
@@ -38,8 +32,7 @@ export default function page() {
     ) {
       router.push('/home');
     }
-  }, [status, cookieValue]);
-
+  }, [status]);
   return (
     <>
       {session || cookieValue ? (
