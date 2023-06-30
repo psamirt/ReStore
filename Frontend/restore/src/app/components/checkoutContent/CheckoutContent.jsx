@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import Boton from '../Button/Button';
 import axios from 'axios';
 import { totalPrice } from '@/app/helpers/totalPrice';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { cleanCart } from '@/redux/actions';
 import LocationsCards from '../locationsCards/LocationsCards';
 import SelectShipment from '../selectShipment/SelectShipment';
 import fetchCartProductsById from '@/app/helpers/fetchCartProductsById';
@@ -21,7 +20,6 @@ export default function CheckoutContent({ session, cookieValue }) {
   const [selectedMethod, setSelectedMethod] = useState(null);
 
   const router = useRouter();
-  const dispatch = useDispatch();
   const total = totalPrice(cart);
 
   useEffect(() => {
@@ -54,10 +52,10 @@ export default function CheckoutContent({ session, cookieValue }) {
       );
       setProcessingPayment(false);
       localStorage.setItem('envio', JSON.stringify(envio));
+      localStorage.setItem('userId', JSON.stringify(userId));
       localStorage.setItem('direccion', JSON.stringify(direccion));
 
       // TODO pasar el dispatch a la pantalla de success
-      dispatch(cleanCart(session?.user.id, cookieValue));
       router.push(data.url);
     } catch (error) {
       setProcessingPayment(false);
@@ -66,26 +64,30 @@ export default function CheckoutContent({ session, cookieValue }) {
   };
 
   return (
-    <div className='container mx-auto px-4 py-8 flex gap-8 justify-between'>
-      <div className='grid gap-8'>
-        <h1 className='text-3xl font-semibold'>
+    <div className='container mx-auto px-4 py-8 flex gap-8 justify-between relative '>
+      <div className='grid gap-8 '>
+        <h1 className='text-3xl font-semibold text-blue-900'>
           ¿Cómo querés recibir o retirar tu compra?
         </h1>
-        <div>
-          <h2>Domicilio</h2>
+        <div className='grid gap-4'>
+          <h2 className='text-xl font-medium'>¿Retirar o recibir compra?</h2>
+
+          <SelectShipment
+            selectedMethod={selectedMethod}
+            setSelectedMethod={setSelectedMethod}
+            setSelectedLocation={setSelectedLocation}
+          />
+        </div>
+        <div className='grid gap-4'>
+          <h2 className='text-xl font-medium'>Domicilio</h2>
           <LocationsCards
-            userId={session.user.id}
+            userId={session?.user.id}
             cookieValue={cookieValue}
             setSelectedLocation={setSelectedLocation}
             selectedLocation={selectedLocation}
             selectedMethod={selectedMethod}
           ></LocationsCards>
         </div>
-        <SelectShipment
-          selectedMethod={selectedMethod}
-          setSelectedMethod={setSelectedMethod}
-          setSelectedLocation={setSelectedLocation}
-        />
         <Boton
           disabled={
             (!selectedLocation && selectedMethod !== 'no enviar') ||
@@ -94,22 +96,25 @@ export default function CheckoutContent({ session, cookieValue }) {
           onClick={handlePayment}
           text={'Pagar'}
         />
-        {processingPayment ? <ProcessingPayment /> : null}
+        {processingPayment ? <ProcessingPayment text={'Loading...'} /> : null}
         {paymentError ? (
-          <p>Ocurrio un error en el pago, vuelve a intentarlo</p>
+          <p className='font-medium text-lg text-red-600 text-center -mt-4'>
+            Ocurrio un error en el pago, vuelve a intentarlo
+          </p>
         ) : null}
       </div>
-      <aside className='bg-slate-200 '>
+      <aside className='bg-slate-50 p-8 rounded-lg shadow-lg shadow-slate-300 w-[30%] flex flex-col gap-4 justify-start items-center'>
         {cart && cart.length > 1 ? (
-          <div>
-            <h2>Resumen de compra</h2>
-            <hr />
-            <p>{`Productos ${cart.length}`}</p>
-            <p>{`Total: $${total}`}</p>
-          </div>
+          <>
+            <h2 className='text-xl'>Resumen de compra</h2>
+            <hr className='h-px bg-gray-400 border-0 self-stretch ' />
+
+            <p className='text-lg text-gray-600'>{`Productos: ${cart.length}`}</p>
+            <p className='text-xl font-semibold '>{`Total: $${total}`}</p>
+          </>
         ) : null}
         {cart && cart.length === 1 ? (
-          <div>
+          <>
             {products[0] ? (
               <Image
                 width={120}
@@ -121,13 +126,14 @@ export default function CheckoutContent({ session, cookieValue }) {
               <div style={{ width: '120px', height: '120px' }} />
             )}
 
-            <h3>{products[0]?.name}</h3>
-            <hr />
-            <div>
-              <span>Producto</span>
+            <h2 className='text-xl  '>{products[0]?.name}</h2>
+            <hr className='h-px bg-gray-400 border-0 self-stretch ' />
+
+            <div className='text-xl font-semibold'>
+              <span>Total: </span>
               <span>{`$${total}`}</span>
             </div>
-          </div>
+          </>
         ) : null}
       </aside>
     </div>

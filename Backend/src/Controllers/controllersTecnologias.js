@@ -198,9 +198,55 @@ const getModelCategories = (req, res) => {
   }
 };
 
+const modifyProduct = async (req, res) => {
+  try {
+    const { id } = req.params;
+    if (req.file) {
+      const product = await TechSchema.findById(id);
+      const previousProfilePictureUrl = product.background_image
+
+      if (previousProfilePictureUrl) {
+        await cloudinary.uploader.destroy(previousProfilePictureUrl);
+      }
+    }
+     const cloudinaryImage = req.file && await cloudinary.uploader.upload(req.file.path, {
+      folder: "Proyecto Final",
+    });
+    // user.profile_picture = cloudinaryImage.secure_url;
+    console.log(req.file);
+    const update = {
+      $set: {
+        name: req.body.name,
+        state: req.body.state,
+        precio: req.body.precio,
+        genero: req.body.genero,
+        Description: req.body.Description,
+        Ofertas: req.body.Ofertas,
+        metodosPago: req.body.metodosPago,
+        Disabled: req.body.Disabled,
+        stock: req.body.stock,
+        background_image: req.file && cloudinaryImage.secure_url,
+      },
+    };
+
+    const updtProduct = await TechSchema.findOneAndUpdate({ _id: id }, update, {
+      new: true,
+    });
+
+    res.status(200).json(updtProduct);
+  } catch (error) {
+    console.error(error);
+    res
+      .status(500)
+      .json({ message: "Error al actualizar los datos del usuario" });
+  }
+};
+
+
 module.exports = {
   postProduct,
   getAllProducts,
   getAllProductsByCategory,
   getModelCategories,
+  modifyProduct
 };

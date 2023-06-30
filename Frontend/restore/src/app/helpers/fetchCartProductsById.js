@@ -3,7 +3,6 @@ import { totalPrice } from './totalPrice';
 const { default: axios } = require('axios');
 
 const fetchCartProductsById = async (cart, setProducts) => {
-  console.log(cart, setProducts);
   Promise.all(
     cart.map((item) =>
       axios.get(

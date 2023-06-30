@@ -125,7 +125,6 @@ const loggedRemoveFromCart = (productId, userId, userId2) => {
           },
         }
       );
-      console.log(data);
       return dispatch({ type: REMOVE_FROM_CART, payload: productId });
     } catch (error) {}
   };
@@ -145,6 +144,8 @@ export const cleanCart = (userId, userId2) => {
         }
       );
       dispatch({ type: CLEAN_CART });
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   };
 };
