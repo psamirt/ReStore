@@ -79,19 +79,18 @@ const updateUser = async (req, res) => {
   try {
     const { id } = req.params;
     if (req.file) {
-
-      const user = await User.findById(id)
+      const user = await User.findById(id);
       const previousProfilePictureUrl = user.imagenDePerfil;
-  
+
       if (previousProfilePictureUrl) {
         await cloudinary.uploader.destroy(previousProfilePictureUrl);
       }
     }
-    const cloudinaryImage = await cloudinary.uploader.upload(req.file.path, {
+    const cloudinaryImage = req.file && await cloudinary.uploader.upload(req.file.path, {
       folder: "Foto de perfil",
     });
-     // user.profile_picture = cloudinaryImage.secure_url;
-     console.log(req)
+    // user.profile_picture = cloudinaryImage.secure_url;
+    console.log(req);
     const update = {
       $set: {
         nombre: req.body.nombre,
@@ -101,17 +100,13 @@ const updateUser = async (req, res) => {
         fechaNacimiento: req.body.fechaNacimiento,
         ubicacion: req.body.ubicacion,
         metodosPago: req.body.metodosPago,
-        imagenDePerfil: cloudinaryImage.secure_url
       },
     };
+    if (req.file)  update.imagenDePerfil = cloudinaryImage.secure_url
 
-    const updtUser = await User.findOneAndUpdate({ _id: id }, update, { new: true });
-
-
-  
-
-   
-
+    const updtUser = await User.findOneAndUpdate({ _id: id }, update, {
+      new: true,
+    });
 
     res.status(200).json(updtUser);
   } catch (error) {
@@ -186,8 +181,6 @@ const getEMAIL = async (req, res) => {
     res.status(500).json({ error: "Error al obtener los usuarios" });
   }
 };
-
-
 
 module.exports = {
   updatePasswordController,
