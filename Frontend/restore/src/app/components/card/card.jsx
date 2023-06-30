@@ -7,6 +7,8 @@ import Image from 'next/image';
 // !!IMPORTANTE agregar esto a axios para que envie la cookie { withCredentials: true }
 
 function Card(data) {
+
+  if (data.Disabled) return null
   const [precioConDescuento, setPrecioConDescuento] = useState(null);
 
   useEffect(() => {
