@@ -48,12 +48,12 @@ export default function LocationsCards({
   return (
     <>
       {!locations.length ? (
-        <>
-          <p>Debes agregar un domicilio primero</p>
+        <div className='flex justify-between items-center'>
+          <p className='text-lg '>Debes agregar un domicilio primero</p>
           <Link href={'/user/ubicacion'}>
             <Boton text={'Ir a mi perfil'}></Boton>
           </Link>
-        </>
+        </div>
       ) : (
         <form className='grid gap-4 '>
           {locations.map((location) => (
