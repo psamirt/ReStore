@@ -57,7 +57,7 @@ function usuario({ searchParams }) {
     const id = session ? session.user.id : cookieValue;
     console.log([...formData]);
     axios
-      .put(`https://re-store.onrender.com/users/${id}`, formData)
+      .put(`http://localhost:3000/users/${id}`, formData)
       .then(() => {
         alert("Cambios guardados exitosamente");
       })
@@ -71,7 +71,7 @@ function usuario({ searchParams }) {
 
   useEffect(() => {
     const fetchUsuario = async (id) => {
-      const response = await fetch(`https://re-store.onrender.com/users/${id}`);
+      const response = await fetch(`http://localhost:3000/users/${id}`);
       const user = await response.json();
       console.log(user);
 
@@ -119,7 +119,7 @@ function usuario({ searchParams }) {
   };
   return (
     <>
-    {console.log(comprados, calificado)}
+      {console.log(comprados, calificado)}
       <Navbar></Navbar>
       <div className="container mx-auto p-4">
         <Button onClick={readOnly ? handleToggleReadOnly : handleCancelButton}>
@@ -204,18 +204,20 @@ function usuario({ searchParams }) {
             <div>
               <h2>Productos comprados</h2>
               <ul>
-                {comprados.map((producto) => (
-                  <li key={producto.productId}>
-                    {producto.productId}{" "}
-                    {calificado.some(
-                      (item) => item.productId === producto.productId
-                    ) ? (
-                      <span>Producto ya calificado</span>
-                    ) : (
-                      <button>Calificar</button>
-                    )}
-                  </li>
-                ))}
+                {comprados.map((order) =>
+                  order.orderItems.map((producto) => (
+                    <li key={producto.id}>
+                      {producto.id}{" "}
+                      {calificado.some(
+                        (item) => item.productId === producto.id
+                      ) ? (
+                        <span>Producto ya calificado</span>
+                      ) : (
+                        <button>Calificar</button>
+                      )}
+                    </li>
+                  ))
+                )}
               </ul>
             </div>
           )}
