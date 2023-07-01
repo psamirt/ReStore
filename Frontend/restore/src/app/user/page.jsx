@@ -57,7 +57,7 @@ function usuario({ searchParams }) {
     const id = session ? session.user.id : cookieValue;
     console.log([...formData]);
     axios
-      .put(`http://localhost:3000/users/${id}`, formData)
+      .put(`http://localhost:3001/users/${id}`, formData)
       .then(() => {
         alert("Cambios guardados exitosamente");
       })
@@ -71,7 +71,7 @@ function usuario({ searchParams }) {
 
   useEffect(() => {
     const fetchUsuario = async (id) => {
-      const response = await fetch(`http://localhost:3000/users/${id}`);
+      const response = await fetch(`http://localhost:3001/users/${id}`);
       const user = await response.json();
       console.log(user);
 
@@ -85,12 +85,13 @@ function usuario({ searchParams }) {
       cookieValue && setCookieImg(user.imagenDePerfil);
 
       if (user.orders) {
-        const productosComprados = user.orders.filter(
-          (order) => order.calificado === false
+        const productosComprados = user.orders.filter((order) =>
+          order.orderItems.map((item) => item.calificado === false)
         );
         setComprados(productosComprados);
-        const productoCalificado = user.orders.filter(
-          (order) => order.calificado === true
+
+        const productoCalificado = user.orders.filter((order) =>
+          order.orderItems.map((item) => item.calificado === true)
         );
         setCalificado(productoCalificado);
       }
@@ -110,6 +111,10 @@ function usuario({ searchParams }) {
       ...prevInput,
       [clave]: value,
     }));
+  };
+
+  const handleButtonRating = (productId) => {
+    router.push(`/users/${session.user.id}/ratingProduct/${productId}`);
   };
 
   const handleCancelButton = () => {
@@ -204,19 +209,26 @@ function usuario({ searchParams }) {
             <div>
               <h2>Productos comprados</h2>
               <ul>
-                {comprados.map((order) =>
-                  order.orderItems.map((producto) => (
-                    <li key={producto.id}>
-                      {producto.id}{" "}
-                      {calificado.some(
-                        (item) => item.productId === producto.id
-                      ) ? (
-                        <span>Producto ya calificado</span>
-                      ) : (
-                        <button>Calificar</button>
-                      )}
-                    </li>
-                  ))
+                {comprados.map(
+                  (order) =>
+                    order.orderItems.map((producto) => (
+                      <li key={producto._id}>
+                        {producto._id}{" "}
+                        {calificado.some((order) =>
+                          order.orderItems.some(
+                            (item) => item.id === producto._id
+                          )
+                        ) ? (
+                          <span>Producto ya calificado</span>
+                        ) : (
+                          <button
+                            onClick={() => handleButtonRating(producto._id)}
+                          >
+                            Calificar
+                          </button>
+                        )}
+                      </li>
+                    ))
                 )}
               </ul>
             </div>

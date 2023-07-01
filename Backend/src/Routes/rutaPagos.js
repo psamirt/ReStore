@@ -40,6 +40,8 @@ const createOrder = async (customer, data) => {
       id: item.productId,
       quantity: item.cantidad,
       price: item.precio,
+      image: item.background_image,
+      name: item.name
     }));
 
     const newOrder = {

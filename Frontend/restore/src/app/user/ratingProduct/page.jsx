@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import { Navbar } from "../components/navbar/navbar";
+import { Navbar } from "../../components/navbar/navbar";
 
 const Rating = ({ productId }) => {
   const [rating, setRating] = useState(0);
@@ -16,7 +16,7 @@ const Rating = ({ productId }) => {
   const submitRating = async () => {
     try {
       const response = await axios.put(
-        `https://re-store.onrender.com/categories/technology/rating`,
+        `http://localhost:3001/categories/technology/rating${productId}`,
         {
           rate: rating,
           id: productId,
@@ -24,7 +24,7 @@ const Rating = ({ productId }) => {
         }
       );
       if (response.status === 200) {
-        router.push(`/home/${productId}`);
+        router.push(`/home`);
       } else {
         console.log("Error al enviar calificación");
       }

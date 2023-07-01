@@ -75,6 +75,12 @@ const userSchema = new Schema({
           price: {
             type: Number,
           },
+          image:{
+            type:String,
+          },
+          name:{
+            type:String,
+          },
           calificado: {
             type: Boolean,
             default: false,
