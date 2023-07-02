@@ -5,6 +5,7 @@ const rating = async (req, res) => {
   try {
     const { rate, comment } = req.body;
     const { productId } = req.params; // Obtener el ID del producto de los parámetros de consulta
+    const { userId } = req.body;
 
     // Buscar el producto por su ID
     const product = await TechModel.findById(productId);
@@ -33,6 +34,7 @@ const rating = async (req, res) => {
     // Actualizar el campo 'totalStars' en el objeto 'rating' del producto con el nuevo promedio
     product.rating.totalStars = newRating;
 
+    product.rating.userId.push(userId)
     // Marcar el producto como calificado en la lista de productos comprados del usuario
     const user = await UserModel.findById(req.userId);
     if (user) {

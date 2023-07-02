@@ -42,6 +42,7 @@ const TechnologySchema = mongoose.Schema({
     default: [],
   },
   rating: {
+    userId: [String],
     stars: {
       type: [Number],
     },
@@ -52,9 +53,9 @@ const TechnologySchema = mongoose.Schema({
       type: [String],
     },
   },
-  stock:{
-    type:Number,
-    default:1
+  stock: {
+    type: Number,
+    default: 1,
   },
   subcategoria: {
     type: {

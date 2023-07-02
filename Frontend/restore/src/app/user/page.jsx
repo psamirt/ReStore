@@ -113,9 +113,10 @@ function usuario({ searchParams }) {
     }));
   };
 
-  const handleButtonRating = (productId) => {
-    router.push(`/users/${session.user.id}/ratingProduct/${productId}`);
-  };
+  // const handleButtonRating = (productId) => {
+  //   router.push(`/user/${session.user.id}/ratingProduct/${productId}`);
+  //   // router.push({pathname:`/user/${session.user.id}/ratingProduct/${productId}`})
+  // };
 
   const handleCancelButton = () => {
     setNewInput(Input);
@@ -124,7 +125,7 @@ function usuario({ searchParams }) {
   };
   return (
     <>
-      {console.log(comprados, calificado)}
+      {console.log( calificado)}
       <Navbar></Navbar>
       <div className="container mx-auto p-4">
         <Button onClick={readOnly ? handleToggleReadOnly : handleCancelButton}>
@@ -212,20 +213,21 @@ function usuario({ searchParams }) {
                 {comprados.map(
                   (order) =>
                     order.orderItems.map((producto) => (
-                      <li key={producto._id}>
-                        {producto._id}{" "}
+                      <li key={producto.id}>
+                        {producto.id}{" "}
                         {calificado.some((order) =>
                           order.orderItems.some(
-                            (item) => item.id === producto._id
+                            (item) => item.id === producto.id
                           )
                         ) ? (
                           <span>Producto ya calificado</span>
                         ) : (
-                          <button
-                            onClick={() => handleButtonRating(producto._id)}
+                          <Link href={{pathname:`/user/ratingProduct/`,query:{product:producto.id}}}>
+                          <buttn
                           >
                             Calificar
-                          </button>
+                          </buttn>
+                          </Link>
                         )}
                       </li>
                     ))
