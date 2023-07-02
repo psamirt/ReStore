@@ -48,18 +48,21 @@ export default function LocationsCards({
   return (
     <>
       {!locations.length ? (
-        <>
-          <p>Debes agregar un domicilio primero</p>
+        <div className='flex justify-between items-center'>
+          <p className='text-lg '>Debes agregar un domicilio primero</p>
           <Link href={'/user/ubicacion'}>
             <Boton text={'Ir a mi perfil'}></Boton>
           </Link>
-        </>
+        </div>
       ) : (
-        <form>
+        <form className='grid gap-4 '>
           {locations.map((location) => (
-            <div className='flex justify-between' key={location._id}>
-              <span>
-                <h2>{`${location.codigoPostal} - ${location.ciudad}`}</h2>
+            <div
+              className='flex justify-between bg-gray-50 px-6 py-8 shadow-md shadow-slate-300 rounded-lg'
+              key={location._id}
+            >
+              <span className='text-gray-500'>
+                <h2 className='font-semibold text-lg'>{`${location.codigoPostal} - ${location.ciudad}`}</h2>
                 <p>{location.direccion}</p>
               </span>
               <label htmlFor='radio' className='flex'>

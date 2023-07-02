@@ -68,7 +68,8 @@ export default function CartContent() {
       )}
       {cart && cart.length ? (
         <div>
-          <hr className='mb-4' />
+          <hr className='h-px bg-gray-300 border-0 mb-4' />
+
           <p className='text-lg font-medium mb-4'>Total: ${totalPrice(cart)}</p>
           {!session && !cookieValue ? (
             <div className='flex gap-4 items-center'>

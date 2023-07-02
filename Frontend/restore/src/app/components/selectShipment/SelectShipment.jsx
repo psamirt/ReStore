@@ -12,10 +12,10 @@ export default function SelectShipment({
     setSelectedMethod(value);
   };
   return (
-    <form>
-      <div className='flex justify-between'>
+    <form className='grid gap-4 text-gray-500'>
+      <div className='flex justify-between bg-gray-50 px-6 py-8 shadow-md shadow-slate-300 rounded-lg'>
         <label htmlFor='recibir' className='flex'>
-          Recibir paquete
+          Recibir a domicilio
         </label>
         <input
           name='location'
@@ -26,9 +26,10 @@ export default function SelectShipment({
           onChange={handleRadioChange}
         />
       </div>
-      <div className='flex justify-between'>
+      <div className='flex justify-between bg-gray-50 px-6 py-8 shadow-md shadow-slate-300 rounded-lg'>
         <label htmlFor='retirar' className='flex'>
-          Retirar paquete
+          Retirar por sucursal -{' '}
+          <span className=''>Avenida Siempre Viva 742</span>
         </label>
         <input
           name='location'

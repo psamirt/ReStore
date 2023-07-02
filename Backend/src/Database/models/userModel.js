@@ -75,6 +75,10 @@ const userSchema = new Schema({
           price: {
             type: Number,
           },
+          calificado: {
+            type: Boolean,
+            default: false,
+          },
         },
       ],
       paymentInfo: {
