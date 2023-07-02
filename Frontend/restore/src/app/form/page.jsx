@@ -5,6 +5,8 @@ import axios from "axios";
 import { Navbar } from "../components/navbar/navbar";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import Swal from 'sweetalert2';
+
 
 export default function MyForm() {
   const { data: session,status } = useSession();
@@ -126,7 +128,10 @@ export default function MyForm() {
     axios
       .post("https://re-store.onrender.com/categories/technology/posteo", formData)
       .then(() => {
-        alert("Producto creado exitosamente");
+        Swal.fire({
+          icon: 'success',
+          title: 'Producto creado exitosamente',
+        });
       })
       .catch((error) => {
         console.error("Error al publicar el producto:", error);

@@ -6,6 +6,7 @@ import { useSession } from "next-auth/react";
 import { Navbar } from "../components/navbar/navbar";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import Swal from 'sweetalert2';
 
 function usuario({ searchParams }) {
   const { data: session, status } = useSession();
@@ -57,9 +58,12 @@ function usuario({ searchParams }) {
     const id = session ? session.user.id : cookieValue;
     console.log([...formData]);
     axios
-      .put(`http://localhost:3000/users/${id}`, formData)
+      .put(`http://localhost:3001/users/${id}`, formData)
       .then(() => {
-        alert("Cambios guardados exitosamente");
+        Swal.fire({
+          icon: 'success',
+          title: 'Producto creado exitosamente',
+        });
       })
       .then(() => {
         handleToggleReadOnly();
@@ -71,7 +75,7 @@ function usuario({ searchParams }) {
 
   useEffect(() => {
     const fetchUsuario = async (id) => {
-      const response = await fetch(`http://localhost:3000/users/${id}`);
+      const response = await fetch(`http://localhost:3001/users/${id}`);
       const user = await response.json();
       console.log(user);
 
@@ -85,12 +89,13 @@ function usuario({ searchParams }) {
       cookieValue && setCookieImg(user.imagenDePerfil);
 
       if (user.orders) {
-        const productosComprados = user.orders.filter(
-          (order) => order.calificado === false
+        const productosComprados = user.orders.filter((order) =>
+          order.orderItems.map((item) => item.calificado === false)
         );
         setComprados(productosComprados);
-        const productoCalificado = user.orders.filter(
-          (order) => order.calificado === true
+
+        const productoCalificado = user.orders.filter((order) =>
+          order.orderItems.map((item) => item.calificado === true)
         );
         setCalificado(productoCalificado);
       }
@@ -112,6 +117,11 @@ function usuario({ searchParams }) {
     }));
   };
 
+  // const handleButtonRating = (productId) => {
+  //   router.push(`/user/${session.user.id}/ratingProduct/${productId}`);
+  //   // router.push({pathname:`/user/${session.user.id}/ratingProduct/${productId}`})
+  // };
+
   const handleCancelButton = () => {
     setNewInput(Input);
     handleToggleReadOnly();
@@ -119,7 +129,7 @@ function usuario({ searchParams }) {
   };
   return (
     <>
-      {console.log(comprados, calificado)}
+      {console.log( calificado)}
       <Navbar></Navbar>
       <div className="container mx-auto p-4">
         <Button onClick={readOnly ? handleToggleReadOnly : handleCancelButton}>
@@ -204,19 +214,27 @@ function usuario({ searchParams }) {
             <div>
               <h2>Productos comprados</h2>
               <ul>
-                {comprados.map((order) =>
-                  order.orderItems.map((producto) => (
-                    <li key={producto.id}>
-                      {producto.id}{" "}
-                      {calificado.some(
-                        (item) => item.productId === producto.id
-                      ) ? (
-                        <span>Producto ya calificado</span>
-                      ) : (
-                        <button>Calificar</button>
-                      )}
-                    </li>
-                  ))
+                {comprados.map(
+                  (order) =>
+                    order.orderItems.map((producto) => (
+                      <li key={producto.id}>
+                        {producto.id}{" "}
+                        {calificado.some((order) =>
+                          order.orderItems.some(
+                            (item) => item.id === producto.id
+                          )
+                        ) ? (
+                          <span>Producto ya calificado</span>
+                        ) : (
+                          <Link href={{pathname:`/user/ratingProduct/`,query:{product:producto.id}}}>
+                          <buttn
+                          >
+                            Calificar
+                          </buttn>
+                          </Link>
+                        )}
+                      </li>
+                    ))
                 )}
               </ul>
             </div>
