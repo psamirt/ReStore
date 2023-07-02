@@ -3,10 +3,12 @@ const UserModel = require("../Database/models/userModel");
 
 const rating = async (req, res) => {
   try {
-    const { rate, comment, id } = req.body;
+    const { rate, comment } = req.body;
+    const { productId } = req.params; // Obtener el ID del producto de los parámetros de consulta
+    const { userId } = req.body;
 
     // Buscar el producto por su ID
-    const product = await TechModel.findById(id);
+    const product = await TechModel.findById(productId);
 
     if (!product) {
       return res.status(404).json({ message: "Producto no existe" });
@@ -22,17 +24,23 @@ const rating = async (req, res) => {
     const totalRatings = product.rating.stars.length;
     let newRating = 0;
     if (totalRatings !== 0) {
-      const sum = product.rating.stars.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+      const sum = product.rating.stars.reduce(
+        (accumulator, currentValue) => accumulator + currentValue,
+        0
+      );
       newRating = Math.round(sum / totalRatings);
     }
 
     // Actualizar el campo 'totalStars' en el objeto 'rating' del producto con el nuevo promedio
     product.rating.totalStars = newRating;
 
+    product.rating.userId.push(userId)
     // Marcar el producto como calificado en la lista de productos comprados del usuario
     const user = await UserModel.findById(req.userId);
     if (user) {
-      const purchasedProduct = user.orders.find((order) => order.productId === id);
+      const purchasedProduct = user.orders.find(
+        (order) => order.productId === id
+      );
       if (purchasedProduct) {
         purchasedProduct.calificado = true;
       }
@@ -42,7 +50,9 @@ const rating = async (req, res) => {
     // Guardar los cambios en la base de datos
     await product.save();
 
-    res.status(200).json({ message: "Calificación enviada exitosamente", newRating });
+    res
+      .status(200)
+      .json({ message: "Calificación enviada exitosamente", newRating });
   } catch (error) {
     res.status(400).json({ message: "Error al calificar" });
     console.error(error);

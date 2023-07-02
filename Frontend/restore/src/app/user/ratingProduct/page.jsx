@@ -2,9 +2,9 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import { Navbar } from "../components/navbar/navbar";
+import { Navbar } from "../../components/navbar/navbar";
 
-const Rating = ({ productId }) => {
+const Rating = ({ searchParams }) => {
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
   const router = useRouter();
@@ -13,24 +13,34 @@ const Rating = ({ productId }) => {
     setComment(event.target.value);
   };
 
+  // const submitRating = async () => {
+  //   try {
+  //     const response = await axios.put(
+  //       `http://localhost:3001/categories/technology/rating${searchParams.product}`,
+  //       {
+  //         rate: rating,
+  //         id: productId,
+  //         comment: comment,
+  //       }
+  //     );
+  //     if (response.status === 200) {
+  //       router.push(`/home`);
+  //     } else {
+  //       console.log("Error al enviar calificación");
+  //     }
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
+
   const submitRating = async () => {
-    try {
-      const response = await axios.put(
-        `https://re-store.onrender.com/categories/technology/rating`,
-        {
-          rate: rating,
-          id: productId,
-          comment: comment,
-        }
-      );
-      if (response.status === 200) {
-        router.push(`/home/${productId}`);
-      } else {
-        console.log("Error al enviar calificación");
+    axios.put(
+      `http://localhost:3001/categories/technology/${searchParams.product}`,
+      {
+        rate: rating,
+        comment: comment,
       }
-    } catch (error) {
-      console.error(error);
-    }
+    );
   };
 
   const handleRatingClick = (selectedRating) => {
@@ -39,7 +49,7 @@ const Rating = ({ productId }) => {
 
   return (
     <div>
-      {console.log(rating, comment)}
+      {console.log(searchParams.product)}
       <Navbar />
       <div className="flex flex-col items-center">
         <div className="flex items-center mt-4">
