@@ -6,6 +6,7 @@ import { useSession } from "next-auth/react";
 import { Navbar } from "../components/navbar/navbar";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import Swal from 'sweetalert2';
 
 function usuario({ searchParams }) {
   const { data: session, status } = useSession();
@@ -59,7 +60,10 @@ function usuario({ searchParams }) {
     axios
       .put(`http://localhost:3000/users/${id}`, formData)
       .then(() => {
-        alert("Cambios guardados exitosamente");
+        Swal.fire({
+          icon: 'success',
+          title: 'Producto creado exitosamente',
+        });
       })
       .then(() => {
         handleToggleReadOnly();

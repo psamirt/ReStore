@@ -3,6 +3,11 @@ import React from 'react';
 import Card from '../card/card';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
+import { useRouter } from "next/navigation";
+import { useSession,signOut } from "next-auth/react";
+import { useEffect, useState } from 'react';
+import axios from "axios"
+import Swal from 'sweetalert2';
 
 const responsive = {
   desktop: {
@@ -23,6 +28,47 @@ const responsive = {
 };
 
 function HomeContainer({ data }) {
+  
+  
+  
+  const router = useRouter()
+  const { data: session, status } = useSession();
+const [email,setEmail] = useState(null)
+const [isBan, setBan] = useState(null)
+const fetchEmail = async () => {
+const {data} = await axios.get(`https://re-store.onrender.com/users/${email}/email`)
+if (data.ban === true) {
+  setBan(true)
+}
+}
+
+useEffect(() => {
+  if (session) {
+    console.log(session);
+    setEmail(session.user.email);
+  }
+}, [session]);
+
+useEffect(() => {
+  if (email) {
+    fetchEmail();
+  }
+}, [email]);
+
+useEffect(() => {
+  if (isBan) {
+    Swal.fire({
+      icon: 'error',
+      title: '¡Estás baneado!',
+      text: 'Estás baneado hasta nuevo aviso. No podrás iniciar sesión.',
+    });
+    signOut()
+  }
+}, [isBan]);
+
+  
+  
+  
   return (
     <Carousel responsive={responsive}>
       {data.result.map((props) => {

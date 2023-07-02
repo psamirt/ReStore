@@ -102,6 +102,10 @@ const userSchema = new Schema({
       },
     },
   ],
+  ban: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 module.exports = model("User", userSchema);
