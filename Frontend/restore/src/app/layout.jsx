@@ -1,5 +1,6 @@
 import './globals.css';
 import Provider from './components/Provider/Provider';
+import Footer from './components/footer/footer';
 export const metadata = {
   title: 'ReStore',
   description: 'Encuentra los mejores productos en nuestro sitio!',
@@ -21,6 +22,7 @@ export default function RootLayout({ children }) {
       <head></head>
       <body>
         <Provider>{children}</Provider>
+        <Footer/>
       </body>
     </html>
   );

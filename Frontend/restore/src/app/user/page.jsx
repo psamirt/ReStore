@@ -191,7 +191,6 @@ function usuario({ searchParams }) {
   const handleCancelButton = () => {
     setNewInput(Input);
     handleToggleReadOnly();
-    setNewInput(input);
   };
   return (
     <>
