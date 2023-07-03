@@ -56,6 +56,19 @@ const userSchema = new Schema({
       },
     },
   ],
+  favoritos: [
+    {
+      productId: {
+        type: String,
+      },
+      precio: {
+        type: Number,
+      },
+      oferta: {
+        type: Number,
+      },
+    },
+  ],
   orders: [
     {
       user: {
