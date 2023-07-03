@@ -29,10 +29,10 @@ function usuario({ searchParams }) {
     fechaNacimiento: "",
     genero: "",
   });
-  
+
   const [comprados, setComprados] = useState([]);
   const [calificado, setCalificado] = useState([]);
-  // const [detalle, setDetalle]= useState(null) 
+  // const [detalle, setDetalle]= useState(null)
 
   useEffect(() => {
     setCookieValue(
@@ -64,14 +64,17 @@ function usuario({ searchParams }) {
       .then(() => {
         Swal.fire({
           icon: "success",
-          title: "Producto creado exitosamente",
+          title: "Cambios guardados exitosamente",
         });
       })
       .then(() => {
         handleToggleReadOnly();
       })
       .catch((error) => {
-        console.error("Error al cambiar los datos:", error);
+        Swal.fire({
+          icon: "error",
+          title: "Algo ha salido mal, intentalo nuevamente mas tarde",
+        });
       });
   };
 
@@ -167,6 +170,7 @@ function usuario({ searchParams }) {
               showUploadList={false}
               customRequest={({ file }) => {
                 setFile(file);
+                handleToggleReadOnly();
               }}
             >
               {file ? (
@@ -250,7 +254,7 @@ function usuario({ searchParams }) {
                               pathname: "/ratingProduct/",
                               query: {
                                 product: producto.id,
-                                user: session ? session.user.id : cookieValue
+                                user: session ? session.user.id : cookieValue,
                               },
                             }}
                           >
