@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 'use client';
 import React, { useState, useEffect } from 'react';
 import { Form, Input, Button, Select, DatePicker, Upload } from 'antd';
@@ -9,18 +8,6 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Swal from 'sweetalert2';
 import { totalPrice } from '../helpers/totalPrice';
-=======
-"use client";
-import React, { useState, useEffect } from "react";
-import { Form, Input, Button, Select, DatePicker, Upload } from "antd";
-import axios from "axios";
-import { useSession } from "next-auth/react";
-import { Navbar } from "../components/navbar/navbar";
-import { useRouter } from "next/navigation";
-import Link from "next/link";
-import Swal from "sweetalert2";
-import { totalPrice } from "../helpers/totalPrice";
->>>>>>> 972711a52d9ebf50e7127304c94b4fa359ba8098
 
 function usuario({ searchParams }) {
   const { data: session, status } = useSession();
@@ -78,27 +65,18 @@ function usuario({ searchParams }) {
       .put(`https://re-store.onrender.com/users/${id}`, formData)
       .then(() => {
         Swal.fire({
-<<<<<<< HEAD
           icon: 'success',
-          title: 'Producto creado exitosamente',
-=======
-          icon: "success",
-          title: "Cambios guardados exitosamente",
->>>>>>> 972711a52d9ebf50e7127304c94b4fa359ba8098
+          title: 'Cambios guardados exitosamente',
         });
       })
       .then(() => {
         handleToggleReadOnly();
       })
       .catch((error) => {
-<<<<<<< HEAD
-        console.error('Error al cambiar los datos:', error);
-=======
         Swal.fire({
-          icon: "error",
-          title: "Algo ha salido mal, intentalo nuevamente mas tarde",
+          icon: 'error',
+          title: 'Algo ha salido mal, intentalo nuevamente mas tarde',
         });
->>>>>>> 972711a52d9ebf50e7127304c94b4fa359ba8098
       });
   };
 
@@ -153,10 +131,6 @@ function usuario({ searchParams }) {
                     precio,
                     Ofertas,
                   } = value.data.result[0];
-<<<<<<< HEAD
-                  console.log(value.data.result[0]);
-=======
->>>>>>> 972711a52d9ebf50e7127304c94b4fa359ba8098
                   const finalPrice = Ofertas
                     ? Math.round(
                         Number(totalPrice([{ precio, oferta: Ofertas }])) * 100
@@ -183,11 +157,6 @@ function usuario({ searchParams }) {
         productosComprados = productosComprados
           .map((item) => item.orderItems)
           .flat(1);
-<<<<<<< HEAD
-        console.log(productosComprados);
-
-=======
->>>>>>> 972711a52d9ebf50e7127304c94b4fa359ba8098
         // setComprados(productosComprados);
         fetchCartProductsById(productosComprados, setComprados);
 
@@ -311,48 +280,14 @@ function usuario({ searchParams }) {
             <div>
               <h2 className='text-2xl font-semibold mb-4'>Tus productos</h2>
               <ul>
-<<<<<<< HEAD
-                {/* {comprados.map((order) =>
-                  order.orderItems.map((producto) => (
-                    <li
-                      key={producto.id}
-                      className='flex justify-between items-center'
-                    >
-                      <span>{producto.id}</span>{' '}
-                      {producto.calificado ? (
-                        <span className='text-green-500'>
-                          Producto ya calificado
-                        </span>
-                      ) : (
-                        <div>
-                          <span> </span>
-                          <Link
-                            href={{
-                              pathname: '/ratingProduct/',
-                              query: {
-                                product: producto.id,
-                                user: session ? session.user.id : cookieValue,
-                              },
-                            }}
-                          >
-                            <button className='bg-blue-500 hover:bg-blue-600 text-white font-bold px-4 rounded'>
-                              Calificar
-                            </button>
-                          </Link>
-                        </div>
-                      )}
-                    </li>
-                  ))
-                )} */}
-=======
                 {comprados.map((producto) => (
                   <li
                     key={producto.id}
-                    className="flex justify-between items-center"
+                    className='flex justify-between items-center'
                   >
                     <span>{producto.name}</span>
                     {producto.calificado ? (
-                      <span className="text-green-500">
+                      <span className='text-green-500'>
                         Producto ya calificado
                       </span>
                     ) : (
@@ -360,14 +295,14 @@ function usuario({ searchParams }) {
                         <span> </span>
                         <Link
                           href={{
-                            pathname: "/ratingProduct/",
+                            pathname: '/ratingProduct/',
                             query: {
                               product: producto.id,
                               user: session ? session.user.id : cookieValue,
                             },
                           }}
                         >
-                          <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold px-4 rounded">
+                          <button className='bg-blue-500 hover:bg-blue-600 text-white font-bold px-4 rounded'>
                             Calificar
                           </button>
                         </Link>
@@ -375,7 +310,6 @@ function usuario({ searchParams }) {
                     )}
                   </li>
                 ))}
->>>>>>> 972711a52d9ebf50e7127304c94b4fa359ba8098
               </ul>
             </div>
           )}
