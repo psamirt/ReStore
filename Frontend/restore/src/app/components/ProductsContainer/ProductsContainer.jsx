@@ -4,7 +4,7 @@ import style from './ProductsContainer.module.css';
 import React, { useState, useEffect } from 'react';
 import productsCounter from '@/app/utils/productsCounter';
 
-function ProductsContainer({ data, ubicaciones, marcas, estado }) {
+function ProductsContainer({ data, marcas, estado }) {
   const [shownProducts, setShownProducts] = useState(data.result);
   const initialState = {
     estado: '',
@@ -51,10 +51,9 @@ function ProductsContainer({ data, ubicaciones, marcas, estado }) {
 
   const stateCounter = productsCounter(estado);
   const marcasCounter = productsCounter(marcas);
-  const [filters] = useState({
+  const initialFilters = {
     estado: [...new Set(estado)],
     marcas: [...new Set(marcas)],
-    ubicacion: [...new Set(ubicaciones)],
     oferta: ['En oferta'],
     precio: [
       'Menos de $2000',
@@ -69,7 +68,16 @@ function ProductsContainer({ data, ubicaciones, marcas, estado }) {
       'Nombre ascendiente',
       'Nombre descendiente',
     ],
-  });
+  };
+  const [filters, setFilters] = useState(initialFilters);
+
+  const updateFilters = () => {
+    setFilters(initialFilters);
+  };
+
+  useEffect(() => {
+    updateFilters();
+  }, [estado, marcas]);
   const [currentOrder, setCurrentOrder] = useState(null);
 
   const handleOrderChange = (orden) => {
@@ -77,7 +85,7 @@ function ProductsContainer({ data, ubicaciones, marcas, estado }) {
   };
 
   useEffect(() => {
-    setNuevosFilters(initialState);    
+    setNuevosFilters(initialState);
     applyFilters(nuevosFilters);
   }, [data]);
 

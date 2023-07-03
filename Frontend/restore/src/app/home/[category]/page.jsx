@@ -15,20 +15,18 @@ async function page({ params }) {
   const categoria = params.category;
 
   const data = await fetchCategory(categoria);
-  const ubicaciones = data.result.map((producto) => producto.Ubicacion);
-  const marcas = data.result.map((producto) => producto.Marca);
-  const estado = data.result.map((producto) => producto.state);
+  const marcas = data.result
+    .filter((producto) => !producto.Disabled)
+    .map((producto) => producto.Marca);
+  const estado = data.result
+    .filter((producto) => !producto.Disabled)
+    .map((producto) => producto.state);
 
   return (
     <>
       <Navbar />
 
-      <ProductsContainer
-        data={data}
-        ubicaciones={ubicaciones}
-        marcas={marcas}
-        estado={estado}
-      />
+      <ProductsContainer data={data} marcas={marcas} estado={estado} />
     </>
   );
 }

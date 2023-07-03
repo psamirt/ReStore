@@ -104,7 +104,7 @@ export const Navbar = () => {
 
           {cookieValue ? (
             <Link
-              className='link'
+              className='link h-[35px]'
               href={{
                 pathname: '/user',
                 query: {
@@ -117,7 +117,7 @@ export const Navbar = () => {
                 width='35'
                 height='35'
                 alt={user.nombre}
-                className='rounded-full'
+                className='rounded-full h-full'
               />
             </Link>
           ) : null}
