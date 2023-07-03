@@ -36,11 +36,20 @@ const createOrder = async (customer, data) => {
 
     console.log("Cart Data:", cartData);
 
-    const orderItems = cartData.map((item) => ({
-      id: item.productId,
-      quantity: item.cantidad,
-      price: item.precio,
-    }));
+    const orderItems = cartData.map((item) => {
+      const precioSinDescuento = parseFloat(item.precio);
+      const descuento = parseFloat(item.oferta);
+      const precioConDescuento = (
+        precioSinDescuento -
+        (precioSinDescuento * descuento) / 100
+      ).toFixed(2);
+
+      return {
+        id: item.productId,
+        quantity: item.cantidad,
+        price: parseFloat(precioConDescuento),
+      };
+    });
 
     const newOrder = {
       user: customer.metadata.userId,
@@ -68,7 +77,7 @@ const createOrder = async (customer, data) => {
 
     const earnings = await Earnings.findOne({});
     if (earnings) {
-      earnings.earnings += data.amount_total;
+      earnings.earnings += parseFloat(data.amount_total / 100);
       await earnings.save();
     } else {
       await Earnings.create({ earnings: data.amount_total });

@@ -129,18 +129,13 @@ export const Navbar = () => {
           ) : (
             <button onClick={handleLogOut}>Cerrar sesion</button>
           )}
-          {flag ? (
-            <Link className='link' href={'/form'}>
-              Crear producto
-            </Link>
-          ) : null}
           {cookieAdmin ? (
             <Link className='link' href={'/dashboardadmin'}>
               Dashboard Admin
             </Link>
           ) : null}
           <Searchbar />
-          <Link href={'/cart'}>Carrito</Link>
+          <Link href={'/cart'}><img width="50" height="50" src="https://img.icons8.com/bubbles/50/add-shopping-cart.png" alt="add-shopping-cart"/></Link>
         </div>
       </div>
     </nav>
