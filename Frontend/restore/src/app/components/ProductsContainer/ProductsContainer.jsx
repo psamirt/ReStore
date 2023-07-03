@@ -77,6 +77,7 @@ function ProductsContainer({ data, ubicaciones, marcas, estado }) {
   };
 
   useEffect(() => {
+    setNuevosFilters(initialState);    
     applyFilters(nuevosFilters);
   }, [data]);
 
