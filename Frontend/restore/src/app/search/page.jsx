@@ -6,6 +6,8 @@ import NotFound from '../home/[category]/[productId]/notFound'
 
 async function Search({ searchParams }) {
   const data = await fetchSearch(searchParams.search)
+  const filteredData = data.result.filter(product => product.Disabled !== true)
+  data.result = filteredData
   const ubicaciones = data.result.map(producto => producto.Ubicacion)
   const marcas = data.result.map(producto => producto.Marca)
   const estado = data.result.map(producto => producto.state)
