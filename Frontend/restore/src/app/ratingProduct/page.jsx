@@ -2,54 +2,38 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import { Navbar } from "../../components/navbar/navbar";
+import { Navbar } from "../components/navbar/navbar";
 
 const Rating = ({ searchParams }) => {
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
+
   const router = useRouter();
 
   const handleCommentChange = (event) => {
     setComment(event.target.value);
   };
 
-  // const submitRating = async () => {
-  //   try {
-  //     const response = await axios.put(
-  //       `http://localhost:3001/categories/technology/rating${searchParams.product}`,
-  //       {
-  //         rate: rating,
-  //         id: productId,
-  //         comment: comment,
-  //       }
-  //     );
-  //     if (response.status === 200) {
-  //       router.push(`/home`);
-  //     } else {
-  //       console.log("Error al enviar calificación");
-  //     }
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
-
   const submitRating = async () => {
-    axios.put(
-      `http://localhost:3001/categories/technology/${searchParams.product}`,
+    await axios.put(
+      `https://re-store.onrender.com/categories/technology/rating/${searchParams.product}/${searchParams.user}`,
       {
         rate: rating,
         comment: comment,
+        product: searchParams.product,
+        user: searchParams.user,
       }
     );
+    router.push(`/user`);
   };
-
+  
+  
   const handleRatingClick = (selectedRating) => {
     setRating(selectedRating);
   };
 
   return (
     <div>
-      {console.log(searchParams.product)}
       <Navbar />
       <div className="flex flex-col items-center">
         <div className="flex items-center mt-4">

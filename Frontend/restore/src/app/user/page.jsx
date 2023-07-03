@@ -6,7 +6,7 @@ import { useSession } from "next-auth/react";
 import { Navbar } from "../components/navbar/navbar";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import Swal from 'sweetalert2';
+import Swal from "sweetalert2";
 
 function usuario({ searchParams }) {
   const { data: session, status } = useSession();
@@ -29,8 +29,10 @@ function usuario({ searchParams }) {
     fechaNacimiento: "",
     genero: "",
   });
+  
   const [comprados, setComprados] = useState([]);
   const [calificado, setCalificado] = useState([]);
+  // const [detalle, setDetalle]= useState(null) 
 
   useEffect(() => {
     setCookieValue(
@@ -58,11 +60,11 @@ function usuario({ searchParams }) {
     const id = session ? session.user.id : cookieValue;
     console.log([...formData]);
     axios
-      .put(`http://localhost:3001/users/${id}`, formData)
+      .put(`https://re-store.onrender.com/users/${id}`, formData)
       .then(() => {
         Swal.fire({
-          icon: 'success',
-          title: 'Producto creado exitosamente',
+          icon: "success",
+          title: "Producto creado exitosamente",
         });
       })
       .then(() => {
@@ -73,11 +75,27 @@ function usuario({ searchParams }) {
       });
   };
 
+  // useEffect(() => {
+  //   const fetchDetail = async (id) => {
+  //     const response = await fetch(
+  //       `https://re-store.onrender.com/categories/technology/Detail/${id}`
+  //     );
+  //     const product = await response.json();
+  //     setDetalle(product);
+  //   };
+  //   comprados.forEach((order) => {
+  //     order.orderItems.forEach((producto) => {
+  //       if (!producto.calificado) {
+  //         fetchDetail(producto.id);
+  //       }
+  //     });
+  //   });
+  // }, [comprados]);
+
   useEffect(() => {
     const fetchUsuario = async (id) => {
-      const response = await fetch(`http://localhost:3001/users/${id}`);
+      const response = await fetch(`https://re-store.onrender.com/users/${id}`);
       const user = await response.json();
-      console.log(user);
 
       setInput({
         email: user.email,
@@ -129,7 +147,6 @@ function usuario({ searchParams }) {
   };
   return (
     <>
-      {console.log( calificado)}
       <Navbar></Navbar>
       <div className="container mx-auto p-4">
         <Button onClick={readOnly ? handleToggleReadOnly : handleCancelButton}>
@@ -212,29 +229,39 @@ function usuario({ searchParams }) {
         <div>
           {comprados.length > 0 && (
             <div>
-              <h2>Productos comprados</h2>
+              <h2 className="text-2xl font-semibold mb-4">Tus productos</h2>
               <ul>
-                {comprados.map(
-                  (order) =>
-                    order.orderItems.map((producto) => (
-                      <li key={producto.id}>
-                        {producto.id}{" "}
-                        {calificado.some((order) =>
-                          order.orderItems.some(
-                            (item) => item.id === producto.id
-                          )
-                        ) ? (
-                          <span>Producto ya calificado</span>
-                        ) : (
-                          <Link href={{pathname:`/user/ratingProduct/`,query:{product:producto.id}}}>
-                          <buttn
+                {comprados.map((order) =>
+                  order.orderItems.map((producto) => (
+                    <li
+                      key={producto.id}
+                      className="flex justify-between items-center"
+                    >
+                      <span>{producto.id}</span>{" "}
+                      {producto.calificado ? (
+                        <span className="text-green-500">
+                          Producto ya calificado
+                        </span>
+                      ) : (
+                        <div>
+                          <span> </span>
+                          <Link
+                            href={{
+                              pathname: "/ratingProduct/",
+                              query: {
+                                product: producto.id,
+                                user: session ? session.user.id : cookieValue
+                              },
+                            }}
                           >
-                            Calificar
-                          </buttn>
+                            <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold px-4 rounded">
+                              Calificar
+                            </button>
                           </Link>
-                        )}
-                      </li>
-                    ))
+                        </div>
+                      )}
+                    </li>
+                  ))
                 )}
               </ul>
             </div>

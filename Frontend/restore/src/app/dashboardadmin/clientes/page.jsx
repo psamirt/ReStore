@@ -64,7 +64,7 @@ function Clientes() {
 
     try {
       // Realizar la solicitud PUT a la ruta /users/ban con el ID del cliente
-      const response = await axios.put("http://localhost:3001/users/ban/user", {
+      const response = await axios.put("https://re-store.onrender.com/users/ban/user", {
         userId: clienteId,
       });
       setFlag(!flag);
