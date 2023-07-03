@@ -35,7 +35,6 @@ function usuario({ searchParams }) {
   const [calificado, setCalificado] = useState([]);
   // const [detalle, setDetalle]= useState(null)
 
-  console.log(comprados);
   useEffect(() => {
     setCookieValue(
       document.cookie
@@ -194,7 +193,6 @@ function usuario({ searchParams }) {
   };
   return (
     <>
-      {console.log(comprados)}
       <Navbar></Navbar>
       <div className='container mx-auto p-4'>
         <Button onClick={readOnly ? handleToggleReadOnly : handleCancelButton}>
