@@ -28,14 +28,16 @@ function Pedidos() {
   
   const [pedidos, setPedidos] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [flag, setFlag] = useState(false);
   const [searchText, setSearchText] = useState('');
 
 
   const getPedidos = async () => {
     const { data } = await axios.get("https://re-store.onrender.com/users/envios/all");
+    console.log(data.users)
     return data.users;
   };
+
+
 
   useEffect(() => {
     setLoading(true);
@@ -53,6 +55,7 @@ function Pedidos() {
             pagado: orden.paymentInfo.amountPaid,
             articulos: orden.orderItems,
             estado: orden.orderStatus,
+            estadoPago: orden.paymentInfo.status
           };
           newPedidos.push(newPedido);
         });
@@ -108,7 +111,7 @@ function Pedidos() {
         title: "Pagado",
         dataIndex: "pagado",
         render: (_, record) => (
-          <span style={{ color: 'gold' }}>{`$${record.pagado} USD`}</span>
+          <span>{`$${record.pagado} USD`}</span>
         ),
       },
       {
@@ -128,11 +131,20 @@ function Pedidos() {
         ),
       },
       {
-        title: "Estado",
+        title: "Estado del envio",
         dataIndex: "estado",
         render: (_, record) => (
           <Tag style={{ fontWeight: 'bold', color: 'white', backgroundColor: 'black' }}>
             {record.estado}
+          </Tag>
+        ),
+      },
+      {
+        title: "Estado del pago",
+        dataIndex: "estadoPago",
+        render: (_, record) => (
+          <Tag style={{ fontWeight: 'bold', color: 'white', backgroundColor: 'green' }}>
+            {record.estadoPago === "paid" && "Pagado"}
           </Tag>
         ),
       },
