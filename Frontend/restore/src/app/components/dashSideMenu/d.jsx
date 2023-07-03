@@ -39,6 +39,11 @@ function DashSideMenu() {
             label: "Clientes",
             key: "/dashboardadmin/clientes",
             icon: <UserOutlined />,
+          },
+          {
+            label: "Crear Producto",
+            key: "/form",
+            icon: <AppstoreAddOutlined />,
           }
         ]}
       ></Menu>
