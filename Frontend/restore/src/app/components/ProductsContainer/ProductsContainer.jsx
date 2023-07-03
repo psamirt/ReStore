@@ -78,7 +78,7 @@ function ProductsContainer({ data, ubicaciones, marcas, estado }) {
 
   useEffect(() => {
     applyFilters(nuevosFilters);
-  }, []);
+  }, [data]);
 
   useEffect(() => {
     const orderProducts = () => {
