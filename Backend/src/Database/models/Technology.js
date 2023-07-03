@@ -42,7 +42,6 @@ const TechnologySchema = mongoose.Schema({
     default: [],
   },
   rating: {
-    userId: [String],
     stars: {
       type: [Number],
     },

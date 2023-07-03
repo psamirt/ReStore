@@ -49,7 +49,7 @@ const createOrder = async (customer, data) => {
       paymentInfo: {
         id: data.payment_intent,
         status: data.payment_status,
-        amountPaid: data.amount_total,
+        amountPaid: data.amount_total / 100,
       },
     };
 

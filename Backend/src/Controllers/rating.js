@@ -4,27 +4,26 @@ const UserModel = require("../Database/models/userModel");
 const rating = async (req, res) => {
   try {
     const { rate, comment } = req.body;
-    const { productId } = req.params; // Obtener el ID del producto de los parámetros de consulta
-    const { userId } = req.body;
+    const { product, user } = req.params; // Obtener los IDs del producto y usuario de los parámetros de la URL
 
     // Buscar el producto por su ID
-    const product = await TechModel.findById(productId);
+    const productObj = await TechModel.findById(product);
 
-    if (!product) {
+    if (!productObj) {
       return res.status(404).json({ message: "Producto no existe" });
     }
 
     // Agregar la calificación (rate) como número entero al array 'stars' en el objeto 'rating' del producto
-    product.rating.stars.push(parseInt(rate, 10));
+    productObj.rating.stars.push(parseInt(rate, 10));
 
     // Agregar el comentario al array 'comments' en el objeto 'rating' del producto
-    product.rating.comments.push(comment);
+    productObj.rating.comments.push(comment);
 
     // Calcular el nuevo promedio de calificaciones
-    const totalRatings = product.rating.stars.length;
+    const totalRatings = productObj.rating.stars.length;
     let newRating = 0;
     if (totalRatings !== 0) {
-      const sum = product.rating.stars.reduce(
+      const sum = productObj.rating.stars.reduce(
         (accumulator, currentValue) => accumulator + currentValue,
         0
       );
@@ -32,27 +31,27 @@ const rating = async (req, res) => {
     }
 
     // Actualizar el campo 'totalStars' en el objeto 'rating' del producto con el nuevo promedio
-    product.rating.totalStars = newRating;
+    productObj.rating.totalStars = newRating;
 
-    product.rating.userId.push(userId)
     // Marcar el producto como calificado en la lista de productos comprados del usuario
-    const user = await UserModel.findById(req.userId);
-    if (user) {
-      const purchasedProduct = user.orders.find(
-        (order) => order.productId === id
+    const userObj = await UserModel.findById(user);
+    if (userObj) {
+      const purchasedOrder = userObj.orders.find((order) =>
+        order.orderItems.find((item) => item.id === product)
       );
-      if (purchasedProduct) {
-        purchasedProduct.calificado = true;
+      if (purchasedOrder) {
+        const purchasedProduct = purchasedOrder.orderItems.find((item) => item.id === product);
+        if (purchasedProduct) {
+          purchasedProduct.calificado = true;
+        }
       }
-      await user.save();
+      await userObj.save();
     }
 
     // Guardar los cambios en la base de datos
-    await product.save();
+    await productObj.save();
 
-    res
-      .status(200)
-      .json({ message: "Calificación enviada exitosamente", newRating });
+    res.status(200).json({ message: "Calificación enviada exitosamente", newRating });
   } catch (error) {
     res.status(400).json({ message: "Error al calificar" });
     console.error(error);
