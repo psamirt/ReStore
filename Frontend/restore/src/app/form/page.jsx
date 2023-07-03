@@ -12,14 +12,9 @@ export default function MyForm() {
   const { data: session,status } = useSession();
   const [categoria, setCategoria] = useState(null);
   const router = useRouter();
-  if (status === "loading") {
-    return <p>Loading...</p>
-  }
-  if (status === "unauthenticated") {
-    return <p>Acceso denegado</p>
-  }
+ 
   useEffect(() => {
-    if (!session && !document.cookie.includes("UserLocal")) {
+    if (!document.cookie.includes("Admin")) {
       router.push("/login");
       return;
     }

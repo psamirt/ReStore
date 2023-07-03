@@ -25,28 +25,28 @@ async function Home() {
             title='click to visit ConsolasyVideojuegos'
             href={'/home/ConsolasyVideojuegos'}
           >
-            Consolas
+            <img width="80" height="80" src="https://img.icons8.com/external-justicon-lineal-color-justicon/80/external-joystick-notifications-justicon-lineal-color-justicon.png" alt="external-joystick-notifications-justicon-lineal-color-justicon"/>
           </Link>
           <Link title='click to visit TV' href={'/home/TV'}>
-            TV
+          <img width="80" height="80" src="https://img.icons8.com/external-rabit-jes-outline-color-rabit-jes/80/external-tv-home-decoration-rabit-jes-outline-color-rabit-jes.png" alt="external-tv-home-decoration-rabit-jes-outline-color-rabit-jes"/>
           </Link>
           <Link title='click to visit Celulares' href={'/home/Celulares'}>
-            Celulares
+          <img width="80" height="80" src="https://img.icons8.com/plasticine/80/iphone.png" alt="iphone"/>
           </Link>
           <Link
             title='click to visit ElectronicaAudioVideo'
             href={'/home/ElectronicaAudioVideo'}
           >
-            Audio y video
+           <img width="80" height="80" src="https://img.icons8.com/deco/80/video.png" alt="video"/>
           </Link>
           <Link title='click to visit Computacion' href={'/home/Computacion'}>
-            Computacion
+          <img width="80" height="80" src="https://img.icons8.com/plasticine/80/workstation.png" alt="workstation"/>
           </Link>{' '}
           <Link
             title='click to visit CamarasyAccesorios'
             href={'/home/CamarasyAccesorios'}
           >
-            Camaras
+          <img width="80" height="80" src="https://img.icons8.com/fluency/80/camera-on-tripod.png" alt="camera-on-tripod"/>
           </Link>
         </div>
         <h2 className='text-4xl text-center mb-4 font-medium text-blue-900'>
