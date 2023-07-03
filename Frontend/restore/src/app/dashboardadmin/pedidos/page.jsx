@@ -19,12 +19,12 @@ import { useEffect, useState } from "react";
 
 function Pedidos() {
   
-  const router = useRouter();
-  useEffect(() => {
-    if (!document.cookie.includes("Admin")) {
-      router.push("/home");
-    }
-  }, []);
+  // const router = useRouter();
+  // useEffect(() => {
+  //   if (!document.cookie.includes("Admin")) {
+  //     router.push("/home");
+  //   }
+  // }, []);
   
   const [pedidos, setPedidos] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -76,9 +76,15 @@ function Pedidos() {
       {
         title: "Email",
         dataIndex: "email",
+        filteredValue: [searchText],
+        onFilter: (value,record) => {
+          return (
+            record.email?.toLowerCase().includes(value.toLowerCase()))
+        },
         render: (_, record) => (
           <span style={{ color: 'green' }}>{record.email}</span>
         ),
+        
       },
       {
         title: "Nombre",
@@ -140,15 +146,16 @@ function Pedidos() {
 
 
   return (
-    <Space size={20} direction="vertical">
+    <div className="app">
+    <Space direction="vertical">
     <Typography.Title level={4}>Pedidos</Typography.Title>
     <Input.Search
       placeholder="Buscar por email"
-      value={searchText}
       onChange={e => setSearchText(e.target.value)}
-    />
+      />
     <TablePedidos />
   </Space>
+      </div>
   );
 }
 

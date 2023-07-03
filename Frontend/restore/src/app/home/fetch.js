@@ -8,8 +8,7 @@ export const fetchOfers = async () => {
 
 export const fetchCategory = async (category) => {
   const response = await fetch(
-    `https://re-store.onrender.com/categories/technology/categoria/${category}`,
-    { next: { revalidate: 60 } }
+    `https://re-store.onrender.com/categories/technology/categoria/${category}`,{ cache: 'no-store'}
   );
   return await response.json();
 };
@@ -35,7 +34,7 @@ export const fetchAllProducts = async () => {
 };
 
   export const fetchSearch = (search) => {
-    return fetch(`https://re-store.onrender.com/categories/technology/searchname?name=${search}`).then((res) =>
+    return fetch(`https://re-store.onrender.com/categories/technology/searchname?name=${search}`,{ cache: 'no-store' }).then((res) =>
       res.json()
     );
   };
