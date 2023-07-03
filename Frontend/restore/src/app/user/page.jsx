@@ -7,6 +7,7 @@ import { Navbar } from "../components/navbar/navbar";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Swal from "sweetalert2";
+import { totalPrice } from "../helpers/totalPrice";
 
 function usuario({ searchParams }) {
   const { data: session, status } = useSession();
@@ -34,6 +35,7 @@ function usuario({ searchParams }) {
   const [calificado, setCalificado] = useState([]);
   // const [detalle, setDetalle]= useState(null)
 
+  console.log(comprados);
   useEffect(() => {
     setCookieValue(
       document.cookie
@@ -110,10 +112,53 @@ function usuario({ searchParams }) {
       cookieValue && setCookieImg(user.imagenDePerfil);
 
       if (user.orders) {
-        const productosComprados = user.orders.filter((order) =>
+        const fetchCartProductsById = async (cart, setProducts) => {
+          Promise.all(
+            cart.map((item) =>
+              axios.get(
+                `https://re-store.onrender.com/categories/technology/Detail/${item.id}`
+              )
+            )
+          )
+            .then((values) =>
+              setProducts(
+                values.map((value, i) => {
+                  //se puede tambien sacar quantity cuando se incorpore
+                  const {
+                    Marca: description,
+                    name,
+                    background_image,
+                    precio,
+                    Ofertas,
+                  } = value.data.result[0];
+                  const finalPrice = Ofertas
+                    ? Math.round(
+                        Number(totalPrice([{ precio, oferta: Ofertas }])) * 100
+                      )
+                    : Number(precio) * 100;
+                  return {
+                    name,
+                    description,
+                    unit_amount: Number(finalPrice),
+                    quantity: 1,
+                    images: [background_image],
+                    calificado: cart[i].calificado,
+                    id: value.data.result[0]._id,
+                  };
+                })
+              )
+            )
+            .catch((error) => console.log(error));
+        };
+
+        let productosComprados = user.orders.filter((order) =>
           order.orderItems.map((item) => item.calificado === false)
         );
-        setComprados(productosComprados);
+        productosComprados = productosComprados
+          .map((item) => item.orderItems)
+          .flat(1);
+        // setComprados(productosComprados);
+        fetchCartProductsById(productosComprados, setComprados);
 
         const productoCalificado = user.orders.filter((order) =>
           order.orderItems.map((item) => item.calificado === true)
@@ -150,6 +195,7 @@ function usuario({ searchParams }) {
   };
   return (
     <>
+      {console.log(comprados)}
       <Navbar></Navbar>
       <div className="container mx-auto p-4">
         <Button onClick={readOnly ? handleToggleReadOnly : handleCancelButton}>
@@ -235,38 +281,36 @@ function usuario({ searchParams }) {
             <div>
               <h2 className="text-2xl font-semibold mb-4">Tus productos</h2>
               <ul>
-                {comprados.map((order) =>
-                  order.orderItems.map((producto) => (
-                    <li
-                      key={producto.id}
-                      className="flex justify-between items-center"
-                    >
-                      <span>{producto.id}</span>{" "}
-                      {producto.calificado ? (
-                        <span className="text-green-500">
-                          Producto ya calificado
-                        </span>
-                      ) : (
-                        <div>
-                          <span> </span>
-                          <Link
-                            href={{
-                              pathname: "/ratingProduct/",
-                              query: {
-                                product: producto.id,
-                                user: session ? session.user.id : cookieValue,
-                              },
-                            }}
-                          >
-                            <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold px-4 rounded">
-                              Calificar
-                            </button>
-                          </Link>
-                        </div>
-                      )}
-                    </li>
-                  ))
-                )}
+                {comprados.map((producto) => (
+                  <li
+                    key={producto.id}
+                    className="flex justify-between items-center"
+                  >
+                    <span>{producto.name}</span>
+                    {producto.calificado ? (
+                      <span className="text-green-500">
+                        Producto ya calificado
+                      </span>
+                    ) : (
+                      <div>
+                        <span> </span>
+                        <Link
+                          href={{
+                            pathname: "/ratingProduct/",
+                            query: {
+                              product: producto.id,
+                              user: session ? session.user.id : cookieValue,
+                            },
+                          }}
+                        >
+                          <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold px-4 rounded">
+                            Calificar
+                          </button>
+                        </Link>
+                      </div>
+                    )}
+                  </li>
+                ))}
               </ul>
             </div>
           )}
