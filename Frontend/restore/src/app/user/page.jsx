@@ -32,6 +32,7 @@ function usuario({ searchParams }) {
   
   const [comprados, setComprados] = useState([]);
   const [calificado, setCalificado] = useState([]);
+  // const [detalle, setDetalle]= useState(null) 
 
   useEffect(() => {
     setCookieValue(
@@ -59,7 +60,7 @@ function usuario({ searchParams }) {
     const id = session ? session.user.id : cookieValue;
     console.log([...formData]);
     axios
-      .put(`http://localhost:3001/users/${id}`, formData)
+      .put(`https://re-store.onrender.com/users/${id}`, formData)
       .then(() => {
         Swal.fire({
           icon: "success",
@@ -74,16 +75,26 @@ function usuario({ searchParams }) {
       });
   };
 
-  useEffect(()=>{
-    const fetchDetail = async(id)=>{
-      const response= await fetch(`http://localhost:3001/categories/technology/Detail/${id}`)
-      const product = await response.json()
-    }
-  })
+  // useEffect(() => {
+  //   const fetchDetail = async (id) => {
+  //     const response = await fetch(
+  //       `https://re-store.onrender.com/categories/technology/Detail/${id}`
+  //     );
+  //     const product = await response.json();
+  //     setDetalle(product);
+  //   };
+  //   comprados.forEach((order) => {
+  //     order.orderItems.forEach((producto) => {
+  //       if (!producto.calificado) {
+  //         fetchDetail(producto.id);
+  //       }
+  //     });
+  //   });
+  // }, [comprados]);
 
   useEffect(() => {
     const fetchUsuario = async (id) => {
-      const response = await fetch(`http://localhost:3001/users/${id}`);
+      const response = await fetch(`https://re-store.onrender.com/users/${id}`);
       const user = await response.json();
 
       setInput({
@@ -239,7 +250,7 @@ function usuario({ searchParams }) {
                               pathname: "/ratingProduct/",
                               query: {
                                 product: producto.id,
-                                user: session.user.id,
+                                user: session ? session.user.id : cookieValue
                               },
                             }}
                           >

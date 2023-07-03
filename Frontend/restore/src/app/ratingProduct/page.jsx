@@ -16,7 +16,7 @@ const Rating = ({ searchParams }) => {
 
   const submitRating = async () => {
     await axios.put(
-      `http://localhost:3001/categories/technology/rating/${searchParams.product}/${searchParams.user}`,
+      `https://re-store.onrender.com/categories/technology/rating/${searchParams.product}/${searchParams.user}`,
       {
         rate: rating,
         comment: comment,
