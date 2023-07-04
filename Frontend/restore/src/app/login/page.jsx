@@ -6,7 +6,7 @@ import axios from 'axios';
 import bcrypt from 'bcryptjs';
 // import './login.css';
 import Link from 'next/link';
-import { signIn, getProviders } from 'next-auth/react';
+import { signIn, getProviders, useSession } from 'next-auth/react';
 import Swal from 'sweetalert2';
 import Image from 'next/image';
 import Boton from '../components/Button/Button';
@@ -97,6 +97,14 @@ function Login() {
       [input_name]: input_value,
     });
   };
+
+  // const { status } = useSession();
+  // useEffect(() => {
+  //   console.log(document.cookie.includes('User_id'));
+  //   if (status === 'authenticated' || document.cookie.includes('User_id')) {
+  //     router.push('/home');
+  //   }
+  // }, []);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -196,7 +204,7 @@ function Login() {
           <div className='flex-grow h-px bg-gray-400'></div>
         </div>
         <div className='grid grid-cols-2 gap-2'>
-          <button
+          <div
             className=' text-slate-50 font-medium py-2 flex gap-4 items-center transition hover:bg-blue-600 bg-blue-500 px-2 rounded-lg shadow shadow-slate-300'
             onClick={() => handleSignIn('google')}
           >
@@ -207,8 +215,8 @@ function Login() {
               src='https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg'
             />
             Google
-          </button>
-          <button
+          </div>
+          <div
             className=' text-slate-50 font-medium py-2 flex gap-4 items-center bg-gray-900 px-2 rounded-lg shadow shadow-slate-300 transition hover:bg-black'
             onClick={() => handleSignIn('github')}
           >
@@ -220,7 +228,7 @@ function Login() {
               alt='github'
             />
             Github
-          </button>
+          </div>
         </div>
         <p>
           ¿No estás registrado?{' '}
