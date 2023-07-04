@@ -35,7 +35,6 @@ function usuario({ searchParams }) {
   const [calificado, setCalificado] = useState([]);
   // const [detalle, setDetalle]= useState(null)
 
-  console.log(comprados);
   useEffect(() => {
     setCookieValue(
       document.cookie
@@ -60,7 +59,6 @@ function usuario({ searchParams }) {
     }
     if (file) formData.append('profileImage', file);
     const id = session ? session.user.id : cookieValue;
-    console.log([...formData]);
     axios
       .put(`https://re-store.onrender.com/users/${id}`, formData)
       .then(() => {
@@ -194,7 +192,6 @@ function usuario({ searchParams }) {
   };
   return (
     <>
-      {console.log(comprados)}
       <Navbar></Navbar>
       <div className='container mx-auto p-4'>
         <Button onClick={readOnly ? handleToggleReadOnly : handleCancelButton}>

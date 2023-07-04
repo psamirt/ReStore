@@ -12,7 +12,6 @@ function ProductsContainer({ data, ubicaciones, marcas, estado }) {
     precio: '',
   };
   const [nuevosFilters, setNuevosFilters] = useState(initialState);
-  console.log(nuevosFilters);
 
   const handleFiltersChange = (event) => {
     const newState = {
@@ -77,7 +76,7 @@ function ProductsContainer({ data, ubicaciones, marcas, estado }) {
   };
 
   useEffect(() => {
-    setNuevosFilters(initialState);    
+    setNuevosFilters(initialState);
     applyFilters(nuevosFilters);
   }, [data]);
 
