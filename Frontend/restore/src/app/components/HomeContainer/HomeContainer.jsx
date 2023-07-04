@@ -40,6 +40,7 @@ function HomeContainer({ data }) {
     }
   };
 
+
   useEffect(() => {
     if (session) {
       setEmail(session.user.email);

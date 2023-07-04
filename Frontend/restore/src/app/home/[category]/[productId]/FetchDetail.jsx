@@ -19,6 +19,22 @@ export function DetailId({ param }) {
   const [ofertas, setOfertas] = useState({ result: [] });
   const [onCart, setOnCart] = useState(false);
   const [cookieValue, setCookieValue] = useState(null);
+  const [valoracionesOpen, setValoracionesOpen] = useState(false);
+
+  const openValoraciones = () => {
+    setValoracionesOpen(true);
+  };
+
+  const closeValoraciones = () => {
+    setValoracionesOpen(false);
+  };
+
+  const handleOutsideClick = (e) => {
+    if (e.target.classList.contains("overlay")) {
+      closeValoraciones();
+    }
+  };
+
   useEffect(() => {
     setCookieValue(
       document.cookie
@@ -109,32 +125,91 @@ export function DetailId({ param }) {
               <h2 className="text-xl font-semibold text-blue-900">
                 {post.result[0].name} {post.result[0].Marca}
               </h2>
-              <div className="flex items-center mt-4">
-                {[1, 2, 3, 4, 5].map((star) => (
-                  <svg
-                    key={star}
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill={
-                      star <= post.result[0].rating.totalStars
-                        ? "yellow"
-                        : "none"
-                    }
-                    viewBox="0 0 24 24"
-                    strokeWidth={1.5}
-                    stroke="currentColor"
-                    className="w-6 h-6"
+              {/* logica para las valoraciones y la ventana flotante */}
+              <div>
+                <div className="flex flex-col mt-4">
+                  <div className="flex">
+                    {[1, 2, 3, 4, 5].map((star) => (
+                      <svg
+                        key={star}
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill={
+                          star <= post.result[0].rating.totalStars
+                            ? "yellow"
+                            : "none"
+                        }
+                        viewBox="0 0 24 24"
+                        strokeWidth={1.5}
+                        stroke="currentColor"
+                        className="w-6 h-6"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z"
+                        />
+                      </svg>
+                    ))}
+                    <div className="flex">
+                      <p
+                        onClick={openValoraciones}
+                        className="text-xs text-gray-500 ml-2 cursor-pointer"
+                      >
+                        {post.result[0].rating.stars.length} Valoraciones
+                      </p>
+                    </div>
+                  </div>
+                  <p className="text-xs text-gray-500 ml-2">
+                    {post.result[0].rating.totalStars}
+                  </p>
+                </div>
+
+                {valoracionesOpen && (
+                  <div
+                    className="fixed inset-0 flex items-center justify-center z-50 overlay"
+                    onClick={handleOutsideClick}
                   >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z"
-                    />
-                  </svg>
-                ))}
-                <p className="text-xs text-gray-500 ml-2">
-                  {post.result[0].rating.totalStars}
-                </p>
+                    <div className="bg-white rounded-lg p-8 w-1/3 h-2/3 overflow-y-auto">
+                      <button
+                        onClick={closeValoraciones}
+                        className="absolute top-0 right-0 m-4 text-gray-500 hover:text-gray-700"
+                      >
+                        &times;
+                      </button>
+
+                      <h1 className="text-2xl font-bold mb-4">Valoraciones</h1>
+                      {post.result[0].rating.stars.map((stars, index) => (
+                        <div key={index}>
+                          <div className="flex items-center">
+                            {[1, 2, 3, 4, 5].map((star) => (
+                              <svg
+                                key={star}
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill={star <= stars ? "yellow" : "none"}
+                                viewBox="0 0 24 24"
+                                strokeWidth={1.5}
+                                stroke="currentColor"
+                                className="w-6 h-6"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z"
+                                />
+                              </svg>
+                            ))}
+                          </div>
+                          <p className="ml-10">
+                            {post.result[0].rating.comments[index]}
+                          </p>
+                          <hr className="my-2" />
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
+              {/* fin de logica */}
               <p className="text-blue-900 text-xl font-semibold">
                 Estado: {post.result[0].state}
               </p>
