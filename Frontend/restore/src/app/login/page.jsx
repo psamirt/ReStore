@@ -98,13 +98,13 @@ function Login() {
     });
   };
 
-  // const { status } = useSession();
-  // useEffect(() => {
-  //   console.log(document.cookie.includes('User_id'));
-  //   if (status === 'authenticated' || document.cookie.includes('User_id')) {
-  //     router.push('/home');
-  //   }
-  // }, []);
+  const { status } = useSession();
+  useEffect(() => {
+    console.log(document.cookie.includes('User_id'));
+    if (status === 'authenticated' || document.cookie.includes('User_id')) {
+      router.push('/home');
+    }
+  }, [status]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
