@@ -1,26 +1,26 @@
-"use client";
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-import "./Signup.css";
-import { v4 as uuidv4 } from "uuid";
-import Link from "next/link";
+'use client';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import './Signup.css';
+import { v4 as uuidv4 } from 'uuid';
+import Link from 'next/link';
 
 function Signup() {
   useEffect(() => {
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
 
-    if (urlParams.has("token")) {
-      const token = urlParams.get("token");
-      const userName = urlParams.get("userName");
-      const password = urlParams.get("password");
-      const email = urlParams.get("email");
-      const genero = urlParams.get("genero");
-      const nacimiento = urlParams.get("nacimiento");
-      const ciudad = urlParams.get("ciudad");
-      const direccion = urlParams.get("direccion");
-      const codigoPostal = urlParams.get("codigoPostal");
-      const apellido = urlParams.get("apellido");
+    if (urlParams.has('token')) {
+      const token = urlParams.get('token');
+      const userName = urlParams.get('userName');
+      const password = urlParams.get('password');
+      const email = urlParams.get('email');
+      const genero = urlParams.get('genero');
+      const nacimiento = urlParams.get('nacimiento');
+      const ciudad = urlParams.get('ciudad');
+      const direccion = urlParams.get('direccion');
+      const codigoPostal = urlParams.get('codigoPostal');
+      const apellido = urlParams.get('apellido');
 
       const handleQuery = async () => {
         try {
@@ -34,13 +34,12 @@ function Signup() {
           const decodedCiudad = decodeURIComponent(ciudad);
           const decodedDireccion = decodeURIComponent(direccion);
           const decodedCodigoPostal = decodeURIComponent(codigoPostal);
-          console.log(decodedToken);
           const { data } = await axios.get(
             `https://re-store.onrender.com/users/verify_emaill/${decodedToken}`
           );
 
           if (data.token === decodedToken) {
-            await axios.post("https://re-store.onrender.com/users", {
+            await axios.post('https://re-store.onrender.com/users', {
               nombre: decodedUserName,
               apellido: decodedApellido,
               contraseña: decodedPassword,
@@ -55,9 +54,9 @@ function Signup() {
                 },
               ],
             });
-            setMessage("Usuario Creado");
+            setMessage('Usuario Creado');
           } else {
-            setMessage("Verificación denegada");
+            setMessage('Verificación denegada');
           }
         } catch (error) {
           console.log(error);
@@ -78,11 +77,11 @@ function Signup() {
     };
 
     // Aplicar los nuevos estilos al body
-    document.body.style.display = "flex";
-    document.body.style.justifyContent = "center";
-    document.body.style.minHeight = "100vh";
-    document.body.style.background = "#0f172a";
-    document.body.style.alignItems = "center";
+    document.body.style.display = 'flex';
+    document.body.style.justifyContent = 'center';
+    document.body.style.minHeight = '100vh';
+    document.body.style.background = '#0f172a';
+    document.body.style.alignItems = 'center';
 
     // Restaurar los estilos originales al desmontar el componente
     return () => {
@@ -94,35 +93,34 @@ function Signup() {
     };
   }, []);
 
-  const URL = "https://re-store.onrender.com/users";
+  const URL = 'https://re-store.onrender.com/users';
 
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState('');
   const [flag, setFlag] = useState(false);
   const [user, setUser] = useState({
-    userName: "",
-    userLastName: "",
-    email: "",
-    password: "",
-    confirm_password: "",
-    genero: "",
-    fechaNacimiento: "",
-    ubiCiudad: "",
-    ubiDireccion: "",
-    ubiCodigoPostal: "",
+    userName: '',
+    userLastName: '',
+    email: '',
+    password: '',
+    confirm_password: '',
+    genero: '',
+    fechaNacimiento: '',
+    ubiCiudad: '',
+    ubiDireccion: '',
+    ubiCodigoPostal: '',
   });
   const [errors, setErrors] = useState({
-    userName: "",
-    userLastName: "",
-    email: "",
-    password: "",
-    confirm_password: "",
-    genero: "",
-    fechaNacimiento: "",
-    ubiCiudad: "",
-    ubiDireccion: "",
-    ubiCodigoPostal: "",
+    userName: '',
+    userLastName: '',
+    email: '',
+    password: '',
+    confirm_password: '',
+    genero: '',
+    fechaNacimiento: '',
+    ubiCiudad: '',
+    ubiDireccion: '',
+    ubiCodigoPostal: '',
   });
-  console.log(user);
   // ----------------------------------------------------------------Validates------------------------------------------------------------------------------
   async function validate(user) {
     const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
@@ -131,15 +129,15 @@ function Signup() {
     const error = {};
 
     if (user.userName && user.userName.length > 30) {
-      error.userName = "Por favor ingresa solo tu primer nombre";
+      error.userName = 'Por favor ingresa solo tu primer nombre';
     }
 
     if (user.LastName && user.LastName.length > 40) {
-      error.userName = "Por favor ingresa solo 1 apellido";
+      error.userName = 'Por favor ingresa solo 1 apellido';
     }
 
     if (!emailRegex.test(user.email)) {
-      error.email = "Debes ingresar un email válido";
+      error.email = 'Debes ingresar un email válido';
     }
 
     try {
@@ -151,30 +149,30 @@ function Signup() {
           const mailFind = data.find((userr) => userr?.email === user.email);
 
           if (mailFind) {
-            error.email = "Email ya existe";
+            error.email = 'Email ya existe';
           }
         }
       }
     } catch (error) {
-      error.email = "Error de conexión";
+      error.email = 'Error de conexión';
       return error;
     }
 
     if (!passwordRegex.test(user.password)) {
       error.password =
-        "Debes ingresar una contraseña con una mayúscula, un número y un carácter especial";
+        'Debes ingresar una contraseña con una mayúscula, un número y un carácter especial';
     }
 
     if (user.password !== user.confirm_password) {
-      error.confirm_password = "Las contraseñas no son las mismas";
+      error.confirm_password = 'Las contraseñas no son las mismas';
     }
 
     if (!user.genero) {
-      error.genero = "Debes completar este campo";
+      error.genero = 'Debes completar este campo';
     }
 
     if (!user.fechaNacimiento) {
-      error.fechaNacimiento = "Debes indicar tu fecha de Nacimiento";
+      error.fechaNacimiento = 'Debes indicar tu fecha de Nacimiento';
     }
 
     return error;
@@ -193,7 +191,6 @@ function Signup() {
       setFlag(false);
     }
   };
-  // console.log(user);
   const handleSubmit = async (event) => {
     event.preventDefault();
     const validationErrors = await validate(user);
@@ -204,7 +201,7 @@ function Signup() {
         setFlag(false); // Cambia flag a false si ya se creó un usuario anteriormente
       } else {
         const uuid = uuidv4();
-        await axios.post("https://re-store.onrender.com/users/verify_email", {
+        await axios.post('https://re-store.onrender.com/users/verify_email', {
           email: user.email,
           uuid,
           userName: user.userName,
@@ -223,138 +220,138 @@ function Signup() {
   };
 
   return (
-    <div className="sign-body">
-      <div className="container_sign">
-        <form onSubmit={handleSubmit} className="form">
+    <div className='sign-body'>
+      <div className='container_sign'>
+        <form onSubmit={handleSubmit} className='form'>
           <h2>Sign up</h2>
-          <div className="inputBox">
+          <div className='inputBox'>
             <input
-              type="text"
+              type='text'
               required
-              name="userName"
+              name='userName'
               value={user.userName}
               onChange={handleInputs}
             ></input>
 
-            <span className="sign-span">Nombre</span>
-            <p className="erorrp">{errors.userName}</p>
+            <span className='sign-span'>Nombre</span>
+            <p className='erorrp'>{errors.userName}</p>
           </div>
-          <div className="inputBox">
+          <div className='inputBox'>
             <input
-              type="text"
+              type='text'
               required
-              name="userLastName"
+              name='userLastName'
               value={user.userLastName}
               onChange={handleInputs}
             ></input>
 
-            <span className="sign-span">Apellido</span>
-            <p className="erorrp">{errors.userLastName}</p>
+            <span className='sign-span'>Apellido</span>
+            <p className='erorrp'>{errors.userLastName}</p>
           </div>
-          <div className="inputBox">
+          <div className='inputBox'>
             <input
-              type="email"
+              type='email'
               required
-              name="email"
+              name='email'
               value={user.email}
               onChange={handleInputs}
             ></input>
 
-            <span className="sign-span">Direccion Email</span>
-            <p className="erorrp">{errors.email}</p>
+            <span className='sign-span'>Direccion Email</span>
+            <p className='erorrp'>{errors.email}</p>
           </div>
-          <div className="inputBox">
+          <div className='inputBox'>
             <input
-              type="password"
+              type='password'
               required
-              name="password"
+              name='password'
               value={user.password}
               onChange={handleInputs}
             ></input>
 
-            <span className="sign-span">Crear Contraseña</span>
-            <p className="erorrp">{errors.password}</p>
+            <span className='sign-span'>Crear Contraseña</span>
+            <p className='erorrp'>{errors.password}</p>
           </div>
-          <div className="inputBox">
+          <div className='inputBox'>
             <input
-              type="password"
+              type='password'
               required
-              name="confirm_password"
+              name='confirm_password'
               value={user.confirm_password}
               onChange={handleInputs}
             ></input>
-            <span className="sign-span">Confirma Contraseña</span>
-            <p className="erorrp">{errors.confirm_password}</p>
+            <span className='sign-span'>Confirma Contraseña</span>
+            <p className='erorrp'>{errors.confirm_password}</p>
           </div>
-          <div className="inputBox">
-            <select name="genero" defaultValue="" onChange={handleInputs}>
-              <option name="genero" value="" disabled hidden>
+          <div className='inputBox'>
+            <select name='genero' defaultValue='' onChange={handleInputs}>
+              <option name='genero' value='' disabled hidden>
                 Selecciona un género
               </option>
-              <option name="genero" value="Masculino">
+              <option name='genero' value='Masculino'>
                 Masculino
               </option>
-              <option name="genero" value="Femenino">
+              <option name='genero' value='Femenino'>
                 Femenino
               </option>
-              <option name="genero" value="Otro">
+              <option name='genero' value='Otro'>
                 Otro
               </option>
             </select>
-            <p className="erorrp">{errors.genero}</p>
+            <p className='erorrp'>{errors.genero}</p>
           </div>
-          <div className="inputBox">
+          <div className='inputBox'>
             <input
-              type="date"
+              type='date'
               required
-              name="fechaNacimiento"
+              name='fechaNacimiento'
               value={user.fechaNacimiento}
               onChange={handleInputs}
             ></input>
-            <p className="erorrp">{errors.fechaNacimiento}</p>
+            <p className='erorrp'>{errors.fechaNacimiento}</p>
           </div>
-          <div className="inputBox">
+          <div className='inputBox'>
             <input
-              type="text"
+              type='text'
               required
-              name="ubiCiudad"
+              name='ubiCiudad'
               value={user.ubiCiudad}
               onChange={handleInputs}
             ></input>
-            <span className="sign-span">Ciudad donde vives</span>
-            <p className="erorrp">{errors.ubiCiudad}</p>
+            <span className='sign-span'>Ciudad donde vives</span>
+            <p className='erorrp'>{errors.ubiCiudad}</p>
           </div>
-          <div className="inputBox">
+          <div className='inputBox'>
             <input
-              type="text"
+              type='text'
               required
-              name="ubiDireccion"
+              name='ubiDireccion'
               value={user.ubiDireccion}
               onChange={handleInputs}
             ></input>
-            <span className="sign-span">Direccion</span>
-            <p className="erorrp">{errors.ubiDireccion}</p>
+            <span className='sign-span'>Direccion</span>
+            <p className='erorrp'>{errors.ubiDireccion}</p>
           </div>
-          <div className="inputBox">
+          <div className='inputBox'>
             <input
-              type="number"
+              type='number'
               required
-              name="ubiCodigoPostal"
+              name='ubiCodigoPostal'
               value={user.ubiCodigoPostal}
               onChange={handleInputs}
             ></input>
-            <span className="sign-span">Codigo Postal</span>
-            <p className="erorrp">{errors.ubiCodigoPostal}</p>
+            <span className='sign-span'>Codigo Postal</span>
+            <p className='erorrp'>{errors.ubiCodigoPostal}</p>
           </div>
-          <div className="inputBox">
-            <input type="submit" value="Crea tu cuenta"></input>
+          <div className='inputBox'>
+            <input type='submit' value='Crea tu cuenta'></input>
           </div>
-          <p id="userCreatedMessage">{flag ? "Verifica tu email" : null}</p>
-          <p id="userCreatedMessage">{message}</p>
+          <p id='userCreatedMessage'>{flag ? 'Verifica tu email' : null}</p>
+          <p id='userCreatedMessage'>{message}</p>
           <p>
-            Ya sos miembro?{" "}
-            <Link href={"/login"}>
-              <p id="asd" className="login">
+            Ya sos miembro?{' '}
+            <Link href={'/login'}>
+              <p id='asd' className='login'>
                 Log in
               </p>
             </Link>

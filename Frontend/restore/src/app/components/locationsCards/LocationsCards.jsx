@@ -28,7 +28,6 @@ export default function LocationsCards({
         const { data } = await axios(
           `https://re-store.onrender.com/users/${id}`
         );
-        console.log(data.ubicacion);
         setLocations(data.ubicacion);
       } catch (error) {
         //seterror
