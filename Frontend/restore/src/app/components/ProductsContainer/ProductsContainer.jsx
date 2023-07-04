@@ -12,7 +12,6 @@ function ProductsContainer({ data, marcas, estado }) {
     precio: '',
   };
   const [nuevosFilters, setNuevosFilters] = useState(initialState);
-  console.log(nuevosFilters);
 
   const handleFiltersChange = (event) => {
     const newState = {
