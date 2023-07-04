@@ -14,7 +14,7 @@ const rating = async (req, res) => {
     }
 
     // Agregar la calificación (rate) como número entero al array 'stars' en el objeto 'rating' del producto
-    productObj.rating.stars.push(parseInt(rate, 10));
+    productObj.rating.stars.push(parseFloat(rate));
 
     // Agregar el comentario al array 'comments' en el objeto 'rating' del producto
     productObj.rating.comments.push(comment);
