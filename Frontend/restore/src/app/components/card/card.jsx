@@ -13,7 +13,7 @@ function Card(data) {
   
 
   const categoria = Object.keys(data.subcategoria)[0]
-  console.log(categoria)
+  // console.log(categoria)
   useEffect(() => {
     const calcularPrecioConDescuento = () => {
       if (data.oferta && data.precio) {

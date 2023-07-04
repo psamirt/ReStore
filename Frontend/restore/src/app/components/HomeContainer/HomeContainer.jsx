@@ -42,7 +42,7 @@ if (data.ban === true) {
 
 useEffect(() => {
   if (session) {
-    console.log(session);
+    // console.log(session);
     setEmail(session.user.email);
   }
 }, [session]);
