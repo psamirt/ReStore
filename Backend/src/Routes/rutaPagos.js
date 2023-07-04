@@ -77,11 +77,11 @@ const createOrder = async (customer, data) => {
 
     const earnings = await Earnings.findOne({});
     if (earnings) {
-      earnings.earnings += parseFloat(data.amount_total / 100);
+      earnings.earnings += parseFloat(data.amount_total / 100).toFixed(2);
       await earnings.save();
     } else {
-      await Earnings.create({ earnings: data.amount_total });
-    }
+      await Earnings.create({ earnings: data.amount_total.toFixed(2) });
+    }
 
     return newOrder;
   } catch (error) {
