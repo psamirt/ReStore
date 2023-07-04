@@ -126,7 +126,7 @@ function Login() {
         Swal.fire({
           icon: 'error',
           title: '¡Estás baneado!',
-          text: 'Estás baneado hasta nuevo aviso. No podrás iniciar sesión.',
+          text: 'Estás baneado indefinidamente. No podrás iniciar sesión.',
         });
         return;
       }
@@ -163,7 +163,7 @@ function Login() {
             Email:{' '}
           </label>
           <input
-            className='py-4 px-8 bg-slate-50 rounded-lg shadow shadow-slate-300'
+            className='text-sm py-3 px-6 bg-slate-50 rounded-lg shadow shadow-slate-300'
             type='text'
             name='email'
             value={user.email}
@@ -178,7 +178,7 @@ function Login() {
             Contraseña:{' '}
           </label>
           <input
-            className='py-4 px-8 bg-slate-50 rounded-lg shadow shadow-slate-300'
+            className='text-sm py-3 px-6 bg-slate-50 rounded-lg shadow shadow-slate-300'
             placeholder='Contraseña'
             type='password'
             name='password'
@@ -188,7 +188,7 @@ function Login() {
           ></input>
           <p className='text-blue-900 font-medium'>{errors.password}</p>
           <Link
-            className='justify-self-end text-blue-700 font- hover:underline decoration-2'
+            className=' text-blue-700 font- hover:underline decoration-2'
             href={'/login/changepassword'}
           >
             <span>¿Olvidaste tu contraseña?</span>
@@ -205,6 +205,7 @@ function Login() {
         </div>
         <div className='grid grid-cols-2 gap-2'>
           <div
+            tabIndex={0}
             className='cursor-pointer text-slate-50 font-medium py-2 flex gap-4 items-center transition hover:bg-blue-600 bg-blue-500 px-2 rounded-lg shadow shadow-slate-300'
             onClick={() => handleSignIn('google')}
           >
@@ -217,6 +218,7 @@ function Login() {
             Google
           </div>
           <div
+            tabIndex={0}
             className='cursor-pointer text-slate-50 font-medium py-2 flex gap-4 items-center bg-gray-900 px-2 rounded-lg shadow shadow-slate-300 transition hover:bg-black'
             onClick={() => handleSignIn('github')}
           >
