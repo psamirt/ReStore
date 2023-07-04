@@ -133,7 +133,7 @@ function Signup() {
 
     if (!passwordRegex.test(user.password)) {
       error.password =
-        'Debes ingresar una contraseña con una mayúscula, un número y un carácter especial';
+        'Debe incluir una mayúscula, un número y un carácter especial';
     }
 
     if (user.password !== user.confirm_password) {
@@ -196,7 +196,7 @@ function Signup() {
     <div className='min-h-screen grid place-content-center bg-slate  '>
       <form
         onSubmit={handleSubmit}
-        className=' mx-auto  rounded-lg shadow-xl shadow-slate-400 bg-slate-200 p-12 sm:my-8 grid gap-4 w-screen sm:w-auto'
+        className=' mx-auto  rounded-lg shadow-xl shadow-slate-400 bg-slate-200 p-12 sm:my-8 grid gap-4 w-screen sm:w-[610px] '
       >
         <h2 className='text-2xl font-bold'>Sign up</h2>
         <div className='grid sm:grid-cols-2 sm:gap-8 '>
