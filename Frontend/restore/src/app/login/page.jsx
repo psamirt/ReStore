@@ -205,7 +205,7 @@ function Login() {
         </div>
         <div className='grid grid-cols-2 gap-2'>
           <div
-            className=' text-slate-50 font-medium py-2 flex gap-4 items-center transition hover:bg-blue-600 bg-blue-500 px-2 rounded-lg shadow shadow-slate-300'
+            className='cursor-pointer text-slate-50 font-medium py-2 flex gap-4 items-center transition hover:bg-blue-600 bg-blue-500 px-2 rounded-lg shadow shadow-slate-300'
             onClick={() => handleSignIn('google')}
           >
             <Image
@@ -217,7 +217,7 @@ function Login() {
             Google
           </div>
           <div
-            className=' text-slate-50 font-medium py-2 flex gap-4 items-center bg-gray-900 px-2 rounded-lg shadow shadow-slate-300 transition hover:bg-black'
+            className='cursor-pointer text-slate-50 font-medium py-2 flex gap-4 items-center bg-gray-900 px-2 rounded-lg shadow shadow-slate-300 transition hover:bg-black'
             onClick={() => handleSignIn('github')}
           >
             <Image

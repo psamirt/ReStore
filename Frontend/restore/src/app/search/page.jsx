@@ -10,19 +10,20 @@ async function Search({ searchParams }) {
     (product) => product.Disabled !== true
   );
   data.result = filteredData;
-  const ubicaciones = data.result.map((producto) => producto.Ubicacion);
-  const marcas = data.result.map((producto) => producto.Marca);
-  const estado = data.result.map((producto) => producto.state);
+
+  const marcas = data.result
+    .filter((producto) => !producto.Disabled)
+    .map((producto) => producto.Marca);
+  const estado = data.result
+    .filter((producto) => !producto.Disabled)
+    .map((producto) => producto.state);
+
   if (data.length === 0) return <NotFound></NotFound>;
   return (
     <div>
       <Navbar></Navbar>
-      <ProductsContainer
-        data={data}
-        ubicaciones={ubicaciones}
-        marcas={marcas}
-        estado={estado}
-      />
+
+      <ProductsContainer data={data} marcas={marcas} estado={estado} />
     </div>
   );
 }
