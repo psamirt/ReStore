@@ -3,10 +3,10 @@ import React from 'react';
 import Card from '../card/card';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
-import { useRouter } from "next/navigation";
-import { useSession,signOut } from "next-auth/react";
+import { useRouter } from 'next/navigation';
+import { useSession, signOut } from 'next-auth/react';
 import { useEffect, useState } from 'react';
-import axios from "axios"
+import axios from 'axios';
 import Swal from 'sweetalert2';
 
 const responsive = {
@@ -28,48 +28,46 @@ const responsive = {
 };
 
 function HomeContainer({ data }) {
-  
-  
   const { data: session, status } = useSession();
-const [email,setEmail] = useState(null)
-const [isBan, setBan] = useState(null)
-const fetchEmail = async () => {
-const {data} = await axios.get(`https://re-store.onrender.com/users/${email}/email`)
-if (data.ban === true) {
-  setBan(true)
-}
-}
-
-useEffect(() => {
-  if (session) {
-    // console.log(session);
-    setEmail(session.user.email);
-  }
-}, [session]);
-
-useEffect(() => {
-  if (email) {
-    fetchEmail();
-  }
-}, [email]);
-
-useEffect(() => {
-  if (isBan) {
-    Swal.fire({
-      icon: 'error',
-      title: '¡Estás baneado!',
-      text: 'Estás baneado hasta nuevo aviso. No podrás iniciar sesión.',
-    });
-    signOut()
-  }
-}, [isBan]);
+  const [email, setEmail] = useState(null);
+  const [isBan, setBan] = useState(null);
+  const fetchEmail = async () => {
+    const { data } = await axios.get(
+      `https://re-store.onrender.com/users/${email}/email`
+    );
+    if (data.ban === true) {
+      setBan(true);
+    }
+  };
 
 
+  useEffect(() => {
+    if (session) {
+      setEmail(session.user.email);
+    }
+  }, [session]);
 
-const filteredData = data.result.filter(product => product.Disabled !== true)
-  
-  
-  
+  useEffect(() => {
+    if (email) {
+      fetchEmail();
+    }
+  }, [email]);
+
+  useEffect(() => {
+    if (isBan) {
+      Swal.fire({
+        icon: 'error',
+        title: '¡Estás baneado!',
+        text: 'Estás baneado hasta nuevo aviso. No podrás iniciar sesión.',
+      });
+      signOut();
+    }
+  }, [isBan]);
+
+  const filteredData = data.result.filter(
+    (product) => product.Disabled !== true
+  );
+
   return (
     <Carousel responsive={responsive}>
       {filteredData.map((props) => {

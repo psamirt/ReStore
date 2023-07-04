@@ -60,7 +60,6 @@ function usuario({ searchParams }) {
     }
     if (file) formData.append("profileImage", file);
     const id = session ? session.user.id : cookieValue;
-    console.log([...formData]);
     axios
       .put(`https://re-store.onrender.com/users/${id}`, formData)
       .then(() => {

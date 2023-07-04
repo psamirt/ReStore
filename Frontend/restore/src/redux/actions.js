@@ -55,7 +55,6 @@ export const addFromDatabase = (localItems, userId, userId2) => {
         }
       );
       let mergedCart = [...localItems, ...dbItems];
-      console.log(mergedCart);
       mergedCart = mergedCart.reduce((uniqueItems, item) => {
         // Verificar si el ID del item actual ya existe en el array uniqueItems
         const exists = uniqueItems.some(
