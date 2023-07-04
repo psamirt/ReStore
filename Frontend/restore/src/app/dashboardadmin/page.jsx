@@ -33,9 +33,10 @@ function Dashboard() {
   }
 
   const getOrdenesRecientes = async () => {
-    const { data } = await axios.get("https://re-store.onrender.com/users/envios/all");
-  
-   
+    const { data } = await axios.get(
+      "https://re-store.onrender.com/users/envios/all"
+    );
+
     return data.users;
   };
   const [ordenes, setOrdenes] = useState([]);
@@ -60,19 +61,18 @@ function Dashboard() {
           newPedidos.push(newPedido);
         });
       });
-      setAllOrdenes(newPedidos)
+      setAllOrdenes(newPedidos);
       setOrdenes(newPedidos.splice(0, 5));
       setLoading(false);
     });
   }, []);
   function RecentOrders() {
-  
     const columns = [
       {
         title: "Email",
         dataIndex: "email",
         render: (_, record) => (
-          <span style={{ color: 'green' }}>{record.email}</span>
+          <span style={{ color: "green" }}>{record.email}</span>
         ),
       },
       {
@@ -84,14 +84,14 @@ function Dashboard() {
           const ciudad = record?.ubicacion?.[0]?.ciudad;
           return `${ciudad}, ${direccion}, ${codigoPostal}`;
         },
-      },  {
+      },
+      {
         title: "Pagado",
         dataIndex: "pagado",
         render: (_, record) => (
-          <span style={{ color: 'gold' }}>{`$${record.pagado} USD`}</span>
+          <span style={{ color: "#00CC00" }}>{`$${record.pagado} USD`}</span>
         ),
       },
-      
     ];
 
     return (
@@ -111,8 +111,7 @@ function Dashboard() {
   const [clientesTot, setTotClientes] = useState(null);
   const [productosTot, setTotProductos] = useState(null);
   const [dataProductos, setDataProductos] = useState(null);
-const [totalProfit,setProfit] = useState(null)
-
+  const [totalProfit, setProfit] = useState(null);
 
   useEffect(() => {
     const getAllClientes = async () => {
@@ -148,13 +147,16 @@ const [totalProfit,setProfit] = useState(null)
     }
   }, [dataProductos]);
 
-
   useEffect(() => {
     const getTotalProfit = async () => {
       const { data } = await axios.get(
         "https://re-store.onrender.com/payments/earnings"
       );
-      setProfit(data.earnings);
+      const earningsFormatted = data.earnings.toLocaleString("es-ES", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      });
+      setProfit(earningsFormatted);
     };
 
     getTotalProfit();
