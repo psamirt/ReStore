@@ -122,7 +122,7 @@ function Ubicaciones() {
           {userData &&
             userData.map((e) => (
               <div
-                className='bg-slate-50 w-[300px] p-4 shadow-lg shadow-slate-300 rounded-lg grid place-content-center gap-2'
+                className='bg-slate-50 w-[300px] mb-4 p-4 shadow-lg shadow-slate-300 rounded-lg grid place-content-center gap-2'
                 key={e.direccion}
               >
                 <h1 className='font-medium'>
@@ -169,7 +169,6 @@ function Ubicaciones() {
                 <input
                   className='text-sm py-2 px-4 bg-slate-100 rounded-lg shadow shadow-slate-300'
                   type='text'
-                  required
                   name='ciudad'
                   value={user.ciudad}
                   onChange={handleInputs}
@@ -181,7 +180,6 @@ function Ubicaciones() {
                 <input
                   className='text-sm py-2 px-4 bg-slate-100 rounded-lg shadow shadow-slate-300'
                   type='text'
-                  required
                   name='direccion'
                   value={user.direccion}
                   onChange={handleInputs}
@@ -192,7 +190,6 @@ function Ubicaciones() {
                 <input
                   className='text-sm py-2 px-4 bg-slate-100 rounded-lg shadow shadow-slate-300'
                   type='number'
-                  required
                   name='codigoPostal'
                   value={user.codigoPostal}
                   onChange={handleInputs}
