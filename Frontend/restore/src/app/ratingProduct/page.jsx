@@ -46,7 +46,9 @@ const Rating = () => {
   const handleRatingClick = (selectedRating) => {
     setRating(selectedRating);
   };
-  
+
+  const buttonDisable = rating === 0 || comment.trim() === "";
+
   const calculateDiscountedPrice = () => {
     if (detail?.Ofertas && detail.precio) {
       const descuento = parseFloat(detail.Ofertas) / 100;
@@ -67,25 +69,27 @@ const Rating = () => {
           <div className="rounded-lg p-8">
             {detail && (
               <div>
-                <h3 className="text-blue-900 text-xl font-semibold mb-2">{detail.name}</h3>
+                <h3 className="text-blue-900 text-xl font-semibold mb-2">
+                  {detail.name}
+                </h3>
                 <img
                   src={detail.background_image}
                   alt={detail.name}
                   className="w-40 h-auto mb-4"
                 />
-                              {precioConDescuento ? (
-                <p className="text-blue-900 text-xl font-semibold">
-                  Precio:{" "}
-                  <span className="text-red-500 line-through">
-                    ${detail.precio}
-                  </span>{" "}
-                  <span className="">${precioConDescuento}</span>
-                </p>
-              ) : (
-                <p className="text-blue-900 text-xl font-semibold">
-                  Precio: ${detail.precio}
-                </p>
-              )}
+                {precioConDescuento ? (
+                  <p className="text-blue-900 text-xl font-semibold">
+                    Precio:{" "}
+                    <span className="text-red-500 line-through">
+                      ${detail.precio}
+                    </span>{" "}
+                    <span className="">${precioConDescuento}</span>
+                  </p>
+                ) : (
+                  <p className="text-blue-900 text-xl font-semibold">
+                    Precio: ${detail.precio}
+                  </p>
+                )}
               </div>
             )}
           </div>
@@ -111,7 +115,9 @@ const Rating = () => {
               </svg>
             ))}
           </div>
-          <p className="text-blue-900 text-m font-semibold">{rating} De 5 estrellas</p>
+          <p className="text-blue-900 text-m font-semibold">
+            {rating} De 5 estrellas
+          </p>
           <div className="mt-4">
             <textarea
               className="p-2 border border-gray-300 rounded resize-none"
@@ -122,8 +128,11 @@ const Rating = () => {
             ></textarea>
           </div>
           <button
-            className="mt-2 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
+            className={`mt-2 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded ${
+              buttonDisable ? "bg-gray-300 cursor-not-allowed" : ""
+            }`}
             onClick={submitRating}
+            disabled={buttonDisable}
           >
             Submit
           </button>
