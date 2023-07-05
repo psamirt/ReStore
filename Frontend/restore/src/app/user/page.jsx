@@ -19,18 +19,18 @@ function usuario({ searchParams }) {
   const [cookieImg, setCookieImg] = useState(null);
   const [file, setFile] = useState('');
   const [input, setInput] = useState({
-    Nombre: '',
-    Apellido: '',
-    Email: '',
-    FechaNacimiento: '',
-    Genero: '',
+    nombre: '',
+    apellido: '',
+    email: '',
+    fechaNacimiento: '',
+    genero: '',
   });
   const [newInput, setNewInput] = useState({
-    Nombre: '',
-    Apellido: '',
-    Email: '',
-    FechaNacimiento: '',
-    Genero: '',
+    nombre: '',
+    apellido: '',
+    email: '',
+    fechaNacimiento: '',
+    genero: '',
   });
 
   const [comprados, setComprados] = useState([]);
@@ -107,11 +107,11 @@ function usuario({ searchParams }) {
       const user = await response.json();
 
       setInput({
-        Email: user.email,
-        Nombre: user.nombre,
-        Apellido: user.apellido,
-        Genero: user.genero,
-        FechaNacimiento: user.fechaNacimiento,
+        email: user.email,
+        nombre: user.nombre,
+        apellido: user.apellido,
+        genero: user.genero,
+        fechaNacimiento: user.fechaNacimiento,
       });
       cookieValue && setCookieImg(user.imagenDePerfil);
 
