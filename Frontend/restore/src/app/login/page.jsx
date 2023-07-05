@@ -198,7 +198,7 @@ function Login() {
         {/* hr con texto */}
         <div className='flex items-center'>
           <div className='flex-grow h-px bg-gray-400'></div>
-          <span className='flex-shrink  text-gray-600 px-2 font-light -my-2'>
+          <span className='flex-shrink  text-gray-600 px-2 font-light -my-2 text-sm'>
             O inicia sesión con:
           </span>
           <div className='flex-grow h-px bg-gray-400'></div>
