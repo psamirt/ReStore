@@ -1,7 +1,7 @@
 export const fetchOfers = async () => {
   const response = await fetch(
     "https://re-store.onrender.com/categories/technology/Ofertas",
-    { next: { revalidate: 60 } }
+    {cache: 'no-store'}
   );
   return await response.json();
 };
