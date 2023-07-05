@@ -9,6 +9,7 @@ import Link from 'next/link';
 import Swal from 'sweetalert2';
 import { totalPrice } from '../helpers/totalPrice';
 import Image from 'next/image';
+import Boton from '../components/Button/Button';
 
 function usuario({ searchParams }) {
   const { data: session, status } = useSession();
@@ -18,18 +19,18 @@ function usuario({ searchParams }) {
   const [cookieImg, setCookieImg] = useState(null);
   const [file, setFile] = useState('');
   const [input, setInput] = useState({
-    nombre: '',
-    apellido: '',
-    email: '',
-    fechaNacimiento: '',
-    genero: '',
+    Nombre: '',
+    Apellido: '',
+    Email: '',
+    FechaNacimiento: '',
+    Genero: '',
   });
   const [newInput, setNewInput] = useState({
-    nombre: '',
-    apellido: '',
-    email: '',
-    fechaNacimiento: '',
-    genero: '',
+    Nombre: '',
+    Apellido: '',
+    Email: '',
+    FechaNacimiento: '',
+    Genero: '',
   });
 
   const [comprados, setComprados] = useState([]);
@@ -106,11 +107,11 @@ function usuario({ searchParams }) {
       const user = await response.json();
 
       setInput({
-        email: user.email,
-        nombre: user.nombre,
-        apellido: user.apellido,
-        genero: user.genero,
-        fechaNacimiento: user.fechaNacimiento,
+        Email: user.email,
+        Nombre: user.nombre,
+        Apellido: user.apellido,
+        Genero: user.genero,
+        FechaNacimiento: user.fechaNacimiento,
       });
       cookieValue && setCookieImg(user.imagenDePerfil);
 
@@ -199,84 +200,122 @@ function usuario({ searchParams }) {
     <>
       <Navbar></Navbar>
       <div className='container mx-auto p-4'>
-        <Button onClick={readOnly ? handleToggleReadOnly : handleCancelButton}>
-          {readOnly ? 'Editar perfil' : 'Cancelar'}
-        </Button>
-        <Link href={'/user/ubicacion'}>
-          <Button>Editar Ubicaciones</Button>
-        </Link>
+        <h1 className='text-2xl font-semibold text-blue-900'>Mi perfil</h1>
+
         <Form
+          className='grid gap-4 sm:max-w-[85%] sm:mx-auto my-8 bg-slate-50 p-8 rounded-lg shadow-slate-300 shadow-md'
           onFinish={handleSubmit}
           labelCol={{ span: 0 }}
           wrapperCol={{ span: 14 }}
         >
-          <Form.Item label='Imagen' valuePropName='file'>
-            <Upload
-              disabled={session ? true : false}
-              listType='picture-card'
-              showUploadList={false}
-              customRequest={({ file }) => {
-                setFile(file);
-                handleToggleReadOnly();
-              }}
-            >
-              {file ? (
-                <img
-                  src={URL.createObjectURL(file)}
-                  alt='Preview'
-                  style={{ width: '100%' }}
-                />
-              ) : (
-                <img
-                  src={
-                    (session && session.user.image) ||
-                    (cookieValue && cookieImg)
-                  }
-                  alt='Preview'
-                  style={{ width: '100%' }}
-                />
-              )}
-            </Upload>
-          </Form.Item>
-          {Object.entries(input).map(([clave, valor]) => (
-            <Form.Item key={clave} label={clave}>
-              {clave === 'genero' ? (
-                <Select
-                  onChange={(value) => handleSelectChange(value, clave)}
-                  value={newInput.genero ? newInput.genero : input.genero}
-                  disabled={readOnly}
-                  className='w-full'
-                >
-                  <Select.Option value='masculino'>Masculino</Select.Option>
-                  <Select.Option value='femenino'>Femenino</Select.Option>
-                  <Select.Option value='otro'>Otro</Select.Option>
-                </Select>
-              ) : clave === 'fechaNacimiento' ? (
-                <DatePicker
-                  onChange={(value) => handleSelectChange(value, clave)}
-                  value={newInput.fechaNacimiento}
-                  disabled={readOnly}
-                  className='w-full'
-                />
-              ) : (
-                <Input
-                  disabled={clave === 'email' ? true : false}
-                  readOnly={readOnly}
-                  placeholder={valor}
-                  className='w-full border rounded px-3 py-2'
-                  onChange={(event) =>
-                    handleSelectChange(event.target.value, clave)
-                  }
-                />
-              )}
+          <div className='grid gap-2'>
+            <label className='font-medium' htmlFor='imagen'>
+              Imagen
+            </label>
+            <Form.Item valuePropName='file'>
+              <Upload
+                disabled={session ? true : false}
+                listType='picture-card'
+                showUploadList={false}
+                customRequest={({ file }) => {
+                  setFile(file);
+                  handleToggleReadOnly();
+                }}
+              >
+                {file ? (
+                  <img
+                    src={URL.createObjectURL(file)}
+                    alt='Preview'
+                    style={{
+                      width: '100%',
+                      borderRadius: '100%',
+                      aspectRatio: '1',
+                      objectFit: 'cover',
+                    }}
+                  />
+                ) : (
+                  <img
+                    src={
+                      (session && session.user.image) ||
+                      (cookieValue && cookieImg)
+                    }
+                    alt='Preview'
+                    style={{
+                      width: '100%',
+                      borderRadius: '100%',
+                      aspectRatio: '1',
+                      objectFit: 'cover',
+                    }}
+                  />
+                )}
+              </Upload>
             </Form.Item>
+          </div>
+          {Object.entries(input).map(([clave, valor]) => (
+            <div className='grid gap-2'>
+              <label className='font-medium' htmlFor=''>
+                {clave}
+              </label>
+              <Form.Item key={clave}>
+                {clave === 'genero' ? (
+                  <Select
+                    onChange={(value) => handleSelectChange(value, clave)}
+                    value={newInput.genero ? newInput.genero : input.genero}
+                    disabled={readOnly}
+                    className='w-full'
+                  >
+                    <Select.Option value='masculino'>Masculino</Select.Option>
+                    <Select.Option value='femenino'>Femenino</Select.Option>
+                    <Select.Option value='otro'>Otro</Select.Option>
+                  </Select>
+                ) : clave === 'fechaNacimiento' ? (
+                  <DatePicker
+                    onChange={(value) => handleSelectChange(value, clave)}
+                    value={newInput.fechaNacimiento}
+                    disabled={readOnly}
+                    className='w-full'
+                  />
+                ) : (
+                  <Input
+                    disabled={clave === 'email' ? true : false}
+                    readOnly={readOnly}
+                    placeholder={valor}
+                    className='w-full border rounded px-3 py-2'
+                    onChange={(event) =>
+                      handleSelectChange(event.target.value, clave)
+                    }
+                  />
+                )}
+              </Form.Item>
+            </div>
           ))}
+          <div className='flex gap-4 justify-center'>
+            <Button
+              className={`px-4 py-2 bg-yellow-400 h-12  hover:bg-yellow-500 transition rounded-lg text-slate-800 font-medium`}
+              onClick={readOnly ? handleToggleReadOnly : handleCancelButton}
+            >
+              {readOnly ? 'Editar perfil' : 'Cancelar'}
+            </Button>
+            <Link href={'/user/ubicacion'}>
+              <Button
+                className={`px-4 py-2 bg-yellow-400 h-12 hover:bg-yellow-500 transition rounded-lg text-slate-800 font-medium`}
+              >
+                Editar Ubicaciones
+              </Button>
+            </Link>
+          </div>
+          {!readOnly && (
+            <div className='grid place-content-center'>
+              <Button
+                className={`px-4 py-2 h-12 bg-inherit border-2 border-yellow-400 hover:bg-yellow-400 hover:text-slate-800 transition rounded-lg text-inherit font-medium `}
+                onClick={handleSubmit}
+                htmlType='submit'
+              >
+                Guardar Cambios
+              </Button>
+            </div>
+          )}
         </Form>
-        {!readOnly && (
-          <Button onClick={handleSubmit} htmlType='submit'>
-            Guardar Cambios
-          </Button>
-        )}
         <div>
           {comprados.length > 0 && (
             <div>
@@ -294,7 +333,7 @@ function usuario({ searchParams }) {
                     </div>
                     <div className='relative aspect-square w-32 h-32 shadow-slate-200'>
                       <Image
-                        className='object-contain rounded-md'
+                        className='object-contain rounded-md shadow shadow-slate-300'
                         src={producto.images[0]}
                         alt={producto.name}
                         layout='fill'
@@ -316,9 +355,10 @@ function usuario({ searchParams }) {
                               },
                             }}
                           >
-                            <button className='bg-blue-500 hover:bg-blue-600 text-white font-bold px-4 py-2 rounded'>
+                            {/* <button className='bg-blue-500 hover:bg-blue-600 text-white font-bold px-4 py-2 rounded'>
                               Calificar
-                            </button>
+                            </button> */}
+                            <Boton secondary={true} text={'Calificar'}></Boton>
                           </Link>
                         </div>
                       )}
