@@ -120,6 +120,16 @@ export function DetailId({ param }) {
                 alt={post.result[0].name}
                 fill
               />
+              {post.result[0].Disabled ? (
+                <>
+                  <div className='absolute inset-0 bg-slate-200 opacity-50 '></div>
+                  <div className='absolute inset-0 grid place-content-center'>
+                    <p className='text-3xl font-bold text-slate-800 opacity-100'>
+                      Sin stock
+                    </p>
+                  </div>
+                </>
+              ) : null}
             </div>
             <div className='grid gap-4 text-gray-600 content-baseline'>
               <h2 className='text-xl font-semibold text-blue-900'>
@@ -127,8 +137,8 @@ export function DetailId({ param }) {
               </h2>
               {/* logica para las valoraciones y la ventana flotante */}
               <div>
-                <div className='flex flex-col mt-4'>
-                  <div className='flex'>
+                <div className='flex flex-col '>
+                  <div className='flex items-center'>
                     {[1, 2, 3, 4, 5].map((star) => (
                       <svg
                         key={star}
@@ -150,18 +160,21 @@ export function DetailId({ param }) {
                         />
                       </svg>
                     ))}
-                    <div className='flex'>
-                      <p
-                        onClick={openValoraciones}
-                        className='text-xs text-gray-500 ml-2 cursor-pointer'
-                      >
-                        {post.result[0].rating.stars.length} Valoraciones
+                    <p className='text-sm ml-2 font-  text-gray-500 mr-2 '>
+                      ({post.result[0].rating.totalStars})
+                    </p>
+                    <div className=''>
+                      <p className='text-sm font-light text-gray-500 ml-2  '>
+                        {post.result[0].rating.stars.length} Valoraciones{' '}
+                        <span
+                          className='underline  cursor-pointer font-normal'
+                          onClick={openValoraciones}
+                        >
+                          (Ver comentarios)
+                        </span>
                       </p>
                     </div>
                   </div>
-                  <p className='text-xs text-gray-500 ml-2'>
-                    {post.result[0].rating.totalStars}
-                  </p>
                 </div>
 
                 {valoracionesOpen && (
@@ -169,7 +182,7 @@ export function DetailId({ param }) {
                     className='fixed inset-0 flex items-center justify-center z-50 overlay'
                     onClick={handleOutsideClick}
                   >
-                    <div className='bg-white rounded-lg p-8 w-1/3 h-2/3 overflow-y-auto'>
+                    <div className='bg-white rounded-lg p-8 w-1/3 h-2/3 overflow-y-auto shadow-xl shadow-slate-600'>
                       <button
                         onClick={closeValoraciones}
                         className='absolute top-0 right-0 m-4 text-gray-500 hover:text-gray-700'
@@ -178,6 +191,12 @@ export function DetailId({ param }) {
                       </button>
 
                       <h1 className='text-2xl font-bold mb-4'>Valoraciones</h1>
+                      {console.log(post.result[0].rating)}
+                      {!post.result[0].rating.stars.length ? (
+                        <div className='relative mt-8 inset-0 grid place-content-center'>
+                          <p>No hay valoraciones aun</p>
+                        </div>
+                      ) : null}
                       {post.result[0].rating.stars.map((stars, index) => (
                         <div key={index}>
                           <div className='flex items-center'>
@@ -210,9 +229,7 @@ export function DetailId({ param }) {
                 )}
               </div>
               {/* fin de logica */}
-              <p className='text-blue-900 text-xl font-semibold'>
-                Estado: {post.result[0].state}
-              </p>
+              <p className='text-lg'>Estado: {post.result[0].state}</p>
               {precioConDescuento ? (
                 <p className='text-blue-900 text-xl font-semibold'>
                   Precio:{' '}
@@ -226,15 +243,19 @@ export function DetailId({ param }) {
                   Precio: ${post.result[0].precio}
                 </p>
               )}
-              <div className='flex gap-4 align-middle'>
+              <div className='flex gap-4 items-center'>
                 <span className='justify-self-start'>
                   <Boton
                     onClick={() => handleAddToCart()}
                     text={'Añadir al carrito'}
+                    disabled={post.result[0].Disabled}
                   >
                     Añadir al carrito
                   </Boton>
                 </span>
+                {post.result[0].Disabled ? (
+                  <p>No tenemos stock de este producto</p>
+                ) : null}
                 {addedToCart ? (
                   !onCart ? (
                     <p className='self-center font-medium text-green-500'>
