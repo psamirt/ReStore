@@ -1,6 +1,6 @@
-'use client';
-import React from 'react';
-import '../dash.css';
+"use client";
+import React from "react";
+import "../dash.css";
 import {
   Space,
   Typography,
@@ -11,10 +11,10 @@ import {
   Tag,
   Button,
   Input,
-} from 'antd';
-import { useRouter } from 'next/navigation';
-import axios from 'axios';
-import { useEffect, useState } from 'react';
+} from "antd";
+import { useRouter } from "next/navigation";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
 function Pedidos() {
   // const router = useRouter();
@@ -26,11 +26,11 @@ function Pedidos() {
 
   const [pedidos, setPedidos] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [searchText, setSearchText] = useState('');
+  const [searchText, setSearchText] = useState("");
 
   const getPedidos = async () => {
     const { data } = await axios.get(
-      'https://re-store.onrender.com/users/envios/all'
+      "https://re-store.onrender.com/users/envios/all"
     );
     return data.users;
   };
@@ -70,27 +70,27 @@ function Pedidos() {
 
     const columns = [
       {
-        title: 'Email',
-        dataIndex: 'email',
+        title: "Email",
+        dataIndex: "email",
         filteredValue: [searchText],
         onFilter: (value, record) => {
           return record.email?.toLowerCase().includes(value.toLowerCase());
         },
         render: (_, record) => (
-          <span style={{ color: 'green' }}>{record.email}</span>
+          <span style={{ color: "green" }}>{record.email}</span>
         ),
       },
       {
-        title: 'Nombre',
-        dataIndex: 'nombre',
+        title: "Nombre",
+        dataIndex: "nombre",
       },
       {
-        title: 'Apellido',
-        dataIndex: 'apellido',
+        title: "Apellido",
+        dataIndex: "apellido",
       },
       {
-        title: 'Ciudad',
-        dataIndex: 'ciudad',
+        title: "Ciudad",
+        dataIndex: "ciudad",
         render: (_, record) => {
           const direccion = record?.ubicacion?.[0]?.direccion;
           const codigoPostal = record?.ubicacion?.[0]?.codigoPostal;
@@ -99,22 +99,22 @@ function Pedidos() {
         },
       },
       {
-        title: 'Pagado',
-        dataIndex: 'pagado',
+        title: "Pagado",
+        dataIndex: "pagado",
         render: (_, record) => <span>{`$${record.pagado} USD`}</span>,
       },
       {
-        title: 'Artículos',
-        dataIndex: 'articulos',
+        title: "Artículos",
+        dataIndex: "articulos",
         render: (articulos) => (
           <div>
             {articulos.map((articulo) => (
               <div
                 key={articulo.id}
                 style={{
-                  backgroundColor: 'lightblue',
-                  padding: '5px',
-                  marginBottom: '5px',
+                  backgroundColor: "lightblue",
+                  padding: "5px",
+                  marginBottom: "5px",
                 }}
               >
                 <span>ID: {articulo.id}</span>
@@ -127,14 +127,15 @@ function Pedidos() {
         ),
       },
       {
-        title: 'Estado del envio',
-        dataIndex: 'estado',
+        title: "Estado del envio",
+        dataIndex: "estado",
         render: (_, record) => (
           <Tag
             style={{
-              fontWeight: 'bold',
-              color: 'white',
-              backgroundColor: 'black',
+              fontWeight: 620,
+              color: "white",
+              backgroundColor: "black",
+              fontSize: "15px",
             }}
           >
             {record.estado}
@@ -142,17 +143,18 @@ function Pedidos() {
         ),
       },
       {
-        title: 'Estado del pago',
-        dataIndex: 'estadoPago',
+        title: "Estado del pago",
+        dataIndex: "estadoPago",
         render: (_, record) => (
           <Tag
             style={{
-              fontWeight: 'bold',
-              color: 'white',
-              backgroundColor: 'green',
+              fontWeight: 620,
+              color: "white",
+              backgroundColor: "green",
+              fontSize: "15px",
             }}
           >
-            {record.estadoPago === 'paid' && 'Pagado'}
+            {record.estadoPago === "paid" && "Pagado"}
           </Tag>
         ),
       },
@@ -162,11 +164,11 @@ function Pedidos() {
   }
 
   return (
-    <div className='app'>
-      <Space direction='vertical'>
+    <div className="app">
+      <Space direction="vertical">
         <Typography.Title level={4}>Pedidos</Typography.Title>
         <Input.Search
-          placeholder='Buscar por email'
+          placeholder="Buscar por email"
           onChange={(e) => setSearchText(e.target.value)}
         />
         <TablePedidos />
