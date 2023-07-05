@@ -79,7 +79,12 @@ export const Navbar = () => {
     <nav className='py-4 z-20 sticky top-0 bg-slate-900 text-slate-50'>
       <div className='container px-4 mx-auto flex gap-4 justify-between'>
         <Link className='self-center link' href={'/home'}>
-          Pagina Principal
+          <Image
+            alt='home'
+            src={'/icons8-casa-50.png'}
+            width={30}
+            height={30}
+          ></Image>
         </Link>
         <div className='flex gap-8 justify-between items-center'>
           {session ? (
@@ -135,7 +140,14 @@ export const Navbar = () => {
             </Link>
           ) : null}
           <Searchbar />
-          <Link href={'/cart'}><img width="50" height="50" src="https://img.icons8.com/bubbles/50/add-shopping-cart.png" alt="add-shopping-cart"/></Link>
+          <Link href={'/cart'}>
+            <Image
+              width={36}
+              height={36}
+              alt='carrito'
+              src={'/icons8-carrito-de-compras-64.png'}
+            ></Image>
+          </Link>
         </div>
       </div>
     </nav>
