@@ -29,6 +29,8 @@ export default function CartItem({ productId, item, userId, userId2 }) {
     };
     fetch();
   }, []);
+  //mostrar la cantidad
+  //dos botones que despachen las actions de subir y bajar con id de user y de product
   return (
     <>
       <hr className='h-px bg-gray-300 border-0 ' />

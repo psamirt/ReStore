@@ -20,6 +20,7 @@ if (typeof window !== 'undefined') {
 const initialState = storedCart;
 
 export const reducer = (state = initialState, action) => {
+  //crear dos actions que hagan un map de todo el cart, y el que tiene mismo id que lo retorne con una cantidad +/-
   switch (action.type) {
     case ADD_TO_CART:
       if (
