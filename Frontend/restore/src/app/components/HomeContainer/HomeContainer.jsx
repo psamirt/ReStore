@@ -9,6 +9,7 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { Card as AntCard,Image,Tooltip,Carousel as AntCarousel } from "antd";
 
+
 const responsive = {
   desktop: {
     breakpoint: { max: 3000, min: 1024 },
@@ -44,7 +45,7 @@ function HomeContainer({ data }) {
   useEffect(() => {
     const fetchReviews = async () => {
       const { data } = await axios.get(
-        "http://localhost:3001/categories/technology/allProducts?fav=true"
+        "https://re-store.onrender.com/categories/technology/allProducts?fav=true"
       );
       setReviews(data.result);
     };
@@ -78,7 +79,7 @@ function HomeContainer({ data }) {
 
 
   
-  const filteredData = data.result.filter(
+  const filteredData =  data.result.filter(
     (product) => product.Disabled !== true
     );
 
@@ -148,10 +149,13 @@ function HomeContainer({ data }) {
                     <Image
                     src={review.background_image}
                     alt={review.name}
-                    className="aspect-square object-contain fill"
+                    // className="aspect-square object-contain fill"
                     style={{
-                      objectFit: 'contain',
-                      width: 200
+                      height: 'auto',
+                      maxHeight: '200px',
+                      width: 'auto',
+                      maxWidth: '200px',
+                      objectFit: 'cover'
                     }}
                     />
                     </div>
@@ -175,17 +179,20 @@ function HomeContainer({ data }) {
               return (
                 <AntCard
                   className="h-full flex flex-col justify-between"
-                  style={{ width: 200 }}
+                  style={{ width: 150}}
                   cover={
-                    <div style={{display:"flex", display: 'flex',
+                    <div style={{ display: 'flex',
                     justifyContent: 'center',}}>
 
                     <Image
                     src={review.background_image}
                     alt={review.name}
                     style={{
-                      objectFit: 'contain',
-                      width: 200,
+                      height: 'auto',
+                      maxHeight: '200px',
+                      width: 'auto',
+                      maxWidth: '200px',
+                      objectFit: 'cover'
                     }}
                     />
                     </div>

@@ -9,7 +9,7 @@ import axios from 'axios';
 import Loader from '@/app/components/loader/Loader';
 import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
-import HomeContainer from '@/app/components/HomeContainer/HomeContainer';
+import DetailCarousel from '@/app/components/detailCarousel/detailCarousel';
 
 export function DetailId({ param }) {
   const dispatch = useDispatch();
@@ -63,13 +63,23 @@ export function DetailId({ param }) {
 
   useEffect(() => {
     const fetch = async () => {
-      const response = await axios.get(
-        `https://re-store.onrender.com/categories/technology/Ofertas`
-      );
-      setOfertas(response.data);
+      if (post.result.length) {
+
+        const subcategory = Object.keys(post.result[0].subcategoria)[0]
+        const response = await axios.get(
+          `https://re-store.onrender.com/categories/technology/categoria/${subcategory}`
+          );
+          setOfertas(response.data);
+        }
     };
     fetch();
-  }, []);
+  }, [post.result]);
+
+
+  console.log(post)
+  console.log(ofertas)
+   const filteredData = post.result.length && ofertas.result.filter(product => product.Disabled !== true && product._id !== post.result[0]._id)
+
 
   useEffect(() => {
     if (!addedToCart) {
@@ -262,7 +272,8 @@ export function DetailId({ param }) {
               <h3 className='text-xl font-semibold text-blue-900'>
                 También te puede interesar:
               </h3>
-              <HomeContainer data={ofertas}></HomeContainer>
+              <DetailCarousel data={filteredData}></DetailCarousel>
+              {/* <HomeContainer data={ofertas}></HomeContainer> */}
             </div>
           </div>
         </div>
