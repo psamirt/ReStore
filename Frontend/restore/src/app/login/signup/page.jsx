@@ -1,9 +1,10 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import './Signup.css';
+// import './Signup.css';
 import { v4 as uuidv4 } from 'uuid';
 import Link from 'next/link';
+import Boton from '@/app/components/Button/Button';
 
 function Signup() {
   useEffect(() => {
@@ -66,32 +67,6 @@ function Signup() {
       handleQuery();
     }
   }, []);
-  useEffect(() => {
-    // Guardar los estilos originales del body
-    const originalStyles = {
-      display: document.body.style.display,
-      justifyContent: document.body.style.justifyContent,
-      minHeight: document.body.style.minHeight,
-      background: document.body.style.background,
-      alignItems: document.body.style.alignItems,
-    };
-
-    // Aplicar los nuevos estilos al body
-    document.body.style.display = 'flex';
-    document.body.style.justifyContent = 'center';
-    document.body.style.minHeight = '100vh';
-    document.body.style.background = '#0f172a';
-    document.body.style.alignItems = 'center';
-
-    // Restaurar los estilos originales al desmontar el componente
-    return () => {
-      document.body.style.display = originalStyles.display;
-      document.body.style.justifyContent = originalStyles.justifyContent;
-      document.body.style.minHeight = originalStyles.minHeight;
-      document.body.style.background = originalStyles.background;
-      document.body.style.alignItems = originalStyles.alignItems;
-    };
-  }, []);
 
   const URL = 'https://re-store.onrender.com/users';
 
@@ -146,10 +121,8 @@ function Signup() {
           `https://re-store.onrender.com/users/${user.email}/email`
         );
         if (!data.error) {
-          const mailFind = data.find((userr) => userr?.email === user.email);
-
-          if (mailFind) {
-            error.email = 'Email ya existe';
+          if (data.email === user.email) {
+            error.email = 'Ya existe una cuenta con ese email';
           }
         }
       }
@@ -160,7 +133,7 @@ function Signup() {
 
     if (!passwordRegex.test(user.password)) {
       error.password =
-        'Debes ingresar una contraseña con una mayúscula, un número y un carácter especial';
+        'Debe incluir una mayúscula, un número y un carácter especial';
     }
 
     if (user.password !== user.confirm_password) {
@@ -218,146 +191,178 @@ function Signup() {
       }
     }
   };
-
+  // max-w-md sm:w-screen
   return (
-    <div className='sign-body'>
-      <div className='container_sign'>
-        <form onSubmit={handleSubmit} className='form'>
-          <h2>Sign up</h2>
-          <div className='inputBox'>
-            <input
-              type='text'
-              required
-              name='userName'
-              value={user.userName}
-              onChange={handleInputs}
-            ></input>
+    <div className='min-h-screen grid place-content-center bg-slate  '>
+      <form
+        onSubmit={handleSubmit}
+        className=' mx-auto  rounded-lg shadow-xl shadow-slate-400 bg-slate-200 p-12 sm:my-8 grid gap-4 w-screen sm:w-[610px] '
+      >
+        <h2 className='text-2xl font-bold'>Sign up</h2>
+        <div className='grid sm:grid-cols-2 sm:gap-8 '>
+          <div className='grid gap-4'>
+            <div className='grid gap-2'>
+              <label className='font-medium'>Nombre</label>
+              <input
+                className='text-sm py-3 px-6 bg-slate-50 rounded-lg shadow shadow-slate-300'
+                type='text'
+                required
+                name='userName'
+                value={user.userName}
+                onChange={handleInputs}
+              ></input>
 
-            <span className='sign-span'>Nombre</span>
-            <p className='erorrp'>{errors.userName}</p>
-          </div>
-          <div className='inputBox'>
-            <input
-              type='text'
-              required
-              name='userLastName'
-              value={user.userLastName}
-              onChange={handleInputs}
-            ></input>
+              <p className='text-red-500 font-medium'>{errors.userName}</p>
+            </div>
+            <div className='grid gap-2'>
+              <label className='font-medium'>Apellido</label>
+              <input
+                className='text-sm py-3 px-6 bg-slate-50 rounded-lg shadow shadow-slate-300'
+                type='text'
+                required
+                name='userLastName'
+                value={user.userLastName}
+                onChange={handleInputs}
+              ></input>
+              <p className='text-red-500 font-medium'>{errors.userLastName}</p>
+            </div>
+            <div className='grid gap-2'>
+              <label className='font-medium'>Direccion Email</label>
+              <input
+                className='text-sm py-3 px-6 bg-slate-50 rounded-lg shadow shadow-slate-300'
+                type='email'
+                required
+                name='email'
+                value={user.email}
+                onChange={handleInputs}
+              ></input>
 
-            <span className='sign-span'>Apellido</span>
-            <p className='erorrp'>{errors.userLastName}</p>
-          </div>
-          <div className='inputBox'>
-            <input
-              type='email'
-              required
-              name='email'
-              value={user.email}
-              onChange={handleInputs}
-            ></input>
+              <p className='text-red-500 font-medium'>{errors.email}</p>
+            </div>
+            <div className='grid gap-2'>
+              <label className='font-medium'>Crear Contraseña</label>
+              <input
+                className='text-sm py-3 px-6 bg-slate-50 rounded-lg shadow shadow-slate-300'
+                type='password'
+                required
+                name='password'
+                value={user.password}
+                onChange={handleInputs}
+              ></input>
 
-            <span className='sign-span'>Direccion Email</span>
-            <p className='erorrp'>{errors.email}</p>
-          </div>
-          <div className='inputBox'>
-            <input
-              type='password'
-              required
-              name='password'
-              value={user.password}
-              onChange={handleInputs}
-            ></input>
-
-            <span className='sign-span'>Crear Contraseña</span>
-            <p className='erorrp'>{errors.password}</p>
-          </div>
-          <div className='inputBox'>
-            <input
-              type='password'
-              required
-              name='confirm_password'
-              value={user.confirm_password}
-              onChange={handleInputs}
-            ></input>
-            <span className='sign-span'>Confirma Contraseña</span>
-            <p className='erorrp'>{errors.confirm_password}</p>
-          </div>
-          <div className='inputBox'>
-            <select name='genero' defaultValue='' onChange={handleInputs}>
-              <option name='genero' value='' disabled hidden>
-                Selecciona un género
-              </option>
-              <option name='genero' value='Masculino'>
-                Masculino
-              </option>
-              <option name='genero' value='Femenino'>
-                Femenino
-              </option>
-              <option name='genero' value='Otro'>
-                Otro
-              </option>
-            </select>
-            <p className='erorrp'>{errors.genero}</p>
-          </div>
-          <div className='inputBox'>
-            <input
-              type='date'
-              required
-              name='fechaNacimiento'
-              value={user.fechaNacimiento}
-              onChange={handleInputs}
-            ></input>
-            <p className='erorrp'>{errors.fechaNacimiento}</p>
-          </div>
-          <div className='inputBox'>
-            <input
-              type='text'
-              required
-              name='ubiCiudad'
-              value={user.ubiCiudad}
-              onChange={handleInputs}
-            ></input>
-            <span className='sign-span'>Ciudad donde vives</span>
-            <p className='erorrp'>{errors.ubiCiudad}</p>
-          </div>
-          <div className='inputBox'>
-            <input
-              type='text'
-              required
-              name='ubiDireccion'
-              value={user.ubiDireccion}
-              onChange={handleInputs}
-            ></input>
-            <span className='sign-span'>Direccion</span>
-            <p className='erorrp'>{errors.ubiDireccion}</p>
-          </div>
-          <div className='inputBox'>
-            <input
-              type='number'
-              required
-              name='ubiCodigoPostal'
-              value={user.ubiCodigoPostal}
-              onChange={handleInputs}
-            ></input>
-            <span className='sign-span'>Codigo Postal</span>
-            <p className='erorrp'>{errors.ubiCodigoPostal}</p>
-          </div>
-          <div className='inputBox'>
-            <input type='submit' value='Crea tu cuenta'></input>
-          </div>
-          <p id='userCreatedMessage'>{flag ? 'Verifica tu email' : null}</p>
-          <p id='userCreatedMessage'>{message}</p>
-          <p>
-            Ya sos miembro?{' '}
-            <Link href={'/login'}>
-              <p id='asd' className='login'>
-                Log in
+              <p className='text-red-500 font-medium'>{errors.password}</p>
+            </div>
+            <div className='grid gap-2'>
+              <label className='font-medium'>Confirma Contraseña</label>
+              <input
+                className='text-sm py-3 px-6 bg-slate-50 rounded-lg shadow shadow-slate-300'
+                type='password'
+                required
+                name='confirm_password'
+                value={user.confirm_password}
+                onChange={handleInputs}
+              ></input>
+              <p className='text-red-500 font-medium'>
+                {errors.confirm_password}
               </p>
-            </Link>
+            </div>
+          </div>
+          <div className='grid gap-4'>
+            <div className='grid gap-2'>
+              <label className='font-medium' htmlFor='genero'>
+                Género
+              </label>
+              <select
+                className='text-sm py-3 px-6 bg-slate-50 rounded-lg shadow shadow-slate-300'
+                name='genero'
+                defaultValue=''
+                onChange={handleInputs}
+              >
+                <option name='genero' value='' disabled hidden>
+                  Selecciona un género
+                </option>
+                <option name='genero' value='Masculino'>
+                  Masculino
+                </option>
+                <option name='genero' value='Femenino'>
+                  Femenino
+                </option>
+                <option name='genero' value='Otro'>
+                  Otro
+                </option>
+              </select>
+              <p className='text-red-500 font-medium'>{errors.genero}</p>
+            </div>
+            <div className='grid gap-2'>
+              <label className='font-medium' htmlFor='date'>
+                Fecha de nacimiento
+              </label>
+              <input
+                className='text-sm py-3 px-6 bg-slate-50 rounded-lg shadow shadow-slate-300'
+                type='date'
+                required
+                name='fechaNacimiento'
+                value={user.fechaNacimiento}
+                onChange={handleInputs}
+              ></input>
+              <p className='text-red-500 font-medium'>
+                {errors.fechaNacimiento}
+              </p>
+            </div>
+            <div className='grid gap-2'>
+              <label className='font-medium'>Ciudad donde vives</label>
+              <input
+                className='text-sm py-3 px-6 bg-slate-50 rounded-lg shadow shadow-slate-300'
+                type='text'
+                required
+                name='ubiCiudad'
+                value={user.ubiCiudad}
+                onChange={handleInputs}
+              ></input>
+              <p className='text-red-500 font-medium'>{errors.ubiCiudad}</p>
+            </div>
+            <div className='grid gap-2'>
+              <label className='font-medium'>Direccion</label>
+              <input
+                className='text-sm py-3 px-6 bg-slate-50 rounded-lg shadow shadow-slate-300'
+                type='text'
+                required
+                name='ubiDireccion'
+                value={user.ubiDireccion}
+                onChange={handleInputs}
+              ></input>
+              <p className='text-red-500 font-medium'>{errors.ubiDireccion}</p>
+            </div>
+            <div className='grid gap-2'>
+              <label className='font-medium'>Codigo Postal</label>
+              <input
+                className='text-sm py-3 px-6 bg-slate-50 rounded-lg shadow shadow-slate-300'
+                type='number'
+                required
+                name='ubiCodigoPostal'
+                value={user.ubiCodigoPostal}
+                onChange={handleInputs}
+              ></input>
+              <p className='text-red-500 font-medium'>
+                {errors.ubiCodigoPostal}
+              </p>
+            </div>
+          </div>
+        </div>
+        <Boton type='submit' text={'Crea tu cuenta'}></Boton>
+        <div className='grid gap-2'>
+          <p className='font-medium text-lg text-center text-blue-700'>
+            {flag ? 'Verifica tu email' : null}
           </p>
-        </form>
-      </div>
+          <p>{message}</p>
+          <label className='font-medium' htmlFor=''>
+            Ya sos miembro?{' '}
+          </label>
+          <Link className='grid bg-slate-100 rounded-lg' href={'/login'}>
+            <Boton text={'Log in'} secondary={true}></Boton>
+          </Link>
+        </div>
+      </form>
     </div>
   );
 }
