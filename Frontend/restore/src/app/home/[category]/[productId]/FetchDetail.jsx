@@ -1,15 +1,15 @@
-"use client";
-import Image from "next/image";
-import Boton from "@/app/components/Button/Button";
-import BackButton from "@/app/components/backButton/BackButton";
-import NotFound from "./notFound";
-import { addToCart } from "@/redux/actions";
-import { useDispatch, useSelector } from "react-redux";
-import axios from "axios";
-import Loader from "@/app/components/loader/Loader";
-import { useSession } from "next-auth/react";
-import { useEffect, useState } from "react";
-import HomeContainer from "@/app/components/HomeContainer/HomeContainer";
+'use client';
+import Image from 'next/image';
+import Boton from '@/app/components/Button/Button';
+import BackButton from '@/app/components/backButton/BackButton';
+import NotFound from './notFound';
+import { addToCart } from '@/redux/actions';
+import { useDispatch, useSelector } from 'react-redux';
+import axios from 'axios';
+import Loader from '@/app/components/loader/Loader';
+import { useSession } from 'next-auth/react';
+import { useEffect, useState } from 'react';
+import HomeContainer from '@/app/components/HomeContainer/HomeContainer';
 
 export function DetailId({ param }) {
   const dispatch = useDispatch();
@@ -30,7 +30,7 @@ export function DetailId({ param }) {
   };
 
   const handleOutsideClick = (e) => {
-    if (e.target.classList.contains("overlay")) {
+    if (e.target.classList.contains('overlay')) {
       closeValoraciones();
     }
   };
@@ -38,9 +38,9 @@ export function DetailId({ param }) {
   useEffect(() => {
     setCookieValue(
       document.cookie
-        .split("; ")
-        .find((row) => row.startsWith("User_id"))
-        ?.split("=")[1]
+        .split('; ')
+        .find((row) => row.startsWith('User_id'))
+        ?.split('=')[1]
     );
   }, []);
 
@@ -105,104 +105,104 @@ export function DetailId({ param }) {
   const precioConDescuento = calculateDiscountedPrice();
 
   return (
-    <div className="container mx-auto px-4 my-8">
+    <div className='container mx-auto px-4 my-8'>
       {!post.result[0] ? (
         <Loader />
       ) : (
         <div>
           {console.log(post)}
           <BackButton />
-          <div className="grid md:grid-cols-2 gap-4 mb-12 mt-4">
-            <div className="relative rounded-lg aspect-square shadow-md shadow-slate-200 md:justify-self-center ">
+          <div className='grid md:grid-cols-2 gap-4 mb-12 mt-4'>
+            <div className='relative rounded-lg aspect-square shadow-md shadow-slate-200 md:justify-self-center '>
               <Image
-                className="aspect-square rounded-lg object-contain"
+                className='aspect-square rounded-lg object-contain'
                 src={post.result[0].background_image}
                 alt={post.result[0].name}
                 fill
               />
             </div>
-            <div className="grid gap-4 text-gray-600">
-              <h2 className="text-xl font-semibold text-blue-900">
+            <div className='grid gap-4 text-gray-600'>
+              <h2 className='text-xl font-semibold text-blue-900'>
                 {post.result[0].name} {post.result[0].Marca}
               </h2>
               {/* logica para las valoraciones y la ventana flotante */}
               <div>
-                <div className="flex flex-col mt-4">
-                  <div className="flex">
+                <div className='flex flex-col mt-4'>
+                  <div className='flex'>
                     {[1, 2, 3, 4, 5].map((star) => (
                       <svg
                         key={star}
-                        xmlns="http://www.w3.org/2000/svg"
+                        xmlns='http://www.w3.org/2000/svg'
                         fill={
                           star <= post.result[0].rating.totalStars
-                            ? "yellow"
-                            : "none"
+                            ? 'yellow'
+                            : 'none'
                         }
-                        viewBox="0 0 24 24"
+                        viewBox='0 0 24 24'
                         strokeWidth={1.5}
-                        stroke="currentColor"
-                        className="w-6 h-6"
+                        stroke='currentColor'
+                        className='w-6 h-6'
                       >
                         <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z"
+                          strokeLinecap='round'
+                          strokeLinejoin='round'
+                          d='M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z'
                         />
                       </svg>
                     ))}
-                    <div className="flex">
+                    <div className='flex'>
                       <p
                         onClick={openValoraciones}
-                        className="text-xs text-gray-500 ml-2 cursor-pointer"
+                        className='text-xs text-gray-500 ml-2 cursor-pointer'
                       >
                         {post.result[0].rating.stars.length} Valoraciones
                       </p>
                     </div>
                   </div>
-                  <p className="text-xs text-gray-500 ml-2">
+                  <p className='text-xs text-gray-500 ml-2'>
                     {post.result[0].rating.totalStars}
                   </p>
                 </div>
 
                 {valoracionesOpen && (
                   <div
-                    className="fixed inset-0 flex items-center justify-center z-50 overlay"
+                    className='fixed inset-0 flex items-center justify-center z-50 overlay'
                     onClick={handleOutsideClick}
                   >
-                    <div className="bg-white rounded-lg p-8 w-1/3 h-2/3 overflow-y-auto">
+                    <div className='bg-white rounded-lg p-8 w-1/3 h-2/3 overflow-y-auto'>
                       <button
                         onClick={closeValoraciones}
-                        className="absolute top-0 right-0 m-4 text-gray-500 hover:text-gray-700"
+                        className='absolute top-0 right-0 m-4 text-gray-500 hover:text-gray-700'
                       >
                         &times;
                       </button>
 
-                      <h1 className="text-2xl font-bold mb-4">Valoraciones</h1>
+                      <h1 className='text-2xl font-bold mb-4'>Valoraciones</h1>
                       {post.result[0].rating.stars.map((stars, index) => (
                         <div key={index}>
-                          <div className="flex items-center">
+                          <div className='flex items-center'>
                             {[1, 2, 3, 4, 5].map((star) => (
                               <svg
                                 key={star}
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill={star <= stars ? "yellow" : "none"}
-                                viewBox="0 0 24 24"
+                                xmlns='http://www.w3.org/2000/svg'
+                                fill={star <= stars ? 'yellow' : 'none'}
+                                viewBox='0 0 24 24'
                                 strokeWidth={1.5}
-                                stroke="currentColor"
-                                className="w-6 h-6"
+                                stroke='currentColor'
+                                className='w-6 h-6'
                               >
                                 <path
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                  d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z"
+                                  strokeLinecap='round'
+                                  strokeLinejoin='round'
+                                  d='M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z'
                                 />
                               </svg>
                             ))}
                           </div>
-                          <p className="ml-10">
+                          <p className='ml-10'>
                             {post.result[0].rating.comments[index]}
                           </p>
-                          <hr className="my-2" />
+                          <hr className='my-2' />
                         </div>
                       ))}
                     </div>
@@ -210,38 +210,38 @@ export function DetailId({ param }) {
                 )}
               </div>
               {/* fin de logica */}
-              <p className="text-blue-900 text-xl font-semibold">
+              <p className='text-blue-900 text-xl font-semibold'>
                 Estado: {post.result[0].state}
               </p>
               {precioConDescuento ? (
-                <p className="text-blue-900 text-xl font-semibold">
-                  Precio:{" "}
-                  <span className="text-red-500 line-through">
+                <p className='text-blue-900 text-xl font-semibold'>
+                  Precio:{' '}
+                  <span className='text-red-500 line-through'>
                     ${post.result[0].precio}
-                  </span>{" "}
-                  <span className="">${precioConDescuento}</span>
+                  </span>{' '}
+                  <span className=''>${precioConDescuento}</span>
                 </p>
               ) : (
-                <p className="text-blue-900 text-xl font-semibold">
+                <p className='text-blue-900 text-xl font-semibold'>
                   Precio: ${post.result[0].precio}
                 </p>
               )}
-              <div className="flex gap-4 align-middle">
-                <span className="justify-self-start">
+              <div className='flex gap-4 align-middle'>
+                <span className='justify-self-start'>
                   <Boton
                     onClick={() => handleAddToCart()}
-                    text={"Añadir al carrito"}
+                    text={'Añadir al carrito'}
                   >
                     Añadir al carrito
                   </Boton>
                 </span>
                 {addedToCart ? (
                   !onCart ? (
-                    <p className="self-center font-medium text-green-500">
+                    <p className='self-center font-medium text-green-500'>
                       Agregado exitósamente
                     </p>
                   ) : (
-                    <p className="self-center font-medium text-red-500">
+                    <p className='self-center font-medium text-red-500'>
                       Ya agregaste este producto al carrito
                     </p>
                   )
@@ -249,17 +249,17 @@ export function DetailId({ param }) {
               </div>
             </div>
           </div>
-          <div className="grid  gap-4 mb-8">
-            <div className="grid gap-2">
-              <h3 className="text-blue-900 text-xl font-medium">
-                Descripción:{" "}
+          <div className='grid  gap-4 mb-8'>
+            <div className='grid gap-2'>
+              <h3 className='text-blue-900 text-xl font-medium'>
+                Descripción:{' '}
               </h3>
-              <p className="text-gray-600 leading-normal text-sm">
+              <p className='text-gray-600 leading-normal text-sm'>
                 {post.result[0].Description}
               </p>
             </div>
-            <div className="grid gap-2">
-              <h3 className="text-xl font-semibold text-blue-900">
+            <div className='grid gap-2'>
+              <h3 className='text-xl font-semibold text-blue-900'>
                 También te puede interesar:
               </h3>
               <HomeContainer data={ofertas}></HomeContainer>

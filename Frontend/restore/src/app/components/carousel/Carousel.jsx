@@ -106,7 +106,7 @@ export default function Carousel() {
               textWrap: 'balance',
             }}
           >
-            ¡Se acerca el dia del padre!
+            Toda la tecnología, en un mismo lugar
           </p>
         </div>
       </swiper-slide>

@@ -6,6 +6,10 @@ import {
   REMOVE_FROM_CART,
 } from './action-types';
 
+//crear accion que despache el id y agregar uno, y otra de quitar uno.
+//dentro de esas chequear si esta logueado, si lo esta ir a logged sumar o restar.
+//va a haber que hacer una api para eso
+
 export const addToCart = (productId, userId, userId2, precio, oferta = 0) => {
   const newProduct = {
     productId,

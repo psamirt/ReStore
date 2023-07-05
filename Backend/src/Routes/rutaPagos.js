@@ -1,27 +1,27 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
-const { createSession } = require("../Controllers/paymentsControllers");
-const Stripe = require("stripe");
-const User = require("../Database/models/userModel");
-const Earnings = require("../Database/models/totalEarnings");
-const emailController = require("../Controllers/enviosController");
+const { createSession } = require('../Controllers/paymentsControllers');
+const Stripe = require('stripe');
+const User = require('../Database/models/userModel');
+const Earnings = require('../Database/models/totalEarnings');
+const emailController = require('../Controllers/enviosController');
 const stripe = new Stripe(
-  "sk_test_51NNLpXJ1lb1YFkHpt7cNexUW59vJoBx40Sta98qZ2Bqa8bRzrTaU1gjsNAWMrpYseNMP4u3KRJZxMbjBXT9LtuJC00e9OgY4Hm"
+  'sk_test_51NNLpXJ1lb1YFkHpt7cNexUW59vJoBx40Sta98qZ2Bqa8bRzrTaU1gjsNAWMrpYseNMP4u3KRJZxMbjBXT9LtuJC00e9OgY4Hm'
 );
 let endpointSecret;
 
 // Parsear el cuerpo de la solicitud como texto sin procesar
-router.post("/send-email", emailController.sendEmailController);
-router.post("/create-checkout-session", createSession);
-router.get("/success");
-router.get("/cancel");
-router.get("/earnings", async (req, res) => {
+router.post('/send-email', emailController.sendEmailController);
+router.post('/create-checkout-session', createSession);
+router.get('/success');
+router.get('/cancel');
+router.get('/earnings', async (req, res) => {
   try {
     const earnings = await Earnings.findOne({});
     res.json({ earnings: earnings ? earnings.earnings : 0 });
   } catch (error) {
-    console.error("Error retrieving total earnings:", error);
-    res.status(500).json({ error: "Error retrieving total earnings" });
+    console.error('Error retrieving total earnings:', error);
+    res.status(500).json({ error: 'Error retrieving total earnings' });
   }
 });
 
@@ -29,12 +29,12 @@ router.get("/earnings", async (req, res) => {
 //   "whsec_602cd2598b4998749e3f929be11b474b1123a11e8d6a5c3bea2a9be9e5728679";
 const createOrder = async (customer, data) => {
   try {
-    console.log("Creating new order...");
+    console.log('Creating new order...');
     console.log(customer.metadata.userId);
     const user = await User.findById(customer.metadata.userId);
     const cartData = user.carrito;
 
-    console.log("Cart Data:", cartData);
+    console.log('Cart Data:', cartData);
 
     const orderItems = cartData.map((item) => {
       const precioSinDescuento = parseFloat(item.precio);
@@ -62,7 +62,7 @@ const createOrder = async (customer, data) => {
       },
     };
 
-    console.log("New Order:", newOrder);
+    console.log('New Order:', newOrder);
 
     // Update user's orders property
     const updatedUser = await User.findByIdAndUpdate(
@@ -73,28 +73,28 @@ const createOrder = async (customer, data) => {
       { new: true }
     );
 
-    console.log("Updated User:", updatedUser);
+    console.log('Updated User:', updatedUser);
 
     const earnings = await Earnings.findOne({});
     if (earnings) {
       earnings.earnings += parseFloat(data.amount_total / 100);
       await earnings.save();
     } else {
-      await Earnings.create({ earnings: data.amount_total});
-    }
+      await Earnings.create({ earnings: data.amount_total });
+    }
 
     return newOrder;
   } catch (error) {
-    console.error("Error creating order:", error);
+    console.error('Error creating order:', error);
     throw error;
   }
 };
 
 router.post(
-  "/webhook",
-  express.raw({ type: "application/json" }),
+  '/webhook',
+  express.raw({ type: 'application/json' }),
   async (req, res) => {
-    const sig = req.headers["stripe-signature"];
+    const sig = req.headers['stripe-signature'];
     let data;
     let eventType;
 
@@ -103,7 +103,7 @@ router.post(
 
       try {
         event = stripe.webhooks.constructEvent(req.body, sig, endpointSecret);
-        console.log("webhook verify");
+        console.log('webhook verify');
       } catch (err) {
         console.log(`Webhook Error: ${err.message}`);
         res.status(400).send(`Webhook Error: ${err.message}`);
@@ -118,7 +118,7 @@ router.post(
     }
 
     // Handle the event
-    if (eventType === "checkout.session.completed") {
+    if (eventType === 'checkout.session.completed') {
       stripe.customers
         .retrieve(data.customer)
         .then((customer) => {
