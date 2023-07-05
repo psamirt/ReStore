@@ -113,7 +113,7 @@ export function DetailId({ param }) {
           {console.log(post)}
           <BackButton />
           <div className='grid md:grid-cols-2 gap-4 mb-12 mt-4'>
-            <div className='relative rounded-lg aspect-square shadow-md shadow-slate-200 md:justify-self-center '>
+            <div className='relative rounded-lg aspect-square shadow-md shadow-slate-200 md:w-[70%] md:mx-auto '>
               <Image
                 className='aspect-square rounded-lg object-contain'
                 src={post.result[0].background_image}
@@ -121,7 +121,7 @@ export function DetailId({ param }) {
                 fill
               />
             </div>
-            <div className='grid gap-4 text-gray-600'>
+            <div className='grid gap-4 text-gray-600 content-baseline'>
               <h2 className='text-xl font-semibold text-blue-900'>
                 {post.result[0].name} {post.result[0].Marca}
               </h2>

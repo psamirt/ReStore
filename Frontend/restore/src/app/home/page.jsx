@@ -6,7 +6,7 @@ import { Suspense } from 'react';
 import HomeContainer from '../components/HomeContainer/HomeContainer';
 import Link from 'next/link';
 import Footer from '../components/footer/footer';
-
+import Image from 'next/image';
 
 async function Home() {
   const data = await fetchOfers();
@@ -20,33 +20,79 @@ async function Home() {
       <Navbar />
       <Carousel />
       <div className='mx-auto container px-4 mb-8'>
-        <div className='flex align-middle justify-center gap-16 py-8 flex-wrap gap-y-4'>
+        <div className='flex align-middle justify-center gap-16 py-8 flex-wrap gap-y-4  text-center'>
           <Link
-            title='click to visit ConsolasyVideojuegos'
+            className=''
+            title='Click para visitar consolas y videojuegos'
             href={'/home/ConsolasyVideojuegos'}
           >
-            <img width="80" height="80" src="https://img.icons8.com/external-justicon-lineal-color-justicon/80/external-joystick-notifications-justicon-lineal-color-justicon.png" alt="external-joystick-notifications-justicon-lineal-color-justicon"/>
+            <Image
+              className='mx-auto'
+              width='60'
+              height='60'
+              src='/icons8-joystick-50.png'
+              alt='joystick'
+            />
+            Consolas
           </Link>
-          <Link title='click to visit TV' href={'/home/TV'}>
-          <img width="80" height="80" src="https://img.icons8.com/external-rabit-jes-outline-color-rabit-jes/80/external-tv-home-decoration-rabit-jes-outline-color-rabit-jes.png" alt="external-tv-home-decoration-rabit-jes-outline-color-rabit-jes"/>
+          <Link title='Click para visitar TV' href={'/home/TV'}>
+            <Image
+              className='mx-auto'
+              width='60'
+              height='60'
+              src='/icons8-televisión-50.png'
+              alt='TV'
+            />
+            TV
           </Link>
-          <Link title='click to visit Celulares' href={'/home/Celulares'}>
-          <img width="80" height="80" src="https://img.icons8.com/plasticine/80/iphone.png" alt="iphone"/>
+          <Link title='Click para visitar celulares' href={'/home/Celulares'}>
+            <Image
+              className='mx-auto'
+              width='60'
+              height='60'
+              src='/icons8-iphone-100.png'
+              alt='iphone'
+            />
+            Celulares
           </Link>
           <Link
-            title='click to visit ElectronicaAudioVideo'
+            title='Click para visitar audio y video'
             href={'/home/ElectronicaAudioVideo'}
           >
-           <img width="80" height="80" src="https://img.icons8.com/deco/80/video.png" alt="video"/>
+            <Image
+              className='mx-auto'
+              width='60'
+              height='60'
+              src='/icons8-auriculares-90.png'
+              alt='Auriculares'
+            />
+            Audio
           </Link>
-          <Link title='click to visit Computacion' href={'/home/Computacion'}>
-          <img width="80" height="80" src="https://img.icons8.com/plasticine/80/workstation.png" alt="workstation"/>
+          <Link
+            title='Click para visitar computación'
+            href={'/home/Computacion'}
+          >
+            <Image
+              className='mx-auto'
+              width='60'
+              height='60'
+              src='/icons8-estación-de-trabajo-50.png'
+              alt='Computadora'
+            />
+            Computación
           </Link>{' '}
           <Link
-            title='click to visit CamarasyAccesorios'
+            title='Click para visitar camaras'
             href={'/home/CamarasyAccesorios'}
           >
-          <img width="80" height="80" src="https://img.icons8.com/fluency/80/camera-on-tripod.png" alt="camera-on-tripod"/>
+            <Image
+              className='mx-auto'
+              width='60'
+              height='60'
+              src='/icons8-cámara-compacta-50.png'
+              alt='Camara'
+            />
+            Cámaras
           </Link>
         </div>
         <h2 className='text-4xl text-center mb-4 font-medium text-blue-900'>
