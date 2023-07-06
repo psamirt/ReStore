@@ -1,12 +1,12 @@
-const nodemailer = require("nodemailer");
-const Token = require("../Database/models/Tokens");
+const nodemailer = require('nodemailer');
+const Token = require('../Database/models/Tokens');
 
 const EMAIL_PASSWORD = process.env.EMAIL_PASSWORD;
 const transporter = nodemailer.createTransport({
-  service: "gmail",
+  service: 'gmail',
   auth: {
-    user: "reStorePFHenry@gmail.com",
-    pass: "vrczzeekxahsxrvb",
+    user: 'reStorePFHenry@gmail.com',
+    pass: 'vrczzeekxahsxrvb',
   },
   tls: {
     rejectUnauthorized: false, // Ignorar la verificación del certificado
@@ -41,11 +41,11 @@ async function postVerifyUser(req, res) {
     const encodedCiudad = encodeURIComponent(ubiCiudad);
     const encodedDireccion = encodeURIComponent(ubiDireccion);
     const encodedCodigoPostal = encodeURIComponent(ubiCodigoPostal);
-    const verifyEmailUrl = `https://re-store-git-main-psamirt.vercel.app/login/signup?token=${encodedUuid}&userName=${encodedUser}&apellido=${encodedApellido}&password=${encodedPassword}&email=${encodedEmail}&genero=${encodedGenero}&nacimiento=${encodedNacimiento}&ciudad=${encodedCiudad}&direccion=${encodedDireccion}&codigoPostal=${encodedCodigoPostal}`;
+    const verifyEmailUrl = `https://re-store-six.vercel.app/login/signup?token=${encodedUuid}&userName=${encodedUser}&apellido=${encodedApellido}&password=${encodedPassword}&email=${encodedEmail}&genero=${encodedGenero}&nacimiento=${encodedNacimiento}&ciudad=${encodedCiudad}&direccion=${encodedDireccion}&codigoPostal=${encodedCodigoPostal}`;
     const mailOptions = {
-      from: "reStorePFHenry@gmail.com",
+      from: 'reStorePFHenry@gmail.com',
       to: email,
-      subject: "Confirmación de correo electrónico",
+      subject: 'Confirmación de correo electrónico',
       html: `
           <h3>Hola ${userName},</h3>
           <p>Gracias por registrarte en nuestra aplicación.</p>
@@ -57,10 +57,10 @@ async function postVerifyUser(req, res) {
       if (error) {
         console.log(error);
       } else {
-        console.log("Correo electrónico de confirmación enviado");
+        console.log('Correo electrónico de confirmación enviado');
         res
           .status(200)
-          .json({ message: "Correo electrónico de confirmación enviado" });
+          .json({ message: 'Correo electrónico de confirmación enviado' });
       }
     });
   } catch (error) {
@@ -76,7 +76,7 @@ async function getVerifyUser(req, res) {
     if (verification) {
       res.status(200).json(verification);
     } else {
-      res.status(400).json({ message: "Verification denied" });
+      res.status(400).json({ message: 'Verification denied' });
     }
   } catch (error) {
     res.status(400).json({ message: error.message });
