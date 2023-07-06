@@ -1,25 +1,25 @@
-"use client";
-import React from "react";
-import { Navbar } from "../components/navbar/navbar";
-import Footer from "../components/footer/footer";
+'use client';
+import React from 'react';
+import { Navbar } from '../components/navbar/navbar';
+import Footer from '../components/footer/footer';
 
 function SobreNosotros() {
   return (
     <>
       <Navbar />
       <div className='mx-auto container px-4 mb-8'>
-        <div className="container mx-auto py-8">
-          <h1 className="text-2xl font-bold mb-8 text-center">
+        <div className='container mx-auto py-8'>
+          <h1 className='text-2xl font-bold mb-8 text-center'>
             Sobre nosotros
           </h1>
-          <p className="mb-4">
-            En ReEstore, somos un equipo de cinco jóvenes apasionados por el
+          <p className='mb-4'>
+            En ReStore, somos un equipo de cinco jóvenes apasionados por el
             medio ambiente y la tecnología. Desde una edad temprana, nos dimos
             cuenta de que comprar electrodomésticos de segunda mano nos permitía
             obtener los productos que necesitábamos sin tener que pagar precios
             exorbitantes por ellos.
           </p>
-          <p className="mb-4">
+          <p className='mb-4'>
             Uno de nuestros momentos más memorables fue cuando encontramos una
             televisión en un supermercado. Era la última unidad y había sido
             utilizada como modelo de exhibición. Nos acercamos al gerente y le
@@ -28,7 +28,7 @@ function SobreNosotros() {
             última y había sido utilizada como exposición, pero el producto
             estaba en perfectas condiciones.
           </p>
-          <p className="mb-4">
+          <p className='mb-4'>
             Esa experiencia nos inspiró a explorar más a fondo el mercado de
             productos tecnológicos reutilizables. Nos dimos cuenta de que era
             posible obtener dispositivos de calidad a precios accesibles sin
@@ -37,7 +37,7 @@ function SobreNosotros() {
             generando al reducir el desperdicio electrónico y contribuir a la
             economía circular.
           </p>
-          <p className="mb-4">
+          <p className='mb-4'>
             Desde entonces, hemos estado dedicados a proporcionar una plataforma
             confiable para la compra y venta de productos tecnológicos
             reutilizables. Nos esforzamos por garantizar que todos los productos
