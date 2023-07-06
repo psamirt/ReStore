@@ -97,13 +97,14 @@ async function Home() {
         </div>
         <h2 className='text-4xl text-center mb-4 font-medium text-blue-900'>
           {' '}
-          Ofertas Limitadas!
+          Aprovecha nuestras ofertas
         </h2>
         <Suspense fallback={<div>Loading...</div>}>
           <HomeContainer data={data}></HomeContainer>
           {/* <ProductsContainer data={data} ubicaciones={ubicaciones} marcas={marcas} estado={estado}/> */}
         </Suspense>
         {/* <HomeContainer data={data}></HomeContainer> */}
+      <Footer/>
       </div>
     </>
   );
