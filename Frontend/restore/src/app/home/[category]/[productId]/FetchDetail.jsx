@@ -9,7 +9,7 @@ import axios from 'axios';
 import Loader from '@/app/components/loader/Loader';
 import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
-import DetailCarousel from '@/app/components/detailCarousel/detailCarousel';
+import DetailCarousel from '../../../components/detailCarousel/DetailCarousel';
 
 export function DetailId({ param }) {
   const dispatch = useDispatch();
