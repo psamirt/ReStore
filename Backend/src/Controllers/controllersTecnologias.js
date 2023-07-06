@@ -36,8 +36,10 @@ const postProduct = async (req, res) => {
 };
 
 const getAllProducts = async (req, res) => {
+  console.log(req)
   try {
-    const allProducts = await TechSchema.find();
+    const allProducts = req.query && req.query.fav ? await TechSchema.find({ 'rating.comments': { $exists: true, $ne: [] } }) : await TechSchema.find() 
+
 
     res.status(200).json({ result: allProducts });
   } catch (error) {

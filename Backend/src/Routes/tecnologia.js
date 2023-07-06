@@ -43,6 +43,8 @@ router.put("/rating/:product/:user", rating);
 
 router.put("/:id", upload.single("image"), modifyProduct)
 
+
+
 // subcatgoria
 router.get("/Computacion/:compu", getComputacion);
 router.get("/ElectronicaAudioVideo/:electro", getElectronica);
